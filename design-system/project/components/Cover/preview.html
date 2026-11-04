@@ -1,0 +1,37 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+html,body{margin:0;background:var(--paper)}
+.c{position:relative;width:960px;height:288px;overflow:hidden;background:var(--paper)}
+.t{position:absolute;left:32px;bottom:24px;width:440px}
+.n{font-family:var(--font-sans);font-weight:700;font-size:88px;line-height:.95;letter-spacing:-.02em;color:var(--ink)}
+.s{margin-top:12px;font-family:var(--font-sans);font-weight:500;font-size:14px;color:var(--ink)}
+svg{position:absolute;left:0;top:0}
+.teal{fill:var(--logo-teal)}.blk{fill:var(--code-bg)}.gry{fill:var(--ink)}.red{fill:var(--accent-red)}.term{fill:var(--term-bg)}
+.r{stroke:var(--ink-strong);stroke-width:var(--stroke-rule);fill:none}.rw{stroke:var(--code-fg);stroke-width:var(--stroke-rule);fill:none}
+.hk{fill:var(--ink-strong)}.hw{fill:var(--code-fg)}
+</style></head><body>
+<div class="c">
+<svg width="960" height="288" viewBox="0 0 960 288" aria-hidden="true">
+<!--
+blocks: logo-teal 240×288 slab (bleeds top/bottom), code-bg 240×168, ink 240×72, accent-red 72×48, all radius-none
+arrangement: one tall slab with stepped satellites flush to the right edge
+pattern: literal motif, the deck's own stroke-rule arrow, because "=>" is how these talks say "so"; five arrows
+scales: x from 480, steps of 24 and 48 (indent-step), corners radius-none, stroke stroke-rule
+-->
+<rect class="teal" x="720" y="0" width="240" height="288"/>
+<rect class="blk" x="480" y="72" width="240" height="168"/>
+<rect class="gry" x="480" y="0" width="144" height="72"/>
+<rect class="red" x="648" y="240" width="72" height="48"/>
+<path class="rw" d="M504 108H684"/><path class="hw" d="M684 103l10 5-10 5z"/>
+<path class="rw" d="M504 156H636"/><path class="hw" d="M636 151l10 5-10 5z"/>
+<path class="rw" d="M504 204H684"/><path class="hw" d="M684 199l10 5-10 5z"/>
+<path class="r" d="M744 96H924"/><path class="hk" d="M924 91l10 5-10 5z"/>
+<path class="r" d="M744 192H876"/><path class="hk" d="M876 187l10 5-10 5z"/>
+</svg>
+<div class="t">
+<div class="n">IoTLT LT<br>Slides</div>
+<div class="s">白地にグレーのゴシック、やってみたを1枚ずつ。</div>
+</div>
+</div>
+</body></html>
