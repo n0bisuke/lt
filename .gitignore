@@ -10,6 +10,7 @@ node_modules/
 # 生成物
 dist/
 design-system/tokens.css
+decks/*/deck.html
 
 # 取り込み前の画像と元ファイル
 inbox/*

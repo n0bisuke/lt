@@ -22,3 +22,26 @@ for (const g of t.type.groups) {
 }
 writeFileSync(join(root, 'tokens.css'), out.join('\n') + '\n');
 console.log('wrote design-system/tokens.css');
+
+// Marp のテーマ: tokens + 文字サイズの変数 + 部品の CSS + Markdown 用の CSS
+const typeVars = t.type.groups.flatMap((g) => g.styles.flatMap((s) => [
+  `--t-${s.name}-size: ${s.fontSize};`,
+  `--t-${s.name}-weight: ${s.fontWeight};`,
+  `--t-${s.name}-line: ${s.lineHeight};`,
+  `--t-${s.name}-spacing: ${s.letterSpacing ?? 0};`,
+]));
+const bundle = readFileSync(join(root, 'project/components/bundle.css'), 'utf8');
+const fontImport = (/^@import[^\n]*\n/m.exec(bundle) ?? [''])[0];
+const components = bundle.replace(fontImport, '').split('/* ---------- Deck runtime')[0];
+const theme = [
+  '/* @theme iotlt */',
+  '/* @size 16:9 1920px 1080px */',
+  '/* tokens.json、bundle.css、marp/theme.src.css から生成。手で編集しない（node scripts/build-tokens.mjs） */',
+  fontImport.trim(),
+  `:root {\n  ${[...vars, ...typeVars].join('\n  ')}\n}`,
+  ...out.slice(2),
+  components.trim(),
+  readFileSync(join(root, 'marp/theme.src.css'), 'utf8').trim(),
+].join('\n');
+writeFileSync(join(root, 'marp/iotlt.css'), theme + '\n');
+console.log('wrote design-system/marp/iotlt.css');

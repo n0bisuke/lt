@@ -3,7 +3,8 @@ window.IoTLT = (function () {
   function mount(root) {
     var deck = root || document.querySelector('.lt-deck');
     if (!deck) return null;
-    var slides = Array.prototype.slice.call(deck.querySelectorAll('.lt-slide'));
+    // 手書き HTML のスライドと、Marp が出力するスライド（svg）の両方を扱う
+    var slides = Array.prototype.slice.call(deck.querySelectorAll('.lt-slide, svg[data-marpit-svg]'));
     var html = document.documentElement;
     if (/[?&]overview\b/.test(location.search)) {
       html.classList.add('lt-deck-overview');
@@ -22,6 +23,7 @@ window.IoTLT = (function () {
     function fit() {
       var k = Math.min(innerWidth / 1920, innerHeight / 1080);
       slides.forEach(function (s) {
+        if (s.tagName.toLowerCase() === 'svg') return; // svg は CSS で画面に合わせる
         s.style.transform = 'translate(-50%, -50%) scale(' + k + ')';
       });
     }

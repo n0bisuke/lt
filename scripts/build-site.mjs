@@ -8,6 +8,7 @@
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, normalize, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parseDeck, renderArticle, renderSlides } from './lib/deck.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
@@ -32,18 +33,24 @@ mkdirSync(DIST, { recursive: true });
 const published = [];
 for (const name of readdirSync(DECKS).sort().reverse()) {
   const dir = join(DECKS, name);
+  const mdPath = join(dir, 'deck.md');
   const metaPath = join(dir, 'deck.json');
-  if (!existsSync(metaPath)) continue;
-  const meta = JSON.parse(readFileSync(metaPath, 'utf8'));
+  const isMd = existsSync(mdPath);
+  if (!isMd && !existsSync(metaPath)) continue;
+  const source = isMd ? readFileSync(mdPath, 'utf8') : null;
+  const meta = isMd ? parseDeck(source).meta : JSON.parse(readFileSync(metaPath, 'utf8'));
   if (meta.published !== true) continue;
 
-  const htmlPath = join(dir, 'index.html');
-  const html = readFileSync(htmlPath, 'utf8');
+  const htmlPath = isMd ? mdPath : join(dir, 'index.html');
+  // Markdown のデッキは、ここで HTML と記事に変換する
+  const rendered = isMd ? renderSlides(source, { title: meta.title ?? '' }) : null;
+  const html = isMd ? rendered.html : readFileSync(htmlPath, 'utf8');
+  const article = isMd ? renderArticle(source) : '';
   const pdfPath = join(dir, `${name}.pdf`);
   const thumbPath = join(dir, 'thumbnail.png');
 
-  if (/class="[^"]*\blt-slot\b/.test(html)) errors.push(`${name}: 差し替えていない lt-slot が残っています`);
-  if (html.includes('【要確認】')) errors.push(`${name}: 【要確認】が残っています`);
+  if (/class="[^"]*\blt-slot\b/.test(source ?? html)) errors.push(`${name}: 差し替えていない lt-slot が残っています`);
+  if ((source ?? html).includes('【要確認】')) errors.push(`${name}: 【要確認】が残っています`);
   if (!meta.title || !/^\d{4}-\d{2}-\d{2}$/.test(meta.date ?? '')) errors.push(`${name}: deck.json の title か date（YYYY-MM-DD）が正しくありません`);
   if (meta.eventUrl && !/^https?:\/\//.test(meta.eventUrl)) errors.push(`${name}: deck.json の eventUrl は http(s) の URL にしてください`);
   if (!existsSync(thumbPath)) errors.push(`${name}: thumbnail.png がありません（scripts/export-pdf.sh decks/${name}）`);
@@ -61,11 +68,13 @@ for (const name of readdirSync(DECKS).sort().reverse()) {
     const r = decodeURI(m[1]).split(/[?#]/)[0];
     if (!/^[a-z]+:|^\/\//i.test(r) && !r.startsWith('../')) refs.add(normalize(r));
   }
+  // Markdown の ![](images/x) や ![bg](images/x) も拾う
+  if (isMd) for (const m of source.matchAll(/\bimages\/[^\s"'()<>&;]+/g)) refs.add(normalize(decodeURI(m[0])));
   const out = join(DIST, name);
   const slides = join(out, 'slides');
   mkdirSync(slides, { recursive: true });
   // slides/ は decks/<id>/ と同じ深さなので、../../design-system のパスはそのまま使える
-  cpSync(htmlPath, join(slides, 'index.html'));
+  writeFileSync(join(slides, 'index.html'), html);
   if (existsSync(pdfPath)) cpSync(pdfPath, join(out, `${name}.pdf`));
   if (existsSync(thumbPath)) cpSync(thumbPath, join(out, 'thumbnail.png'));
   for (const r of refs) {
@@ -83,7 +92,7 @@ for (const name of readdirSync(DECKS).sort().reverse()) {
       warnings.push(`${name}: 未使用の画像 ${unused.length} 個はサイトに出しませんが、コミットすると公開リポジトリには残ります（--move-unused で unused/ に移せます）: ${unused.join(', ')}`);
     }
   }
-  published.push({ id: name, ...meta, slideCount: (html.match(/<section\s+class="[^"]*\blt-slide\b/g) ?? []).length });
+  published.push({ id: name, ...meta, article, slideCount: isMd ? rendered.count : (html.match(/<section\s+class="[^"]*\blt-slide\b/g) ?? []).length });
 }
 
 if (errors.length) {
@@ -146,6 +155,17 @@ main { max-width: 1200px; margin: 0 auto; padding: 40px 16px 80px; }
 .btn[hidden] { display: none; }
 .detail h1 { margin: 32px 0 8px; font-size: 32px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; }
 .detail .meta { margin: 0; }
+.article { margin-top: 48px; font-size: 17px; line-height: 1.9; overflow-wrap: anywhere; }
+.article section { padding: 24px 0; border-top: 1px solid var(--rule-soft); }
+.article h2 { margin: 0 0 12px; font-size: 22px; font-weight: 700; line-height: 1.4; letter-spacing: -0.02em; }
+.article p, .article ul, .article ol, .article pre, .article table, .article blockquote { margin: 0 0 12px; }
+.article img, .article video { display: block; max-width: 100%; height: auto; margin: 0 0 12px; }
+.article em { font-style: normal; font-weight: 700; color: var(--accent-red); }
+.article blockquote { padding-left: 12px; border-left: 2px solid var(--rule-soft); font-size: 15px; }
+.article pre { padding: 12px 14px; background: var(--code-bg); color: var(--code-fg); font-family: var(--font-mono); font-size: 14px; line-height: 1.5; overflow-x: auto; }
+.article :not(pre) > code { padding: 0 6px; border-radius: var(--radius-chip); background: var(--chip); font-family: var(--font-mono); font-size: 0.9em; }
+.article table { width: 100%; border-collapse: collapse; }
+.article th, .article td { padding: 8px 12px 8px 0; border-bottom: 1px solid var(--rule-soft); text-align: left; }
 @media (max-width: 640px) {
   .detail h1 { font-size: 24px; }
   .grid { grid-template-columns: 1fr; }
@@ -221,7 +241,7 @@ ${headCommon('../')}
     </div>
     <h1>${esc(d.title)}</h1>
     <p class="meta">${esc(dateJa(d.date))}・${d.slideCount}枚${d.event ? `<br>発表イベント：${d.eventUrl ? `<a href="${esc(d.eventUrl)}">${esc(d.event)}</a>` : esc(d.event)}` : ''}</p>
-  </article>
+${d.article ? `    <div class="article">\n${d.article}\n    </div>\n` : ''}  </article>
 </main>
 <script>
 (function () {
@@ -232,7 +252,7 @@ ${headCommon('../')}
   var full = document.getElementById('full');
   function update() {
     var w = frame.contentWindow;
-    var total = w.document.querySelectorAll('.lt-slide').length;
+    var total = w.document.querySelectorAll('.lt-slide, svg[data-marpit-svg]').length;
     var at = parseInt(w.location.hash.slice(1), 10) || 1;
     count.textContent = at + ' / ' + total;
     prev.disabled = at <= 1;

@@ -1,19 +1,22 @@
 # AGENTS.md
 
-IoTLT などのライトニングトーク（LT）のスライドを、発表者（菅原のびすけ）のデザインで作るためのリポジトリです。AI エージェントは、ネタのメモ・記事・リポジトリ・写真を受け取り、HTML のデッキと PDF を作ります。
+IoTLT などのライトニングトーク（LT）のスライドを、発表者（菅原のびすけ）のデザインで作るためのリポジトリです。AI エージェントは、ネタのメモ・記事・リポジトリ・写真を受け取り、1つの `deck.md`（Marp 形式）を書きます。そこからオンラインのデッキ、記事、PDF ができます。
 
 ## 最初に読むもの
 
 - `design-system/project/README.md`：口調、デッキの構成、色と文字のルール。**スライドを書く前に必ず読みます。**
-- `design-system/project/components/<部品名>/README.md`：使う部品の説明とそのまま使える HTML。
-- `decks/sample_bbq/index.html`：完成形の見本。
+- `design-system/project/marp.md`：`deck.md` の書き方。
+- `decks/sample_bbq/deck.md`：見本。
+- `design-system/project/components/<部品名>/README.md`：Markdown で書けない図などの HTML。
 
 ## フォルダ構成
 
 | パス | 内容 |
 | --- | --- |
 | `inbox/` | 発表者が画像やメモを入れるフォルダ。Git には入らない |
-| `decks/<YYYYMMDD>_<短い英語名>/` | スライド置き場。`index.html`、`deck.json`、`images/`、`images.md`、`notes/`、書き出した PDF |
+| `decks/<YYYYMMDD>_<短い英語名>/` | スライド置き場。`deck.md`、`images/`、`images.md`、`notes/`、書き出した PDF とサムネイル。PDF から取り込んだデッキだけは `index.html` と `deck.json` |
+| `design-system/marp/theme.src.css` | Markdown の要素と見た目の対応。`iotlt.css` はここから生成されるので手で編集しない |
+| `scripts/build-deck.mjs` | `deck.md` から確認用の `deck.html` を作る |
 | `design-system/project/tokens.json` | 色・文字・余白の唯一の定義元 |
 | `design-system/project/components/bundle.css` | 部品の配置 |
 | `design-system/project/components/bundle.js` | ページ送りなどの実行コード |
@@ -42,17 +45,17 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
    - つまずいた点、面白かった点
    - 自己紹介の最後の1行に入れる最近のネタ
 3. **構成を決める。** 取り込んだ画像の内容も踏まえ、1枚1行で見出しを書き出します。5分なら15〜25枚が目安で、1枚に1つの話だけを載せます。見出しは項目名ではなく文にします。
-4. **デッキを書く。** `index.html` の `<main class="lt-deck">` の中に `<section class="lt-slide">` を並べ、`deck.json` の `event` にイベント名を、`eventUrl` に connpass などのイベントページの URL を入れます。URL が渡されたらそのページを開き、イベント名と日付を確かめます。
-5. **画像を入れる。** `<img class="lt-media" src="images/xxx.jpg">` で入れます。話に合わない画像は無理に使いません。足りないものは `lt-slot` にして、何を用意するかを書きます。
-6. **書き出して確認する。** 下のコマンドで PDF を作り、全ページを見て、文字のはみ出し、タイトルの折り返し、画像との重なりを直します。ブラウザで `index.html?overview` を開くと全スライドを一覧できます。
+4. **デッキを書く。** `deck.md` にスライドを書きます。先頭の `event` にイベント名を、`eventUrl` に connpass などのイベントページの URL を入れます。URL が渡されたらそのページを開き、イベント名と日付を確かめます。記事として読めるように、話す内容を発表者ノート（`<!-- -->`）に書きます。ノートも材料にある事実だけを書きます。
+5. **画像を入れる。** `![](images/xxx.jpg)` で入れます。話に合わない画像は無理に使いません。足りないものは `lt-slot` にして、何を用意するかを書きます。
+6. **書き出して確認する。** 下のコマンドで PDF を作り、全ページを見て、文字のはみ出し、タイトルの折り返し、画像との重なりを直します。ブラウザで `deck.html?overview` を開くと全スライドを一覧できます。
 7. **報告する。** デッキと PDF のパス、使わなかった画像、残っている `lt-slot`、「【要確認】」の一覧を伝えます。
 
 ## 公開する
 
-発表者が公開を頼んだデッキだけを公開します。`deck.json` は最初 `"published": false` で、`false` のデッキはサイトに出ません。
+発表者が公開を頼んだデッキだけを公開します。`deck.md` の先頭は最初 `published: false` で、`false` のデッキはサイトに出ません。
 
 1. 公開の前に、顔が写っている人、画面に映った個人情報や API キー、引用の許可を確認するよう発表者に伝えます。
-2. `deck.json` を `"published": true` にします。
+2. `deck.md` の先頭を `published: true` にします（PDF から取り込んだデッキは `deck.json` の `"published": true`）。
 3. PDF を書き出してサイトを組み立てます。`lt-slot` か「【要確認】」が残っている、PDF がない、画像が見つからない場合はエラーで止まります。
 
    ```bash
@@ -77,7 +80,7 @@ PDF とサムネイルは Yu Gothic で出力するため手元で作ってコ�
 | URL | 内容 |
 | --- | --- |
 | `https://n0bisuke.github.io/lt/` | スライド一覧 |
-| `https://n0bisuke.github.io/lt/<デッキ名>/` | 個別ページ（プレイヤー、PDF のダウンロード） |
+| `https://n0bisuke.github.io/lt/<デッキ名>/` | 個別ページ（プレイヤー、PDF のダウンロード、記事） |
 | `https://n0bisuke.github.io/lt/<デッキ名>/slides/` | スライド本体 |
 | `https://n0bisuke.github.io/lt/<デッキ名>/<デッキ名>.pdf` | PDF |
 | `https://n0bisuke.github.io/lt/all.json` | 一覧の API |
@@ -110,11 +113,19 @@ scripts/export-pdf.sh decks/<デッキ名>
 node scripts/build-tokens.mjs
 ```
 
-`tokens.json` を変えたあと、PDF を書き出さずに `tokens.css` だけを更新するときに使います。リポジトリを取得した直後で `tokens.css` がないときも、ブラウザで開く前に実行します。
+`tokens.json` か `bundle.css` か `marp/theme.src.css` を変えたあとに実行し、`tokens.css` と Marp のテーマ（`iotlt.css`）を更新します。`iotlt.css` はコミットします。リポジトリを取得した直後は `npm ci` も実行します。
 
-ブラウザでの発表は、← → でページ送り、`f` で全画面です。
+```bash
+node scripts/build-deck.mjs decks/<デッキ名>
+```
 
-## 部品の選び方
+`deck.md` から `deck.html` を作ります。ブラウザでの発表は、この `deck.html` を開いて ← → でページ送り、`f` で全画面です。
+
+VS Code では Marp for VS Code 拡張を入れると、`deck.md` のプレビューで確認しながら直せます。テーマの設定は `.vscode/settings.json` に入っています。
+
+## HTML の部品の選び方
+
+Markdown で書けないときだけ使います。
 
 | 使う場面 | 部品 |
 | --- | --- |
@@ -139,12 +150,12 @@ node scripts/build-tokens.mjs
 - **画像を作らない。** 製品ロゴや写真を描き起こしたり、それらしい画像で埋めたりしません。生成画像は発表者が頼んだときだけ使います。
 - **言葉を整えすぎない。** 発表者の短い話し言葉をそのまま使います。
 - **クレジットを書く。** 他の人が撮った写真には撮影者を、引用には出典を書きます。
-- **CSS を足さない。** デッキには部品のクラスだけを使います。`style` で指定するのは `lt-slot` と `Collage` の位置・大きさだけです。部品にない表現が必要なら発表者に相談します。
+- **CSS を足さない。** デッキには Markdown と部品のクラスだけを使います。`style` で指定するのは `lt-slot` と `Collage` の位置・大きさだけです。部品にない表現が必要なら発表者に相談します。
 - **パスを直す。** 部品の README にあるアバターのパスは、デッキからは `../../design-system/project/assets/Logos/nobisuke-avatar.jpg` です。
 
 ## スライド一覧の API
 
-他のサイトがスライド一覧を取得できるように、`build-site.mjs` が公開中のデッキを新しい順に並べた `all.json` をサイト直下に出力します。記事などをまとめる別リポジトリは、これをビルド時に取得する想定です。このリポジトリには記事を置かず、LT スライド専用にします。
+他のサイトがスライド一覧を取得できるように、`build-site.mjs` が公開中のデッキを新しい順に並べた `all.json` をサイト直下に出力します。記事などをまとめる別リポジトリは、これをビルド時に取得する想定です。記事はスライドの `deck.md` から作るものだけを扱い、スライドと関係のない記事はこのリポジトリに置きません。
 
 ```json
 {

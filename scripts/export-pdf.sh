@@ -12,6 +12,15 @@ fi
 
 node "$ROOT/scripts/build-tokens.mjs" >/dev/null
 
+# Markdown のデッキは deck.html を作ってから書き出す
+PAGE="index.html"
+SOURCE="index.html"
+if [ -f "$DECK_DIR/deck.md" ]; then
+  node "$ROOT/scripts/build-deck.mjs" "$DECK_DIR" >/dev/null
+  PAGE="deck.html"
+  SOURCE="deck.md"
+fi
+
 BROWSER=""
 for c in \
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
@@ -24,9 +33,9 @@ done
 PROFILE="$(mktemp -d)"
 trap 'rm -rf "$PROFILE"' EXIT
 "$BROWSER" --headless=new --disable-gpu --user-data-dir="$PROFILE" --no-pdf-header-footer \
-  --virtual-time-budget=4000 --print-to-pdf="$DECK_DIR/$NAME.pdf" "file://$DECK_DIR/index.html" 2>/dev/null
+  --virtual-time-budget=4000 --print-to-pdf="$DECK_DIR/$NAME.pdf" "file://$DECK_DIR/$PAGE" 2>/dev/null
 "$BROWSER" --headless=new --disable-gpu --user-data-dir="$PROFILE" --hide-scrollbars --window-size=1280,720 \
-  --virtual-time-budget=4000 --screenshot="$DECK_DIR/thumbnail.png" "file://$DECK_DIR/index.html#1" 2>/dev/null
+  --virtual-time-budget=4000 --screenshot="$DECK_DIR/thumbnail.png" "file://$DECK_DIR/$PAGE#1" 2>/dev/null
 echo "$DECK_DIR/$NAME.pdf"
 echo "$DECK_DIR/thumbnail.png"
-grep -c 'lt-slot' "$DECK_DIR/index.html" | xargs -I{} echo "未差し替えの lt-slot: {} 個"
+echo "未差し替えの lt-slot: $(grep -c 'lt-slot' "$DECK_DIR/$SOURCE" || true) 個"

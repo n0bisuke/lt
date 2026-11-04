@@ -124,27 +124,55 @@ const used = join(INBOX, '_used', name);
 mkdirSync(images, { recursive: true });
 
 const tag = name.slice(0, 8);
-if (!existsSync(join(deck, 'deck.json'))) {
-  writeFileSync(join(deck, 'deck.json'), JSON.stringify({ title: title || name, date: `${tag.slice(0, 4)}-${tag.slice(4, 6)}-${tag.slice(6, 8)}`, event: '#IoTLT', eventUrl: '', published: false }, null, 2) + '\n');
-}
-if (!existsSync(join(deck, 'index.html'))) {
-  writeFileSync(join(deck, 'index.html'), `<!doctype html>
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${title || name}</title>
-<link rel="stylesheet" href="../../design-system/tokens.css">
-<link rel="stylesheet" href="../../design-system/project/components/bundle.css">
-<script src="../../design-system/project/components/bundle.js"></script>
-</head>
-<body>
-<main class="lt-deck">
-  <!-- ここにスライド -->
-</main>
-<script>IoTLT.Deck.mount();</script>
-</body>
-</html>
+const dateIso = `${tag.slice(0, 4)}-${tag.slice(4, 6)}-${tag.slice(6, 8)}`;
+const AVATAR = '../../design-system/project/assets/Logos/nobisuke-avatar.jpg';
+if (!existsSync(join(deck, 'deck.md')) && !existsSync(join(deck, 'index.html'))) {
+  writeFileSync(join(deck, 'deck.md'), `---
+marp: true
+theme: iotlt
+title: ${title || name}
+date: ${dateIso}
+event: "#IoTLT"
+eventUrl: ""
+published: false
+---
+
+<!-- _class: title -->
+
+# ${title || name}
+
+<div class="lt-author">
+  <img class="lt-avatar" src="${AVATAR}" alt="">
+  <p class="lt-caption">菅原のびすけ</p>
+  <p class="lt-caption">@n0bisuke</p>
+</div>
+<p class="lt-tagline lt-tag">${tag} #IoTLT</p>
+
+---
+
+<!-- _class: profile -->
+
+<div class="lt-profile-head">
+  <p class="lt-name">菅原 のびすけ</p>
+  <p class="lt-label">nobisuke sugawara</p>
+</div>
+<img class="lt-avatar lt-profile-avatar" src="${AVATAR}" alt="">
+<div class="lt-profile-body lt-body">
+  <p class="lt-strong">・プロトタイピング専門スクール「プロトアウトスタジオ」</p>
+  <p><b>- デジタルハリウッド大学大学院 プロダクトプロトタイピング</b></p>
+  <div class="lt-profile-gap"></div>
+  <p><b>・個人活動</b></p>
+  <p><b>- <span class="lt-strong">IoTLT</span>（国内最大のIoTコミュニティ）主催</b></p>
+  <p><b>- Developers Summit 2025 ベストスピーカー1位</b></p>
+  <p><b>- LINE API Expert / Microsoft MVP / IBM Champion</b></p>
+  <p class="lt-strong">- 【要確認】最近のネタ</p>
+</div>
+
+---
+
+# まとめ
+
+- 【要確認】
 `);
 }
 

@@ -1,6 +1,8 @@
-IoTLT などのライトニングトーク用スライドを、AI が HTML で組み立てるためのルール集です。1920×1080 の白地に、グレーのゴシックと実物の写真・スクショだけで構成します。飾りは足しません。
+IoTLT などのライトニングトーク用スライドを、AI が組み立てるためのルール集です。1920×1080 の白地に、グレーのゴシックと実物の写真・スクショだけで構成します。飾りは足しません。
 
 ## スライドの作り方
+
+新しいスライドは `deck.md` に Markdown で書きます。書き方は「Markdown で書く」の章にあります。Markdown で書けない図や重ねた画像にだけ、下の HTML の部品を使います。
 
 1. `tokens.css`、`components/bundle.css`、`components/bundle.js` を読み込み、`<main class="lt-deck">` の中に `<section class="lt-slide">` を並べ、最後に `IoTLT.Deck.mount()` を呼びます。
 2. 1枚ごとに下のコンポーネントを1つ選び、その README の HTML をそのまま使います。CSS は新しく書きません。

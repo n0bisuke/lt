@@ -13,11 +13,11 @@ IoTLT などの LT スライドを AI で作るための一式です。
 
 Claude Code では `/lt-slides` と打つだけで動きます。途中で質問せず下書きまで作り、分からないところは「【要確認】」としてデッキに残して、最後にまとめて聞きます。
 
-`decks/<日付>_<名前>/index.html` と PDF ができます。素材は `images/` と `notes/` に振り分けられ、元のファイルは `inbox/_used/` に残ります。点線の `lt-slot` が残っていたら、実物の写真に差し替えれば完成です。
+`decks/<日付>_<名前>/deck.md` ができます。この1つのファイルから、オンラインのデッキ、記事、PDF が作られます。素材は `images/` と `notes/` に振り分けられ、元のファイルは `inbox/_used/` に残ります。点線の `lt-slot` が残っていたら、実物の写真に差し替えれば完成です。
 
 ## 公開
 
-「このスライドを公開して」と頼むと、そのデッキの HTML と PDF が GitHub Pages に載ります。`deck.json` の `published` が `true` のデッキだけが公開対象です。手順は `AGENTS.md` の「公開する」にあります。
+「このスライドを公開して」と頼むと、そのデッキ、記事、PDF が GitHub Pages に載ります。`deck.md` の先頭が `published: true` のデッキだけが公開対象です。手順は `AGENTS.md` の「公開する」にあります。
 
 公開先は次のとおりです。
 
@@ -31,13 +31,25 @@ Claude Code では `/lt-slides` と打つだけで動きます。途中で質問
 node scripts/build-site.mjs
 ```
 
+## VS Code で直す
+
+最初に依存パッケージを入れます。
+
+```bash
+npm ci
+```
+
+VS Code で Marp for VS Code 拡張（`marp-team.marp-vscode`）を入れ、`deck.md` を開いてプレビューを表示します。テーマの設定は `.vscode/settings.json` に入っているので、このフォルダを開くだけで使えます。書き方は `design-system/project/marp.md` にあります。
+
 ## 発表と書き出し
 
-ブラウザで `index.html` を開きます。← → でページ送り、`f` で全画面です。`index.html?overview` で全スライドを一覧できます。
+PDF、サムネイル、確認用の `deck.html` を作ります。
 
 ```bash
 scripts/export-pdf.sh decks/sample_bbq
 ```
+
+ブラウザで `deck.html` を開きます。← → でページ送り、`f` で全画面です。`deck.html?overview` で全スライドを一覧できます。
 
 ## フォルダ
 
