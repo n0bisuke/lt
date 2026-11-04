@@ -1,0 +1,109 @@
+/* IoTLT LT Slides — generated from tokens.json */
+:root {
+  --paper: #ffffff;
+  --ink: #5e5e5e;
+  --ink-strong: #000000;
+  --ink-soft: #929292;
+  --accent-red: #b51700;
+  --mark-red: #ee220c;
+  --code-bg: #000000;
+  --code-fg: #ffffff;
+  --term-bg: #1d2020;
+  --term-cyan: #3bbfbf;
+  --term-pink: #ff8095;
+  --logo-teal: #00e2e1;
+  --rule-soft: #d9d9d9;
+  --chip: #e4e4e4;
+  --shadow-avatar: 0 3px 6px rgba(0, 0, 0, 0.45);
+  --edge: 20px;
+  --gutter: 80px;
+  --title-top: 56px;
+  --stage-top: 190px;
+  --indent-step: 48px;
+  --dash-hang: 57px;
+  --line-gap: 66px;
+  --radius-none: 0;
+  --radius-chip: 10px;
+  --radius-avatar: 50%;
+  --stroke-rule: 2px;
+  --stroke-mark: 8px;
+  --font-sans: YuGothic, "Yu Gothic", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  --font-mono: Menlo, Consolas, "Noto Sans Mono", monospace;
+}
+.lt-name {
+  font-family: var(--font-sans);
+  font-size: 98px;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.lt-cover-title {
+  font-family: var(--font-sans);
+  font-size: 57px;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.lt-title {
+  font-family: var(--font-sans);
+  font-size: 54px;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.lt-title-sm {
+  font-family: var(--font-sans);
+  font-size: 47px;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.lt-body {
+  font-family: var(--font-sans);
+  font-size: 47px;
+  line-height: 1.3;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.lt-body-sm {
+  font-family: var(--font-sans);
+  font-size: 40px;
+  line-height: 1.3;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.lt-tag {
+  font-family: var(--font-sans);
+  font-size: 36px;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.lt-caption {
+  font-family: var(--font-sans);
+  font-size: 33px;
+  line-height: 1.3;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.lt-label {
+  font-family: var(--font-sans);
+  font-size: 24px;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.lt-code {
+  font-family: var(--font-mono);
+  font-size: 31px;
+  line-height: 1.3;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.lt-code-sm {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  line-height: 1.3;
+  font-weight: 400;
+  letter-spacing: 0;
+}

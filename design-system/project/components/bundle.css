@@ -1,0 +1,344 @@
+/* IoTLT LT Slides. 色・文字サイズ・余白の値は tokens.json が唯一の定義元。ここでは配置だけを書く。 */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700&family=Noto+Sans+Mono&display=swap");
+
+/* ---------- Slide ---------- */
+.lt-slide {
+  position: relative;
+  box-sizing: border-box;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+.lt-slide *, .lt-slide *::before, .lt-slide *::after { box-sizing: border-box; }
+.lt-slide h1, .lt-slide h2, .lt-slide p, .lt-slide ul, .lt-slide pre { margin: 0; padding: 0; }
+.lt-slide img { display: block; }
+.lt-slide a { color: inherit; }
+
+.lt-slide > .lt-title,
+.lt-slide > .lt-title-sm {
+  position: absolute;
+  top: var(--title-top);
+  left: var(--gutter);
+  right: var(--gutter);
+  text-align: center;
+}
+.lt-stage {
+  position: absolute;
+  top: var(--stage-top);
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: var(--gutter);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+.lt-foot {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: 56px;
+  text-align: center;
+}
+.lt-stage:has(+ .lt-foot) { bottom: 170px; }
+
+/* ---------- Inline ---------- */
+.lt-slide b { font-weight: 700; }
+.lt-strong { color: var(--ink-strong); font-weight: 700; }
+.lt-red { color: var(--accent-red); font-weight: 700; text-decoration: underline; text-underline-offset: 0.12em; }
+.lt-u { text-decoration: underline; text-underline-offset: 0.16em; text-decoration-thickness: 3px; }
+.lt-url { color: var(--ink-strong); overflow-wrap: anywhere; }
+.lt-mark { outline: var(--stroke-mark) solid var(--mark-red); }
+.lt-markline { border-bottom: var(--stroke-mark) solid var(--mark-red); }
+
+/* ---------- Slot: 画像の差し込み待ち ---------- */
+.lt-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  width: 720px;
+  height: 480px;
+  border: var(--stroke-rule) dashed var(--ink-soft);
+  border-radius: var(--radius-none);
+  background: var(--paper);
+  color: var(--ink);
+  text-align: center;
+}
+.lt-media { max-width: 100%; max-height: 100%; object-fit: contain; }
+/* 小さい画像も本文領域いっぱいまで拡大する */
+.lt-stage > .lt-media { flex: 1 1 0; width: 100%; min-height: 0; }
+
+/* ---------- TitleSlide ---------- */
+.lt-cover-body {
+  position: absolute;
+  top: 110px;
+  left: 240px;
+  right: 240px;
+  bottom: 210px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  text-align: center;
+}
+.lt-cover-body .lt-sub { font-weight: 500; }
+.lt-cover-body .lt-slot, .lt-cover-body .lt-media { width: 800px; height: 536px; flex: 0 1 auto; min-height: 0; }
+.lt-author {
+  position: absolute;
+  left: var(--edge);
+  bottom: var(--edge);
+  width: 200px;
+  text-align: center;
+}
+.lt-avatar {
+  width: 116px;
+  height: 116px;
+  border-radius: var(--radius-avatar);
+  box-shadow: var(--shadow-avatar);
+  object-fit: cover;
+}
+.lt-author .lt-avatar { margin: 0 auto 4px; }
+.lt-author .lt-caption { white-space: nowrap; }
+.lt-tagline {
+  position: absolute;
+  right: var(--edge);
+  bottom: var(--edge);
+  max-width: 1300px;
+  text-align: right;
+}
+
+/* ---------- Profile ---------- */
+.lt-profile-head { position: absolute; top: 120px; left: 280px; }
+.lt-profile-head .lt-name { color: var(--ink-strong); }
+.lt-profile-head .lt-label { text-align: center; }
+.lt-profile-avatar { position: absolute; top: 136px; right: 170px; width: 267px; height: 267px; }
+.lt-profile-body { position: absolute; top: 350px; left: 220px; right: 420px; }
+.lt-profile-body p + p { margin-top: 0; }
+.lt-profile-gap { height: 60px; }
+.lt-profile-photos {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 410px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.lt-profile-photos .lt-slot { width: 100%; height: 232px; }
+
+/* ---------- Statement / Stack / Lines ---------- */
+.lt-statement {
+  position: absolute;
+  inset: 0 var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.lt-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--line-gap);
+  text-align: center;
+}
+.lt-lines {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+  text-align: left;
+}
+
+/* ---------- Bullets ---------- */
+.lt-bullets { list-style: none; }
+.lt-bullets ul { list-style: none; margin-left: calc(var(--indent-step) - var(--dash-hang)) !important; }
+.lt-bullets li { position: relative; padding-left: var(--dash-hang); }
+.lt-bullets li::before { content: "-"; position: absolute; left: 0; font-weight: 500; }
+.lt-bullets li.lt-red { text-decoration: none; }
+.lt-bullets li.lt-red > span { text-decoration: underline; text-underline-offset: 0.12em; }
+
+/* ---------- MediaSplit ---------- */
+.lt-split {
+  position: absolute;
+  top: var(--stage-top);
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: var(--gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 56px;
+  align-items: center;
+}
+.lt-foot ~ .lt-split, .lt-split:has(+ .lt-foot) { bottom: 170px; }
+.lt-split > .lt-slot, .lt-split > .lt-media { width: 100%; height: 100%; }
+
+/* ---------- FullPhoto ---------- */
+.lt-full, .lt-slide > .lt-slot.lt-full { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Collage ---------- */
+.lt-collage { position: absolute; top: var(--stage-top); left: var(--gutter); right: var(--gutter); bottom: 110px; }
+.lt-collage > * { position: absolute; }
+.lt-collage > .lt-slot { background: var(--paper); }
+
+/* ---------- CodeBlock ---------- */
+.lt-codeblock {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: var(--radius-none);
+  padding: 10px 14px;
+  max-width: 100%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+.lt-codeblock--term { background: var(--term-bg); }
+.lt-codeblock .t-cyan { color: var(--term-cyan); }
+.lt-codeblock .t-pink { color: var(--term-pink); }
+
+/* ---------- CodePair ---------- */
+.lt-pair {
+  position: absolute;
+  top: var(--stage-top);
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+}
+.lt-pair-col { display: flex; flex-direction: column; align-items: center; gap: 16px; min-width: 0; }
+
+/* ---------- Flow ---------- */
+.lt-flow { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.lt-flow-note { display: block; padding-left: 28px; color: var(--ink); }
+.lt-flow-note::before { content: "↓ "; }
+
+/* ---------- Diagram ---------- */
+.lt-diagram {
+  position: absolute;
+  top: var(--stage-top);
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+.lt-node { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.lt-arrow {
+  position: relative;
+  flex: 1 1 200px;
+  max-width: 460px;
+  min-width: 160px;
+  height: 90px;
+  text-align: center;
+}
+.lt-arrow::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 8px;
+  top: 69px;
+  border-top: var(--stroke-rule) solid var(--ink-strong);
+}
+.lt-arrow::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 65px;
+  border-left: 10px solid var(--ink-strong);
+  border-top: 5px solid var(--paper);
+  border-bottom: 5px solid var(--paper);
+}
+.lt-arrow--both { }
+.lt-arrow--both > .lt-arrow-tail {
+  position: absolute;
+  left: 0;
+  top: 65px;
+  border-right: 10px solid var(--ink-strong);
+  border-top: 5px solid var(--paper);
+  border-bottom: 5px solid var(--paper);
+}
+.lt-box {
+  position: relative;
+  border: var(--stroke-rule) solid var(--ink-strong);
+  border-radius: var(--radius-none);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.lt-cloud {
+  width: 620px;
+  height: 407px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 90px 90px 40px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 420'%3E%3Cpath d='M150 390H505a110 110 0 0 0 24-217 104 104 0 0 0-132-68 142 142 0 0 0-250 72 108 108 0 0 0 3 213Z' fill='none' stroke='%23000' stroke-width='8' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ---------- DataTable ---------- */
+.lt-table { border-collapse: collapse; width: 100%; max-width: 1560px; text-align: left; }
+.lt-table th { font-weight: 700; padding: 20px 24px 20px 0; border-bottom: var(--stroke-rule) solid var(--ink-soft); }
+.lt-table td { padding: 24px 24px 24px 0; border-bottom: 1px solid var(--rule-soft); }
+.lt-table tr:last-child td { border-bottom: 0; }
+.lt-chip {
+  display: inline-block;
+  padding: 0 14px;
+  border-radius: var(--radius-chip);
+  background: var(--chip);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+
+/* ---------- Deck runtime (IoTLT.Deck) ---------- */
+html.lt-deck-root, html.lt-deck-root body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+.lt-deck--mounted .lt-slide { display: none; position: fixed; left: 50%; top: 50%; transform-origin: center; }
+.lt-deck--mounted .lt-slide.is-active { display: block; }
+html.lt-deck-overview, html.lt-deck-overview body { overflow: auto; height: auto; background: #777; }
+.lt-deck--overview { display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; }
+.lt-deck--overview .lt-slide-wrap { width: 480px; height: 270px; overflow: hidden; position: relative; }
+.lt-deck--overview .lt-slide { display: block; position: absolute; left: 0; top: 0; transform: scale(0.25); transform-origin: 0 0; }
+
+/* Marp が出力するスライド */
+.lt-deck--mounted svg[data-marpit-svg] { display: none !important; position: fixed; inset: 0; width: 100vw; height: 100vh; }
+.lt-deck--mounted svg[data-marpit-svg].is-active { display: block !important; }
+.lt-deck--overview svg[data-marpit-svg] { display: block !important; width: 480px; height: 270px; background: #fff; }
+
+@page { size: 1920px 1080px; margin: 0; }
+@media print {
+  html, body, html.lt-deck-root, html.lt-deck-root body { background: #fff; overflow: visible; height: auto; }
+  /* Chrome の PDF は影付きの丸抜き画像の四隅を塗りつぶすため、印刷時だけ影を外す */
+  .lt-avatar { box-shadow: none !important; }
+  .lt-deck--mounted .lt-slide, .lt-slide {
+    display: block !important;
+    position: relative !important;
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    break-after: page;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .lt-deck--mounted svg[data-marpit-svg], svg[data-marpit-svg] {
+    display: block !important;
+    position: relative !important;
+    inset: auto !important;
+    width: 1920px !important;
+    height: 1080px !important;
+    break-after: page;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}

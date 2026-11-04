@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "decks": [
+    {
+      "id": "20260920_jev-microsleep",
+      "title": "Jevでマイクロスリープ判定",
+      "date": "2026-09-20",
+      "event": "IoTLT @JLCPCB オープンハードカンファレンス",
+      "eventUrl": "https://iotlt.connpass.com/event/402832/",
+      "slideCount": 18,
+      "url": "https://n0bisuke.github.io/lt/20260920_jev-microsleep/",
+      "slides": "https://n0bisuke.github.io/lt/20260920_jev-microsleep/slides/",
+      "pdf": "https://n0bisuke.github.io/lt/20260920_jev-microsleep/20260920_jev-microsleep.pdf",
+      "thumbnail": "https://n0bisuke.github.io/lt/20260920_jev-microsleep/thumbnail.png"
+    }
+  ]
+}
