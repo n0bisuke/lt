@@ -67,13 +67,13 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
    ```
 
    `--move-unused` は、スライドで使っていない画像を `unused/` に移します。`unused/` と `notes/` はコミットされません。
-4. **そのデッキだけ**をコミットして push します。
+4. コミットして push します。
 
    ```bash
-   git add decks/<デッキ名>
+   npm run deploy -- "コミットメッセージ"
    ```
 
-   公開リポジトリでは、コミットした内容はすべて誰でも読めます。下書きのデッキをコミットしないよう、`git add .` や `git add decks` は使いません。
+   サイトを組み立て直してエラーがなければ、`git add`、`commit`、`push` まで行います。`decks/` は `published: true` のデッキだけを add します。公開リポジトリでは、コミットした内容はすべて誰でも読めるので、`git add .` や `git add decks` を直接使いません。`npm run deploy -- --dry-run` で、コミットされるファイルを先に確認できます。
 
 PDF とサムネイルは Yu Gothic で出力するため手元で作ってコミットします。GitHub Actions はこれらを作らず、コミット済みのファイルをそのまま公開します。
 

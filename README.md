@@ -25,6 +25,12 @@ Claude Code では `/lt-slides` と打つだけで動きます。途中で質問
 - 個別ページ：`https://n0bisuke.github.io/lt/<デッキ名>/`
 - API：`https://n0bisuke.github.io/lt/all.json`
 
+自分で公開するときは、次のコマンドで `git add`、`commit`、`push` までまとめて行えます。下書きのデッキは入りません。
+
+```bash
+npm run deploy -- "コミットメッセージ"
+```
+
 手元でサイトを確認するときは、次のコマンドで `dist/` を作って中身を開きます。
 
 ```bash
