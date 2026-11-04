@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jevでマイクロスリープ判定</title>
+<link rel="stylesheet" href="../../design-system/tokens.css">
+<link rel="stylesheet" href="../../design-system/project/components/bundle.css">
+<script src="../../design-system/project/components/bundle.js"></script>
+</head>
+<body>
+<main class="lt-deck">
+<section class="lt-slide"><img class="lt-full" src="images/p01.png" alt="#IoTLT 菅原のびすけ @n0bisuke Jevでマイクロスリープ判定 （ショートスリーパー）"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p02.png" alt="菅原 のびすけ - IoTLT （国内最大のIoTコミュニティ）主催 - この夏はみこしを3回担いでます"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p03.png" alt="最近話題のスマート分類機 Jev 話さないLLM? 爆速、安い、そこそこかしこ"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p04.png" alt="引用元: AGIラボさん https://agi-labo.com/articles/n746a127b4074"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p05.png" alt="Jevの使い所（所感） - 判断をさせたいけどifだと難しい - 生成AIに任せるとスピードが遅いしコストも高い IoT文脈でもそんなリッチなのいらないから分類だけやらせたいって話はあった"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p06.png" alt="Jevマイクロスリープ判定器を作ってみた - ネタが分からない人向け - ショートスリーパー堀大輔 - 本人「1日30分睡眠で17年間元気です」 - 世の中「うそつくな」 - 本人「1日30分睡眠で1週間配信して寝なくても元気なこと証明します」 - =&gt; 配信中めちゃ寝ててネットのおもちゃに - 「寝てましたよね？」「いいえ、マイクロスリープです。」"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p07.png" alt="Jevマイクロスリープ判定器を作ってみた - ネタが分からない人向け - ショートスリーパー堀大輔 - 本人「1日30分睡眠で17年間元気です」 - 世の中「うそつくな」 - 本人「1日30分睡眠で1週間配信して寝なくても元気なこと証明します」 - =&gt; 配信中めちゃ寝ててネットのおもちゃに - 「寝てましたよね？」「いいえ、マイクロスリープです。」"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p08.png" alt="Jevマイクロスリープ判定器を作ってみた - ネタが分からない人向け - ショートスリーパー堀大輔"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p09.png" alt="Jevマイクロスリープ判定器を作ってみた カメラ ↓ ローカルで高速に特徴量抽出 目の閉眼時間・まばたき回数・顔検出品質 ↓ 5秒ごとにJSON化 Jev ↓ 通常／注意／寝ている（マイクロスリープ）／観測不足 ↓ 画面警告・ビープ・obniz LED"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p10.png" alt="（堀大輔クラスの ）マイクロスリープは判定が難しい If/else =&gt; 割とむずい LLM =&gt; 判定が遅い。マイクロスリープ判定が厳しい Jev =&gt; 判定が早い。スマート！"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p11.png" alt="const result = await env.AI.run(&quot;typesafe/jev&quot;, { state: { eyesClosedRatio: 0.72, // ← MediaPipeの目情報から計算 longestClosureSeconds: 3.8, // ← MediaPipe + JavaScriptで集計 currentClosureSeconds: 2.4, // ← JavaScriptで計測 blinkCount: 4, // ← MediaPipeの目情報から計算 trackingQuality: 0.93, // ← MediaPipeの検出品質 observationSeconds: 5, // ← JavaScript側の観測時間 }, questions: { isAsleep: { // ← Jevに質問 type: &quot;noul&quot;, instructions: &quot;Is this person likely asleep based on the eye-closing signals?&quot;, criteria: { true: &quot;The eyes stay closed for several seconds and blinking has stopped.&quot;, false: &quot;The eyes open normaly, or the evidence is insuﬃcient.&quot;, }, }, drowsinessLevel: { // ← Jevに質問 type: &quot;score&quot;, instructions: &quot;How drowsy is this person based only on the observed signals?&quot;, criteria: [ &quot;Awake&quot;, &quot;Getting drowsy&quot;, &quot;Very drowsy&quot;, &quot;Asleep&quot;, ], }, }, });"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p12.png" alt="state: { eyesClosedRatio: 0.72, longestClosureSeconds: 3.8, currentClosureSeconds: 2.4, blinkCount: 4, trackingQuality: 0.93, observationSeconds: 5, } Mediapipe 5秒間の観測中、 目を閉じていた割合が72%、 最長で3.8秒連続して目を閉じている。 検出品質は93%で、観測データは信頼できそう。"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p13.png" alt="isAsleep: { type: &quot;noul&quot;, criteria: { true: &quot;The eyes stay closed for several seconds and blinking has stopped.&quot;, false: &quot;The eyes open normaly, or the evidence is insuﬃcient.&quot;, }, } Jev側は質問と照らし合わせる { &quot;isAsleep&quot;: { &quot;noul&quot;: 0.91 }, &quot;drowsinessLevel&quot;: { &quot;score&quot;: 0.82 } } 判断結果"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p14.png" alt="Jevの3タイプ"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p15.png" alt="画像認識はローカルで高速に行い、Jevには 「この状態は眠気なのか、マイクロスリープなのか」 という解釈だけを任せる"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p16.png" alt="元々、生成AIの画像推論で授業の様子解析とかで使えそう雰囲気はあった =&gt; リアルタイムフィードバックのようなものはできそう"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p17.png" alt="過去に作ったYouTube広告スキッパー 画像入力ができる訳ではないのでパラメータ抽出はTeachable Machineでやりつつ、判 断はJevに任せるなどができそう"></section>
+<section class="lt-slide"><img class="lt-full" src="images/p18.png" alt="- Jevを使ってマイクロスリープ判定器作ってみた - Jev ifとLLMの間くらいに使える - IoTとか電子工作でLLMまでは要らないけど…ってい うシーン結構あると思うのでJev使える箇所多いのでは まとめ"></section>
+</main>
+<script>IoTLT.Deck.mount();</script>
+</body>
+</html>

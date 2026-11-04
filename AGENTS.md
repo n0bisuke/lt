@@ -27,6 +27,8 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 
 ## スライドの作り方
 
+発表者が `inbox/` に素材を入れて「スライドを作って」と頼んだら、次の手順で最後まで進めます。Claude Code の `/lt-slides` も同じ流れです。公開とコミットは頼まれるまでしません。
+
 1. **デッキを用意して取り込む。** 次のコマンドで `decks/<名前>/` を作ります。`inbox/` の画像は `images/` に、メモなどは `notes/` に入ります。あとから `inbox/` に足された分は、同じコマンドをもう一度実行すれば取り込めます。
 
    ```bash
@@ -34,13 +36,13 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
    ```
 
    番号は古いファイルから順に付き、一覧は `images.md` に出ます。HEIC は JPEG に変換し、長辺は2400pxまで縮め、JPEG と PNG の位置情報などのメタデータは消します。元のファイルは `inbox/_used/` に残ります。
-2. **材料を読む。** `images.md` の画像を実際に開いて中身を確認し、`notes/` と渡されたものもすべて読みます。足りなければ次の4点だけを聞きます。すでに分かっていることは聞きません。
+2. **材料を読む。** `images.md` の画像を実際に開いて中身を確認し、`notes/` と渡されたものもすべて読みます。途中で質問せず下書きまで作り、次の4点のうち分からないものは「【要確認】」としてデッキに残して、最後にまとめて聞きます。
    - イベント名と日付（`20260419 #IoTLT vol134 in 潮風公園BBQ` の形で使う）
    - 何を作った・試したか、結果はどうだったか
    - つまずいた点、面白かった点
    - 自己紹介の最後の1行に入れる最近のネタ
 3. **構成を決める。** 取り込んだ画像の内容も踏まえ、1枚1行で見出しを書き出します。5分なら15〜25枚が目安で、1枚に1つの話だけを載せます。見出しは項目名ではなく文にします。
-4. **デッキを書く。** `index.html` の `<main class="lt-deck">` の中に `<section class="lt-slide">` を並べ、`deck.json` の `event` を `#IoTLT vol134 in 潮風公園BBQ` のように直します。
+4. **デッキを書く。** `index.html` の `<main class="lt-deck">` の中に `<section class="lt-slide">` を並べ、`deck.json` の `event` にイベント名を、`eventUrl` に connpass などのイベントページの URL を入れます。URL が渡されたらそのページを開き、イベント名と日付を確かめます。
 5. **画像を入れる。** `<img class="lt-media" src="images/xxx.jpg">` で入れます。話に合わない画像は無理に使いません。足りないものは `lt-slot` にして、何を用意するかを書きます。
 6. **書き出して確認する。** 下のコマンドで PDF を作り、全ページを見て、文字のはみ出し、タイトルの折り返し、画像との重なりを直します。ブラウザで `index.html?overview` を開くと全スライドを一覧できます。
 7. **報告する。** デッキと PDF のパス、使わなかった画像、残っている `lt-slot`、「【要確認】」の一覧を伝えます。
@@ -81,6 +83,18 @@ PDF とサムネイルは Yu Gothic で出力するため手元で作ってコ�
 | `https://n0bisuke.github.io/lt/all.json` | 一覧の API |
 
 デッキ名がそのまま URL になるので、公開したあとは変えません。
+
+**発表済みの PDF を載せるとき：** Keynote などで作った PDF は次のコマンドで取り込みます。各ページが画像のスライドになり、PDF はそのまま公開されます。`deck.json` に `"source": "pdf"` が入り、`export-pdf.sh` では上書きされません。手順は上の1、2、3（`build-site.mjs` のみ）、4と同じです。macOS でのみ動きます。
+
+```bash
+node scripts/import-pdf.mjs <PDFのパス> <YYYYMMDD_英小文字の名前> --title "発表タイトル" --event "イベント名" --event-url "https://iotlt.connpass.com/event/000000/"
+```
+
+**取り込んだ PDF の一部を隠すとき：** 次のコマンドで、そのページの画像と PDF の両方にモザイクをかけます。座標は 1920×1080 基準で、`x,y,幅,高さ` を複数指定できます。すでに push したものは履歴に残るので、必ず push の前に行います。
+
+```bash
+swift scripts/mosaic-page.swift decks/<デッキ名> <ページ番号> 24 x,y,w,h
+```
 
 **動画の注意：** MP4、MOV、WebM、WebP の位置情報は消せません。`new-deck.mjs` が注意を出したファイルを公開するときは、発表者に確認します。
 
@@ -141,6 +155,7 @@ node scripts/build-tokens.mjs
       "title": "エッジAIで焼肉の焼き加減判定やってみた",
       "date": "2026-04-19",
       "event": "#IoTLT vol134 in 潮風公園BBQ",
+      "eventUrl": "https://iotlt.connpass.com/event/000000/",
       "slideCount": 24,
       "url": "https://n0bisuke.github.io/lt/20260419_bbq/",
       "slides": "https://n0bisuke.github.io/lt/20260419_bbq/slides/",

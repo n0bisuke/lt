@@ -125,7 +125,7 @@ mkdirSync(images, { recursive: true });
 
 const tag = name.slice(0, 8);
 if (!existsSync(join(deck, 'deck.json'))) {
-  writeFileSync(join(deck, 'deck.json'), JSON.stringify({ title: title || name, date: `${tag.slice(0, 4)}-${tag.slice(4, 6)}-${tag.slice(6, 8)}`, event: '#IoTLT', published: false }, null, 2) + '\n');
+  writeFileSync(join(deck, 'deck.json'), JSON.stringify({ title: title || name, date: `${tag.slice(0, 4)}-${tag.slice(4, 6)}-${tag.slice(6, 8)}`, event: '#IoTLT', eventUrl: '', published: false }, null, 2) + '\n');
 }
 if (!existsSync(join(deck, 'index.html'))) {
   writeFileSync(join(deck, 'index.html'), `<!doctype html>

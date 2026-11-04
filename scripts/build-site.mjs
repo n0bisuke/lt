@@ -45,6 +45,7 @@ for (const name of readdirSync(DECKS).sort().reverse()) {
   if (/class="[^"]*\blt-slot\b/.test(html)) errors.push(`${name}: 差し替えていない lt-slot が残っています`);
   if (html.includes('【要確認】')) errors.push(`${name}: 【要確認】が残っています`);
   if (!meta.title || !/^\d{4}-\d{2}-\d{2}$/.test(meta.date ?? '')) errors.push(`${name}: deck.json の title か date（YYYY-MM-DD）が正しくありません`);
+  if (meta.eventUrl && !/^https?:\/\//.test(meta.eventUrl)) errors.push(`${name}: deck.json の eventUrl は http(s) の URL にしてください`);
   if (!existsSync(thumbPath)) errors.push(`${name}: thumbnail.png がありません（scripts/export-pdf.sh decks/${name}）`);
   if (!existsSync(pdfPath)) {
     errors.push(`${name}: PDF がありません（scripts/export-pdf.sh decks/${name}）`);
@@ -219,7 +220,7 @@ ${headCommon('../')}
       </div>
     </div>
     <h1>${esc(d.title)}</h1>
-    <p class="meta">${esc(dateJa(d.date))}・${d.slideCount}枚${d.event ? `<br>${esc(d.event)}` : ''}</p>
+    <p class="meta">${esc(dateJa(d.date))}・${d.slideCount}枚${d.event ? `<br>発表イベント：${d.eventUrl ? `<a href="${esc(d.eventUrl)}">${esc(d.event)}</a>` : esc(d.event)}` : ''}</p>
   </article>
 </main>
 <script>
@@ -276,6 +277,7 @@ writeFileSync(join(DIST, 'all.json'), JSON.stringify({
       title: d.title,
       date: d.date,
       event: d.event ?? '',
+      eventUrl: d.eventUrl ?? '',
       slideCount: d.slideCount,
       url,
       slides: `${url}slides/`,

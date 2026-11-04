@@ -5,6 +5,11 @@ DECK_DIR="$(cd "$1" && pwd)"
 NAME="$(basename "$DECK_DIR")"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
+if grep -q '"source": "pdf"' "$DECK_DIR/deck.json" 2>/dev/null; then
+  echo "$NAME は PDF から取り込んだデッキです。元の PDF を上書きしないよう書き出しません" >&2
+  exit 1
+fi
+
 node "$ROOT/scripts/build-tokens.mjs" >/dev/null
 
 BROWSER=""
