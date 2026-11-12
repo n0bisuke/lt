@@ -5,7 +5,7 @@ theme: lecture
 
 <!-- _class: speaker-profile -->
 
-![logo](../../design-system/lecture/assets/Logos/protout-studio.png)
+![avatar](../../design-system/project/assets/Logos/nobisuke-avatar.jpg)
 
 # 菅原のびすけ
 
