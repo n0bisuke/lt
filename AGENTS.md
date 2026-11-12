@@ -40,7 +40,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 | `scripts/lecture/` | 講演テーマの検査（`npm run check`）とカードの展開（`npm run cards`） |
 | `.claude/skills/annotate-screenshot/` | [protoout/teachers-agent-skills](https://github.com/protoout/teachers-agent-skills) から入れた、スクショへの注釈付けと Gyazo へのアップロード（`scripts/upload-gyazo.mjs`）。トークンは `.env` の `GYAZO_ACCESS_TOKEN` で、値は読まず表示もしない。アップロードは1枚ずつ発表者に確認してから行う。初回は `npm ci --prefix .claude/skills/annotate-screenshot` |
 | `site.json` | 公開先の URL（`all.json` と個別ページの絶対 URL に使う） |
-| `scripts/fetch-external.mjs` | Speaker Deck と Qiita のスライド情報を `external.json` に保存する（`npm run fetch-external`、数分かかる）。`npm run deploy` では Speaker Deck だけを更新する |
+| `scripts/fetch-external.mjs` | Speaker Deck と Qiita のスライド情報を `external.json` に保存する（`npm run fetch-external`、数分かかる）。`npm run deploy` では Speaker Deck だけを更新する。SlideShare はボット対策で取得できないので、`external.json` に手で書いた分を残す |
 | `external.json` | 一覧に載せる外部スライド。リンク先は各サービスの個別ページで、サムネイルも各サービスの URL を使う |
 | `scripts/build-site.mjs` | 公開するデッキだけを `dist/` に集める |
 | `.github/workflows/pages.yml` | `main` への push で `dist/` を GitHub Pages に公開する |
@@ -206,7 +206,7 @@ Markdown で書けないときだけ使います。
 }
 ```
 
-各デッキには `kind`（`LT` か `講演`）も入ります。Speaker Deck と Qiita のスライドは、同じ `all.json` の `external` に `source`、`title`、`date`、`url`、`thumbnail` の形で入ります。
+各デッキには `kind`（`LT` か `講演`）も入ります。Speaker Deck、Qiita、SlideShare のスライドは、同じ `all.json` の `external` に `source`、`title`、`date`、`url`、`thumbnail` の形で入ります。
 
 項目の追加は `version` を変えずに行えます。項目の削除や意味の変更は、取得側が壊れるので `version` を上げます。
 

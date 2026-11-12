@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // Speaker Deck と Qiita スライドの公開情報を external.json に保存する。
+// SlideShare はスクリプトからの取得をボット対策で止められるので、external.json に手で書いた分をそのまま残す。
 // サイトの一覧はこのファイルから作るので、GitHub Actions は外部サイトにアクセスしない。
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -67,8 +68,10 @@ for (const user of SPEAKERDECK_USERS) decks.push(...await speakerDeck(user));
 // Qiita の API は1ページに1分近くかかるので、--speakerdeck-only では前回の内容を使う
 if (process.argv.includes('--speakerdeck-only')) decks.push(...previous.filter((d) => d.source === 'qiita'));
 else decks.push(...await qiitaSlides(known));
+// SlideShare は取得できないので前回の内容を使う
+decks.push(...previous.filter((d) => d.source === 'slideshare'));
 decks.sort((a, b) => b.date.localeCompare(a.date) || a.url.localeCompare(b.url));
 
 writeFileSync(OUT, JSON.stringify({ decks }, null, 2) + '\n');
 const count = (s) => decks.filter((d) => d.source === s).length;
-console.log(`external.json: Speaker Deck ${count('speakerdeck')} 本、Qiita ${count('qiita')} 本`);
+console.log(`external.json: Speaker Deck ${count('speakerdeck')} 本、Qiita ${count('qiita')} 本、SlideShare ${count('slideshare')} 本`);

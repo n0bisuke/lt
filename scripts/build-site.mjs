@@ -145,12 +145,24 @@ main { max-width: 1200px; margin: 0 auto; padding: 40px 16px 80px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px 24px; }
 .card { display: block; text-decoration: none; }
 .card[hidden] { display: none; }
+.search { display: block; margin-bottom: 16px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.search input { width: 100%; max-width: 480px; min-height: 44px; padding: 8px 12px; border: var(--stroke-rule) solid var(--ink-strong); border-radius: var(--radius-none); background: var(--paper); color: var(--ink); font: inherit; }
+.search input:focus-visible { outline: var(--stroke-rule) solid var(--ink-strong); outline-offset: 2px; }
+.no-match { padding: 24px 0; border-top: 1px solid var(--rule-soft); }
+.no-match[hidden] { display: none; }
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
 .filters .btn[aria-pressed="true"] { background: var(--ink-strong); color: var(--paper); }
 .card img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border: 1px solid var(--rule-soft); }
 .card h2 { margin: 12px 0 4px; font-size: 18px; font-weight: 700; line-height: 1.4; }
 .card:hover h2 { text-decoration: underline; }
 .card p { margin: 0; font-size: 14px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.tags:not(:has(.tag:not([hidden]))) { display: none; }
+.tags + h2 { margin-top: 6px; }
+.tag { padding: 0 8px; border-radius: var(--radius-chip); background: var(--chip); font-size: 13px; font-weight: 700; line-height: 1.7; }
+.tag[hidden] { display: none; }
+.tag-wip { background: var(--accent-red); color: var(--paper); }
 .empty { padding: 24px 0; border-top: 1px solid var(--rule-soft); }
 .site-foot { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--rule-soft); font-size: 14px; }
 
@@ -195,32 +207,64 @@ const avatarBlock = (root, heading) => `<a class="site-head" href="${root}">
 // ---------- 一覧 ----------
 const externalPath = join(ROOT, 'external.json');
 const external = existsSync(externalPath) ? JSON.parse(readFileSync(externalPath, 'utf8')).decks : [];
-const SOURCE_NAMES = { speakerdeck: 'Speaker Deck', qiita: 'Qiita' };
-const localCard = (d) => `    <a class="card" href="${encodeURIComponent(d.id)}/" data-kind="${esc(d.kind)}">
+const SOURCE_NAMES = { speakerdeck: 'Speaker Deck', qiita: 'Qiita', slideshare: 'SlideShare' };
+// IoTLT の発表はタイトル・イベント名・イベントページから見分ける
+const isIotlt = (d) => /iotlt/i.test([d.title, d.event, d.eventUrl].filter(Boolean).join(' '));
+// 発表日が未来なら WIP。ページを開いた日で一覧のスクリプトが付け外しするので、組み立て直さなくても日付が過ぎれば外れる
+const todayJst = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' });
+const cardAttrs = (d, kind) => `data-kind="${esc(kind)}" data-date="${esc(d.date)}"${isIotlt(d) ? ' data-iotlt' : ''}`;
+const tags = (d) => `      <div class="tags">${isIotlt(d) ? '<span class="tag">IoTLT</span>' : ''}<span class="tag tag-wip"${d.date > todayJst ? '' : ' hidden'}>WIP</span></div>`;
+const localCard = (d) => `    <a class="card" href="${encodeURIComponent(d.id)}/" ${cardAttrs(d, d.kind)}>
       <img src="${encodeURIComponent(d.id)}/thumbnail.png" width="1280" height="720" loading="lazy" alt="">
+${tags(d)}
       <h2>${esc(d.title)}</h2>
       <p>${esc(d.kind)}・${esc(dateJa(d.date))}・${d.slideCount}枚${d.event ? `<br>${esc(d.event)}` : ''}</p>
     </a>`;
-const externalCard = (d) => `    <a class="card" href="${esc(d.url)}" data-kind="external">
+const externalCard = (d) => `    <a class="card" href="${esc(d.url)}" ${cardAttrs(d, 'external')}>
       <img src="${esc(d.thumbnail)}" width="1280" height="720" loading="lazy" alt="">
+${tags(d)}
       <h2>${esc(d.title)}</h2>
       <p>${esc(dateJa(d.date))}・${esc(SOURCE_NAMES[d.source] ?? d.source)}</p>
     </a>`;
-// 絞り込み。外部のスライドは LT か講演かを区別できないので「すべて」と「外部」にだけ出す
-const FILTERS = [['all', 'すべて'], ['LT', 'LT'], ['講演', '講演'], ['external', 'Speaker Deck・Qiita']];
-const filterBar = `  <div class="filters" role="group" aria-label="種類で絞り込む">
+// 絞り込み。外部のスライドは LT か講演かを区別できないので「すべて」「IoTLT」「外部」にだけ出す
+const FILTERS = [['all', 'すべて'], ['LT', 'LT'], ['講演', '講演'], ['IoTLT', 'IoTLT'], ['external', 'Speaker Deck・Qiita・SlideShare']];
+const filterBar = `  <label class="search"><span class="visually-hidden">タイトルで検索</span><input type="search" id="q" placeholder="タイトルで検索（例：iot）" autocomplete="off"></label>
+  <div class="filters" role="group" aria-label="種類で絞り込む">
 ${FILTERS.map(([k, label], i) => `    <button class="btn" type="button" data-filter="${esc(k)}" aria-pressed="${i === 0}">${esc(label)}</button>`).join('\n')}
   </div>`;
 const filterScript = `<script>
 (function () {
   var buttons = document.querySelectorAll('[data-filter]');
   var cards = document.querySelectorAll('.card');
+  var input = document.getElementById('q');
+  var noMatch = document.getElementById('no-match');
+  var kind = 'all';
+  // 全角・半角と大文字・小文字を区別せずにタイトルの部分一致で探す
+  var norm = function (s) { return s.normalize('NFKC').toLowerCase(); };
+  cards.forEach(function (c) { c.dataset.title = norm(c.querySelector('h2').textContent); });
+  function apply() {
+    var q = norm(input.value.trim());
+    var shown = 0;
+    cards.forEach(function (c) {
+      var okKind = kind === 'all' || (kind === 'IoTLT' ? c.hasAttribute('data-iotlt') : c.getAttribute('data-kind') === kind);
+      c.hidden = !(okKind && (!q || c.dataset.title.indexOf(q) !== -1));
+      if (!c.hidden) shown++;
+    });
+    noMatch.hidden = shown > 0;
+  }
   buttons.forEach(function (b) {
     b.addEventListener('click', function () {
-      var k = b.getAttribute('data-filter');
+      kind = b.getAttribute('data-filter');
       buttons.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
-      cards.forEach(function (c) { c.hidden = k !== 'all' && c.getAttribute('data-kind') !== k; });
+      apply();
     });
+  });
+  input.addEventListener('input', apply);
+  apply();
+  var today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' });
+  cards.forEach(function (c) {
+    var wip = c.querySelector('.tag-wip');
+    if (wip) wip.hidden = !(c.getAttribute('data-date') > today);
   });
 })();
 </script>`;
@@ -242,7 +286,7 @@ ${headCommon('')}
 <body>
 <main>
   ${avatarBlock('./', '<h1>LT スライド</h1>')}
-${cards ? `${filterBar}\n  <div class="grid">\n${cards}\n  </div>` : '  <p class="empty">公開中のスライドはまだありません。</p>'}
+${cards ? `${filterBar}\n  <div class="grid">\n${cards}\n  </div>\n  <p class="no-match" id="no-match" hidden>一致するスライドはありません。</p>` : '  <p class="empty">公開中のスライドはまだありません。</p>'}
   <p class="site-foot"><a href="all.json">all.json</a></p>
 </main>
 ${cards ? filterScript : ''}

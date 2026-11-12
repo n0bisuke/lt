@@ -351,6 +351,13 @@
       "thumbnail": "https://files.speakerdeck.com/presentations/7cd9415e542640f0bb28b3c2dfc10187/preview_slide_0.jpg?22108429"
     },
     {
+      "source": "slideshare",
+      "title": "20220716_jsfes.pdf",
+      "date": "2022-07-19",
+      "url": "https://www.slideshare.net/slideshow/20220716jsfespdf/252233854",
+      "thumbnail": "https://cdn.slidesharecdn.com/ss_thumbnails/20220716jsfes-220719080357-9106945c-thumbnail.jpg?width=640&height=640&fit=bounds"
+    },
+    {
       "source": "speakerdeck",
       "title": "プロジェクト河豚🐡でWebの未来を感じてみよう #jsfes #projectfugu",
       "date": "2022-07-16",
@@ -1555,6 +1562,13 @@
       "thumbnail": "https://files.speakerdeck.com/presentations/ceaeb04d3f8547c78cfea22c30bd6bc1/preview_slide_0.jpg?4729925"
     },
     {
+      "source": "slideshare",
+      "title": "クリスマス企画を技術面から振り返り ( #ヒカラボ: 15分)",
+      "date": "2015-04-30",
+      "url": "https://www.slideshare.net/slideshow/15-47607375/47607375",
+      "thumbnail": "https://cdn.slidesharecdn.com/ss_thumbnails/sblig-150430080225-conversion-gate02-thumbnail.jpg?width=640&height=640&fit=bounds"
+    },
+    {
       "source": "speakerdeck",
       "title": "Chatwork + RaspberryPiで Juke Box (第2回 #iotlt : 5分)",
       "date": "2015-03-31",
@@ -1583,11 +1597,32 @@
       "thumbnail": "https://files.speakerdeck.com/presentations/c093d76aa2e04668b055046b3c73b872/preview_slide_0.jpg?4456488"
     },
     {
+      "source": "slideshare",
+      "title": "LIGのクリスマス企画の裏側の話(企画面)",
+      "date": "2015-02-21",
+      "url": "https://www.slideshare.net/slideshow/lig-44952888/44952888",
+      "thumbnail": "https://cdn.slidesharecdn.com/ss_thumbnails/christmas-150221010014-conversion-gate02-thumbnail.jpg?width=640&height=640&fit=bounds"
+    },
+    {
       "source": "speakerdeck",
       "title": "LIGのクリスマスを支えた技術(html5minutes:5分)",
       "date": "2015-01-15",
       "url": "https://speakerdeck.com/n0bisuke/ligfalsekurisumasuwozhi-etaji-shu-html5minutes-5fen",
       "thumbnail": "https://files.speakerdeck.com/presentations/b6873e307e2c0132f67912a273297520/preview_slide_0.jpg?4338475"
+    },
+    {
+      "source": "slideshare",
+      "title": "Cmujp21_node-webkit",
+      "date": "2014-10-20",
+      "url": "https://www.slideshare.net/slideshow/cmujp21-nodewebkit/40468310",
+      "thumbnail": "https://cdn.slidesharecdn.com/ss_thumbnails/cmujp21-141019211556-conversion-gate02-thumbnail.jpg?width=640&height=640&fit=bounds"
+    },
+    {
+      "source": "slideshare",
+      "title": "新言語Hackの話 (いわてPHPカンファレンス2014)",
+      "date": "2014-05-21",
+      "url": "https://www.slideshare.net/slideshow/php-34928296/34928296",
+      "thumbnail": "https://cdn.slidesharecdn.com/ss_thumbnails/php-140520202858-phpapp01-thumbnail.jpg?width=640&height=640&fit=bounds"
     }
   ]
 }
