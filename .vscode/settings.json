@@ -1,5 +1,5 @@
 {
-  "markdown.marp.themes": ["./design-system/marp/iotlt.css"],
+  "markdown.marp.themes": ["./design-system/marp/iotlt.css", "./design-system/marp/lecture.css"],
   "markdown.marp.html": "all",
   "markdown.marp.enableHtml": true
 }

@@ -1,0 +1,9 @@
+{
+  "name": "annotate-screenshot",
+  "private": true,
+  "type": "module",
+  "description": "教材スクショに注釈を描くスキル用のスクリプト",
+  "dependencies": {
+    "sharp": "^0.35.5"
+  }
+}

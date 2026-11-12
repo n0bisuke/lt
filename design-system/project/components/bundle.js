@@ -10,6 +10,8 @@ window.IoTLT = (function () {
       html.classList.add('lt-deck-overview');
       deck.classList.add('lt-deck--overview');
       slides.forEach(function (s) {
+        // Marp のテーマは div.marpit > svg を前提にしているので、svg は包まない
+        if (s.tagName.toLowerCase() === 'svg') return;
         var w = document.createElement('div');
         w.className = 'lt-slide-wrap';
         s.parentNode.insertBefore(w, s);

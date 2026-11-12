@@ -2,7 +2,18 @@
 
 IoTLT などのライトニングトーク（LT）のスライドを、発表者（菅原のびすけ）のデザインで作るためのリポジトリです。AI エージェントは、ネタのメモ・記事・リポジトリ・写真を受け取り、1つの `deck.md`（Marp 形式）を書きます。そこからオンラインのデッキ、記事、PDF ができます。
 
-## 最初に読むもの
+## テーマを選ぶ
+
+`deck.md` の先頭の `theme:` で見た目を選びます。一覧では、テーマに合わせて「LT」か「講演」と表示されます。
+
+| テーマ | 使う場面 | 最初に読むもの | 見本 |
+| --- | --- | --- | --- |
+| `iotlt` | IoTLT などの5分前後の LT | `design-system/project/README.md`、`design-system/project/marp.md` | `decks/sample_bbq/deck.md` |
+| `lecture` | 講演や研修など長めの話 | `design-system/lecture/README.md`、`ai-authoring.md`、`components.md`、`examples/<部品名>.md` | `decks/sample_lecture/deck.md` |
+
+どちらか分からなければ発表者に聞きます。`lecture` のデッキは、部品の書き方と守ることを `design-system/lecture/` の文書に従い、変更したら `npm run check` を通します。記事のカードは `<!-- card: URL -->` と書いて `npm run cards` で展開します。
+
+## 最初に読むもの（LT）
 
 - `design-system/project/README.md`：口調、デッキの構成、色と文字のルール。**スライドを書く前に必ず読みます。**
 - `design-system/project/marp.md`：`deck.md` の書き方。
@@ -24,13 +35,19 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 | `scripts/build-tokens.mjs` | `tokens.css` を生成する |
 | `scripts/new-deck.mjs` | デッキを用意し、`inbox/` の中身を取り込む |
 | `scripts/export-pdf.sh` | デッキを PDF に書き出し、1枚目から `thumbnail.png` を作る |
+| `design-system/lecture/` | 講演テーマの色・寸法（`tokens.json`）、部品（`theme.src.css`）、文書、見本、フォント、画像 |
+| `design-system/marp/lecture.css` | 講演テーマ。`build-tokens.mjs` が生成するので手で編集しない |
+| `scripts/lecture/` | 講演テーマの検査（`npm run check`）とカードの展開（`npm run cards`） |
+| `.claude/skills/annotate-screenshot/` | [protoout/teachers-agent-skills](https://github.com/protoout/teachers-agent-skills) から入れた、スクショへの注釈付けと Gyazo へのアップロード（`scripts/upload-gyazo.mjs`）。トークンは `.env` の `GYAZO_ACCESS_TOKEN` で、値は読まず表示もしない。アップロードは1枚ずつ発表者に確認してから行う。初回は `npm ci --prefix .claude/skills/annotate-screenshot` |
 | `site.json` | 公開先の URL（`all.json` と個別ページの絶対 URL に使う） |
+| `scripts/fetch-external.mjs` | Speaker Deck と Qiita のスライド情報を `external.json` に保存する（`npm run fetch-external`、数分かかる）。`npm run deploy` では Speaker Deck だけを更新する |
+| `external.json` | 一覧に載せる外部スライド。リンク先は各サービスの個別ページで、サムネイルも各サービスの URL を使う |
 | `scripts/build-site.mjs` | 公開するデッキだけを `dist/` に集める |
 | `.github/workflows/pages.yml` | `main` への push で `dist/` を GitHub Pages に公開する |
 
 ## スライドの作り方
 
-発表者が `inbox/` に素材を入れて「スライドを作って」と頼んだら、次の手順で最後まで進めます。Claude Code の `/lt-slides` も同じ流れです。公開とコミットは頼まれるまでしません。
+発表者とチャットで話しながら、次の手順で作ります。`inbox/` の素材はあってもなくても始められます。Claude Code の `/lt-slides` も同じ流れです。公開とコミットは頼まれるまでしません。
 
 1. **デッキを用意して取り込む。** 次のコマンドで `decks/<名前>/` を作ります。`inbox/` の画像は `images/` に、メモなどは `notes/` に入ります。あとから `inbox/` に足された分は、同じコマンドをもう一度実行すれば取り込めます。
 
@@ -39,12 +56,12 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
    ```
 
    番号は古いファイルから順に付き、一覧は `images.md` に出ます。HEIC は JPEG に変換し、長辺は2400pxまで縮め、JPEG と PNG の位置情報などのメタデータは消します。元のファイルは `inbox/_used/` に残ります。
-2. **材料を読む。** `images.md` の画像を実際に開いて中身を確認し、`notes/` と渡されたものもすべて読みます。途中で質問せず下書きまで作り、次の4点のうち分からないものは「【要確認】」としてデッキに残して、最後にまとめて聞きます。
+2. **材料を読む。** `images.md` の画像を実際に開いて中身を確認し、`notes/` と渡されたものもすべて読みます。次の4点のうち分からないものを、1回に1つずつ発表者に聞きます。その場で分からないものは「【要確認】」としてデッキに残します。
    - イベント名と日付（`20260419 #IoTLT vol134 in 潮風公園BBQ` の形で使う）
    - 何を作った・試したか、結果はどうだったか
    - つまずいた点、面白かった点
    - 自己紹介の最後の1行に入れる最近のネタ
-3. **構成を決める。** 取り込んだ画像の内容も踏まえ、1枚1行で見出しを書き出します。5分なら15〜25枚が目安で、1枚に1つの話だけを載せます。見出しは項目名ではなく文にします。
+3. **構成を決める。** 取り込んだ画像の内容も踏まえ、1枚1行で見出しを書き出して、発表者と相談します。5分なら15〜25枚が目安で、1枚に1つの話だけを載せます。見出しは項目名ではなく文にします。
 4. **デッキを書く。** `deck.md` にスライドを書きます。先頭の `event` にイベント名を、`eventUrl` に connpass などのイベントページの URL を入れます。URL が渡されたらそのページを開き、イベント名と日付を確かめます。記事として読めるように、話す内容を発表者ノート（`<!-- -->`）に書きます。ノートも材料にある事実だけを書きます。
 5. **画像を入れる。** `![](images/xxx.jpg)` で入れます。話に合わない画像は無理に使いません。足りないものは `lt-slot` にして、何を用意するかを書きます。
 6. **書き出して確認する。** 下のコマンドで PDF を作り、全ページを見て、文字のはみ出し、タイトルの折り返し、画像との重なりを直します。ブラウザで `deck.html?overview` を開くと全スライドを一覧できます。
@@ -113,7 +130,7 @@ scripts/export-pdf.sh decks/<デッキ名>
 node scripts/build-tokens.mjs
 ```
 
-`tokens.json` か `bundle.css` か `marp/theme.src.css` を変えたあとに実行し、`tokens.css` と Marp のテーマ（`iotlt.css`）を更新します。`iotlt.css` はコミットします。リポジトリを取得した直後は `npm ci` も実行します。
+`tokens.json` か `bundle.css` か `marp/theme.src.css`、または `lecture/` の `tokens.json` か `theme.src.css` を変えたあとに実行し、`tokens.css` と Marp のテーマ（`iotlt.css`、`lecture.css`）を更新します。テーマの CSS はコミットします。リポジトリを取得した直後は `npm ci` も実行します。
 
 ```bash
 node scripts/build-deck.mjs decks/<デッキ名>
@@ -153,6 +170,18 @@ Markdown で書けないときだけ使います。
 - **CSS を足さない。** デッキには Markdown と部品のクラスだけを使います。`style` で指定するのは `lt-slot` と `Collage` の位置・大きさだけです。部品にない表現が必要なら発表者に相談します。
 - **パスを直す。** 部品の README にあるアバターのパスは、デッキからは `../../design-system/project/assets/Logos/nobisuke-avatar.jpg` です。
 
+## issue で管理する
+
+リポジトリの機能追加とバグは、GitHub の issue（https://github.com/n0bisuke/lt/issues）で管理します。
+
+- **作業の前に確かめる。** 頼まれた作業に関係する issue を `gh issue list -R n0bisuke/lt` で探し、あればその内容に沿って進めます。
+- **見つけたら登録する。** 作業中に見つけたバグや、あとでやる機能は、その場で直さないものを issue にします。同じものがないか先に検索します。
+- **ラベルを付ける。** バグは `bug`、機能は `enhancement`、文書は `documentation`、発表者が決めることは `question` です。
+- **本文に書くこと。** 何が起きるか（バグなら再現の手順）、対応案、完了の条件を短く書きます。
+- **公開されることを忘れない。** このリポジトリは公開なので、issue も誰でも読めます。トークン、個人情報、非公開の講座や資料の内容、まだ消せていない情報の場所は書きません。そうした件は発表者に直接伝えます。
+- **コミットと結びつける。** 直したコミットのメッセージに `Fixes #番号` を書くと、push したときに issue が閉じます。コミットしないで済んだ件は、理由を書いて閉じます。
+- **スライドの中身は issue にしない。** デッキの【要確認】や `lt-slot` は、これまでどおりデッキの中で管理します。
+
 ## スライド一覧の API
 
 他のサイトがスライド一覧を取得できるように、`build-site.mjs` が公開中のデッキを新しい順に並べた `all.json` をサイト直下に出力します。記事などをまとめる別リポジトリは、これをビルド時に取得する想定です。記事はスライドの `deck.md` から作るものだけを扱い、スライドと関係のない記事はこのリポジトリに置きません。
@@ -176,6 +205,8 @@ Markdown で書けないときだけ使います。
   ]
 }
 ```
+
+各デッキには `kind`（`LT` か `講演`）も入ります。Speaker Deck と Qiita のスライドは、同じ `all.json` の `external` に `source`、`title`、`date`、`url`、`thumbnail` の形で入ります。
 
 項目の追加は `version` を変えずに行えます。項目の削除や意味の変更は、取得側が壊れるので `version` を上げます。
 

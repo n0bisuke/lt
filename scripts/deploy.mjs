@@ -24,6 +24,13 @@ function isPublished(dir) {
   return existsSync(json) && JSON.parse(readFileSync(json, 'utf8')).published === true;
 }
 
+// Speaker Deck の一覧を更新する。取得できなくても、前回の内容のまま続ける
+try {
+  run('node', 'scripts/fetch-external.mjs', '--speakerdeck-only');
+} catch {
+  console.error('注意: 外部スライドの一覧を更新できなかったので、前回の内容を使います。');
+}
+
 // 未完成のデッキ（lt-slot や【要確認】が残っているなど）があればここで止まる
 try {
   run('node', 'scripts/build-tokens.mjs');

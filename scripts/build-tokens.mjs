@@ -45,3 +45,8 @@ const theme = [
 ].join('\n');
 writeFileSync(join(root, 'marp/iotlt.css'), theme + '\n');
 console.log('wrote design-system/marp/iotlt.css');
+
+// 講演テーマ（theme: lecture）
+const { buildTheme: buildLecture, THEME_PATH: LECTURE_PATH } = await import('./lecture/build-theme.mjs');
+writeFileSync(LECTURE_PATH, buildLecture());
+console.log('wrote design-system/marp/lecture.css');

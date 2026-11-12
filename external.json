@@ -1,0 +1,1593 @@
+{
+  "decks": [
+    {
+      "source": "speakerdeck",
+      "title": "エッジAIでBBQの肉の焼き加減判定をやってみた #iotlt #seeed",
+      "date": "2026-04-20",
+      "url": "https://speakerdeck.com/n0bisuke2/etuziaidebbqnorou-noshao-kijia-jian-pan-ding-woyatutemita-number-iotlt-number-seeed",
+      "thumbnail": "https://files.speakerdeck.com/presentations/90c9a6fb24194bf68a30d50a3d48b889/preview_slide_0.jpg?39153771"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "OpenClawハンズオンでのトラブルとデバイス向けなんちゃらクロー #IoTLT vol133",
+      "date": "2026-03-23",
+      "url": "https://speakerdeck.com/n0bisuke2/openclawhanzuondenotoraburutodebaisuxiang-kenantiyarakuro-number-iotlt-vol133",
+      "thumbnail": "https://files.speakerdeck.com/presentations/518b9f92876a43bab2465839cb17e289/preview_slide_0.jpg?38815250"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "20260224福井商工会議所 生成AI活用LT #fcci #protoout",
+      "date": "2026-02-24",
+      "url": "https://speakerdeck.com/n0bisuke2/20260224fu-jing-shang-gong-hui-yi-suo-sheng-cheng-aihuo-yong-lt-number-fcci-number-protoout",
+      "thumbnail": "https://files.speakerdeck.com/presentations/df8618daddd147e685daab80e0d4f7bf/preview_slide_0.jpg?38521420"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "M5StickS3触ってXiaoZhiAI触ってみた #にぼし香 #iotlt",
+      "date": "2026-01-31",
+      "url": "https://speakerdeck.com/n0bisuke2/m5sticks3hong-tutexiaozhiaihong-tutemita-number-nibosixiang-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/de0564814fd443a5ba7d8fa3a8eef493/preview_slide_0.jpg?38258031"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "生成AI時代のアウトプットについて考えてみる => 田植えしよう。",
+      "date": "2026-01-16",
+      "url": "https://speakerdeck.com/n0bisuke2/sheng-cheng-aishi-dai-noautopututonituitekao-etemiru-equals-tian-zhi-esiyou",
+      "thumbnail": "https://files.speakerdeck.com/presentations/49fb26d64f4c466dbec388a3274e9d7a/preview_slide_0.jpg?38100695"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ブラウザの組み込みAI🧠 Gemini Nanoで自動制御チャレンジ #goodbye2025",
+      "date": "2025-12-16",
+      "url": "https://speakerdeck.com/n0bisuke2/burauzanozu-miip-miai-gemini-nanodezi-dong-zhi-yu-tiyarenzi-number-goodbye2025",
+      "thumbnail": "https://files.speakerdeck.com/presentations/f9f3a58a21a6411a8ebc4b0ddd1104a9/preview_slide_0.jpg?37775949"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "実はマルチモーダルだった。ブラウザの組み込みAI🧠でWebの未来を感じてみよう #jsfes #gemini",
+      "date": "2025-12-13",
+      "url": "https://speakerdeck.com/n0bisuke2/burauzanozu-miip-miai-dewebnowei-lai-wogan-zitemiyou-number-jsfes",
+      "thumbnail": "https://files.speakerdeck.com/presentations/fd34670217b94134ae37bba4211d29e9/preview_slide_0.jpg?37741918"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ATOMS3R-CAMとClaude SKILLSでタイムラプスチャレンジ #iotlt",
+      "date": "2025-10-21",
+      "url": "https://speakerdeck.com/n0bisuke2/atoms3r-camtoclaude-skillsdetaimurapusutiyarenzi-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/42bfc72c2e914113b3ca05927aa3a2df/preview_slide_0.jpg?37049853"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "エッジで動くNode-REDを作る実験 #noderedjp #noderedcon",
+      "date": "2025-10-18",
+      "url": "https://speakerdeck.com/n0bisuke2/etuzidedong-kunode-redwozuo-rushi-yan-number-noderedjp-number-noderedcon",
+      "thumbnail": "https://files.speakerdeck.com/presentations/168f157f5e934c9f85f95a7452208b13/preview_slide_0.jpg?37013449"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Node-REDで制御できるエッジカメラのreCameraを触る #iotlt #JLCPCB #recamera",
+      "date": "2025-09-21",
+      "url": "https://speakerdeck.com/n0bisuke2/node-reddezhi-yu-dekiruetuzikameranorecamerawohong-ru-number-iotlt-number-jlcpcb-number-recamera",
+      "thumbnail": "https://files.speakerdeck.com/presentations/756d67229d4847d7bebe06e71e029536/preview_slide_0.jpg?36661058"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "AIがまずいこと言ったら（物理）モデレーションアラート #iotlt #dify",
+      "date": "2025-09-18",
+      "url": "https://speakerdeck.com/n0bisuke2/aigamazuikotoyan-tutara-wu-li-moderesiyonarato-number-iotlt-number-dify",
+      "thumbnail": "https://files.speakerdeck.com/presentations/279ba062505b4d159681cc0d4869f622/preview_slide_0.jpg?36628925"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "EmbeddingGemmaをDifyから使いたいけどAPI経由はつまらん #iotlt #gemma #dify",
+      "date": "2025-09-18",
+      "url": "https://speakerdeck.com/n0bisuke2/embeddinggemmawodifykarashi-itaikedoapijing-you-hatumaran-number-iotlt-number-gemma-number-dify",
+      "thumbnail": "https://files.speakerdeck.com/presentations/695f6f00a6c8489da232adba0c055a12/preview_slide_0.jpg?36629298"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Trying \"Vibe Low-code\" with MCP #iotlt",
+      "date": "2025-09-18",
+      "url": "https://speakerdeck.com/n0bisuke2/trying-vibe-low-code-with-mcp-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b4a199e51c414a1ab68720102cb96f2b/preview_slide_0.jpg?36628865"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Trying \"Vibe No-code/Low-code\" with MCP #noderedjp",
+      "date": "2025-06-27",
+      "url": "https://speakerdeck.com/n0bisuke2/trying-vibe-low-code-with-mcp-number-noderedjp",
+      "thumbnail": "https://files.speakerdeck.com/presentations/eede1248dddc41e3ae62aa33ef4c6013/preview_slide_0.jpg?35621061"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Node-REDでセンサーなどから起動させるカメラノードを作ったよ IoTLT vol123 #iotlt",
+      "date": "2025-05-26",
+      "url": "https://speakerdeck.com/n0bisuke2/node-reddesensanadokaraqi-dong-saserukameranodowozuo-tutayo-iotlt-vol123-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/3916945347fc4d7f84ef4550c85965b7/preview_slide_0.jpg?35223705"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "operatorでNode-REDを制御したかった話 #iotlt vol120",
+      "date": "2025-03-28",
+      "url": "https://speakerdeck.com/n0bisuke2/operatordenode-redwozhi-yu-sitakatutahua-number-iotlt-vol120",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b3f638e504e94e4eb88ac4e8108cbab8/preview_slide_0.jpg?34444711"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Raspberry Pi Connectを使って #Manus => Node-RED操作チャレンジ #iotlt vol121",
+      "date": "2025-03-28",
+      "url": "https://speakerdeck.com/n0bisuke2/raspberry-pi-connectwoshi-tute-number-manus-equals-node-redcao-zuo-tiyarenzi-number-iotlt-vol121",
+      "thumbnail": "https://files.speakerdeck.com/presentations/88bc5fc3e0154a4983d6afb0afee9aae/preview_slide_0.jpg?34444758"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Xの\"だるま\"とコナミコマンド #iotlt #obniz",
+      "date": "2025-01-28",
+      "url": "https://speakerdeck.com/n0bisuke2/xno-daruma-tokonamikomando-number-iotlt-number-obniz",
+      "thumbnail": "https://files.speakerdeck.com/presentations/26a33f5c85f84473a9e6a32e08a57817/preview_slide_0.jpg?33598804"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "いぬぬウォッチャー -  オレトク賞オンライン決勝 #ヒーローズリーグ",
+      "date": "2024-11-28",
+      "url": "https://speakerdeck.com/n0bisuke2/inunuuotutiya-oretokushang-onrainjue-sheng-number-hirozurigu",
+      "thumbnail": "https://files.speakerdeck.com/presentations/86b5d1c31fe44dffafc0ee2dcb38d026/preview_slide_0.jpg?32817296"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "バーチャルバナナとリアルバナナ #iotlt #TouchDesigner",
+      "date": "2024-09-20",
+      "url": "https://speakerdeck.com/n0bisuke2/batiyarubananatoriarubanana-number-iotlt-touchdesigner",
+      "thumbnail": "https://files.speakerdeck.com/presentations/d27d0a0470a6411fa30fc365c3445e20/preview_slide_0.jpg?31807431"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "miiboとamiibo繋げてみた。 #miibo #amiibo #iotlt",
+      "date": "2024-08-25",
+      "url": "https://speakerdeck.com/n0bisuke2/number-miibo-de-number-amiibo-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/bf9ba15d2d26466fa4499447014c3ff1/preview_slide_0.jpg?31479958"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "骨折と入院とIoT #iotlt",
+      "date": "2024-07-17",
+      "url": "https://speakerdeck.com/n0bisuke2/gu-zhe-toru-yuan-toiot-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/1f2f19f382054eceb83b315d9ff158fc/preview_slide_0.jpg?31019036"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "中指立てたか判定IoT #iotlt #p5js",
+      "date": "2024-06-19",
+      "url": "https://speakerdeck.com/n0bisuke2/zhong-zhi-li-tetakapan-ding-iot",
+      "thumbnail": "https://files.speakerdeck.com/presentations/0690ae463e3c47f1971985b87e6a5e17/preview_slide_0.jpg?30684371"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "20240529セミナー #沖中塾",
+      "date": "2024-05-29",
+      "url": "https://speakerdeck.com/n0bisuke2/20240529semina-number-chong-zhong-shu",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b5645d458c7b4f43b93960a3ad32fc0b/preview_slide_0.jpg?30372586"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "GPT-4oに遅刻理由を考えてもらうボタン #gpt_4o #iotlt #chatgpt",
+      "date": "2024-05-24",
+      "url": "https://speakerdeck.com/n0bisuke2/gpt-4onichi-ke-li-you-wokao-etemoraubotan-number-gpt-4o-number-iotlt-number-chatgpt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/3bc7a420f813426a9cb09ff8a09ffbd7/preview_slide_0.jpg?30270907"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "カフェでノートPCが盗難されたかどうかを検知するIoT #linedc #iotlt #obniz #protoout",
+      "date": "2024-04-24",
+      "url": "https://speakerdeck.com/n0bisuke2/kahuedenotopcgadao-nan-saretakadoukawojian-zhi-suruiot-number-linedc-number-iotlt-number-obniz-number-protoout",
+      "thumbnail": "https://files.speakerdeck.com/presentations/9d342eefab8f46a2b44cb70a50514fa6/preview_slide_0.jpg?29864936"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "息を吹きかけると○○選手の○○の人が”○ぶ”仕組みをobnizとSwitchBotで #iotlt",
+      "date": "2024-04-08",
+      "url": "https://speakerdeck.com/n0bisuke2/xi-wochui-kikakeruto-star-star-xuan-shou-no-star-star-noren-ga-star-bu-shi-zu-miwoobniztoswitchbotde-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/aa9f178bec414a63bf8fcbac9bbbd611/preview_slide_0.jpg?29646207"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "GPTsとラズパイ5で監視カメラを作ってみた #iotlt #chatgpt #raspberrypi",
+      "date": "2024-02-28",
+      "url": "https://speakerdeck.com/n0bisuke2/20240227-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/3477ae8e71354378a0b667a8c3bad1c0/preview_slide_0.jpg?29108808"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoTと田中の距離 #iotlt #田中 #openai",
+      "date": "2024-01-16",
+      "url": "https://speakerdeck.com/n0bisuke2/iottotian-zhong-noju-li-number-iotlt-number-tian-zhong-number-openai",
+      "thumbnail": "https://files.speakerdeck.com/presentations/38045a460a5c4b7ca4448bc0cfa9bc89/preview_slide_0.jpg?28546190"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "田中縛りの勉強会! 田中IoTLT OPスライド",
+      "date": "2024-01-16",
+      "url": "https://speakerdeck.com/n0bisuke2/tian-zhong-fu-rinomian-qiang-hui-tian-zhong-iotlt-opsuraido",
+      "thumbnail": "https://files.speakerdeck.com/presentations/f4e27d7583bf4c768063d807c172be44/preview_slide_0.jpg?28546183"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "プロトタイピングスクールとIoTコミュニティでの”自ら作る”の事例 #UDC2023 #一関 #岩手",
+      "date": "2023-11-15",
+      "url": "https://speakerdeck.com/n0bisuke2/purototaipingusukurutoiotkomiyuniteideno-zi-razuo-ru-noshi-li-number-udc2023-number-guan-number-yan-shou",
+      "thumbnail": "https://files.speakerdeck.com/presentations/1840213ab2df4a6f92defab0c4c666bb/preview_slide_0.jpg?27829963"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "#相席食堂 ちょっと待てぃボタンダイジェスト+ソラコムボタン #iotlt",
+      "date": "2023-10-25",
+      "url": "https://speakerdeck.com/n0bisuke2/number-xiang-xi-shi-tang-tiyotutodai-teibotandaiziesuto-plus-sorakomubotan-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/389c9a35804f4fe69687f20bde6d2b92/preview_slide_0.jpg?27542995"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ちょっと待てぃ!!ボタンをキーボード化 #M5Stack #M5JPTour2023 #相席食堂",
+      "date": "2023-10-16",
+      "url": "https://speakerdeck.com/n0bisuke2/tiyotutodai-tei-botanwokibodohua-number-m5stack-number-m5jptour2023-number-xiang-xi-shi-tang",
+      "thumbnail": "https://files.speakerdeck.com/presentations/547228492eb4446cb1be7bb86fe42de3/preview_slide_0.jpg?27417075"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "obnizを制御するChatGPT自作プラグイン　#iotlt #chatgpt",
+      "date": "2023-09-22",
+      "url": "https://speakerdeck.com/n0bisuke2/obnizwozhi-yu-suruchatgptzi-zuo-puraguin-number-iotlt-number-chatgpt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/d4f08c20226f4891a86cc955538239c0/preview_slide_0.jpg?27111449"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "プロトタイピング専門スクールとIoTコミュニティの重要性 #epfc",
+      "date": "2023-08-26",
+      "url": "https://speakerdeck.com/n0bisuke2/purototaipinguzhuan-men-sukurutoiotkomiyuniteinozhong-yao-xing-number-epfc",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b17cd7ca627444e9bc8e52f8cea74792/preview_slide_0.jpg?26838225"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ついにiPaaSでobnizが動くかも?! #iotlt #pipedream #obniz",
+      "date": "2023-08-23",
+      "url": "https://speakerdeck.com/n0bisuke2/tuiniipaasdeobnizgadong-kukamo-number-iotlt-number-pipedream-number-obniz",
+      "thumbnail": "https://files.speakerdeck.com/presentations/7f658e9c114f4424bb978855b8f888e2/preview_slide_0.jpg?26770212"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "10年間毎月LTしてみた （たぶん12年） #ippp",
+      "date": "2023-08-11",
+      "url": "https://speakerdeck.com/n0bisuke2/10nian-jian-mei-yue-ltsitemita-tabun12nian-number-ippp",
+      "thumbnail": "https://files.speakerdeck.com/presentations/fbe797a381314245991ca50c47047c59/preview_slide_0.jpg?26680800"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "100回分は振り返りできなかったけど振り返り #iotlt vol101",
+      "date": "2023-07-31",
+      "url": "https://speakerdeck.com/n0bisuke2/100hui-fen-hazhen-rifan-ridekinakatutakedozhen-rifan-ri-number-iotlt-vol101",
+      "thumbnail": "https://files.speakerdeck.com/presentations/5bdbe7cf92b94105886dd4f8e3d0bcbf/preview_slide_0.jpg?26551572"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoTLT vol100 #NT金沢 #iotlt",
+      "date": "2023-06-20",
+      "url": "https://speakerdeck.com/n0bisuke2/iotlt-vol100-number-ntjin-ze-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/c01007f7cac84094890bc9c58599ab66/preview_slide_0.jpg?26059624"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "#呼び込み君 に例のバイトをさせる #iotlt",
+      "date": "2023-05-25",
+      "url": "https://speakerdeck.com/n0bisuke2/number-hu-biip-mijun-nili-nobaitowosaseru-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/d74b7797d8004b388535f94edd0fda35/preview_slide_0.jpg?25775337"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IFTTTやPower Automateを超えた？！ノーコードかつ無料でLINE Botや自動化ができるPipedreamがアツい(かも) #linedc #pipedream #protoout",
+      "date": "2023-05-20",
+      "url": "https://speakerdeck.com/n0bisuke2/iftttyapower-automatewochao-eta-nokodokatuwu-liao-deline-botyazi-dong-hua-gadekirupipedreamgaatui-kamo-number-linedc-number-pipedream-number-protoout",
+      "thumbnail": "https://files.speakerdeck.com/presentations/d452545e8a614ff399b822ec64c5dd2c/preview_slide_0.jpg?25719170"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ATOM Echoでぽぽぽぽぽーぽ #呼び込み君 #m5jptour2023 #iotlt #m5stack",
+      "date": "2023-05-04",
+      "url": "https://speakerdeck.com/n0bisuke2/atom-echodepopopopopo-number-hu-biip-mijun-number-m5jptour2023-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/ffdfde1604534be7b6344eef905b11f3/preview_slide_0.jpg?25471412"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "衛星通信を使ってLチカしてみた #starlink #iotlt",
+      "date": "2023-03-24",
+      "url": "https://speakerdeck.com/n0bisuke2/wei-xing-tong-xin-woshi-tuteltikasitemita-number-starlink-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/f49e165291ce49249b85fd8bc44ecf43/preview_slide_0.jpg?24999406"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ビンゴでもらった3Dプリンタを触ってみている話 #iotlt #ヒーローズリーグ",
+      "date": "2023-02-01",
+      "url": "https://speakerdeck.com/n0bisuke2/bingodemoratuta3dpurintawohong-tutemiteiruhua-number-iotlt-number-hirozurigu",
+      "thumbnail": "https://files.speakerdeck.com/presentations/9dc4f07dc6504302bfbcf70a4b2465cb/preview_slide_0.jpg?24286573"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "マイコンで動くJavaScript環境まとめ",
+      "date": "2022-12-16",
+      "url": "https://speakerdeck.com/n0bisuke2/maikondedong-kujavascripthuan-jing-matome",
+      "thumbnail": "https://files.speakerdeck.com/presentations/7fcba64d9d28449ba55db9424a855008/preview_slide_0.jpg?23803415"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "テックストリート",
+      "date": "2022-12-16",
+      "url": "https://speakerdeck.com/n0bisuke2/tetukusutorito",
+      "thumbnail": "https://files.speakerdeck.com/presentations/60087e7a77d0467cb0ae400e5a90357c/preview_slide_0.jpg?23809125"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "LINEビーコンで無限プッシュなメンヘラ女子BOT #iotlt #esp32 #linedc",
+      "date": "2022-11-18",
+      "url": "https://speakerdeck.com/n0bisuke2/linebikondewu-xian-putusiyunamenherabot-number-iotlt-number-esp32-number-linedc",
+      "thumbnail": "https://files.speakerdeck.com/presentations/813d2c2429f448df9f3f1124ac8720cc/preview_slide_0.jpg?23469525"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "GASでobniz触れるのか検証パート1 #iotlt",
+      "date": "2022-10-19",
+      "url": "https://speakerdeck.com/n0bisuke2/gasdeobnizhong-rerunokajian-zheng-pato1-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/99a90750ef104c8a9616f651bc12e88e/preview_slide_0.jpg?23092453"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "某大学院のIoT的な授業で使ってるツールで昔を振り返る #IoTLT",
+      "date": "2022-08-16",
+      "url": "https://speakerdeck.com/n0bisuke2/mou-da-xue-yuan-falseiotde-nashou-ye-deshi-tuteruturudexi-wozhen-rifan-ru-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/4f3424ba34c54b70958a2f65230cf8e1/preview_slide_0.jpg?22369065"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "インスタコード(MIDI)でLTに挑んでみた #iotlt #instachord",
+      "date": "2022-07-20",
+      "url": "https://speakerdeck.com/n0bisuke2/instacord-midi-deltnitiao-ndemita-number-iotlt-number-instachord",
+      "thumbnail": "https://files.speakerdeck.com/presentations/7cd9415e542640f0bb28b3c2dfc10187/preview_slide_0.jpg?22108429"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "プロジェクト河豚🐡でWebの未来を感じてみよう #jsfes #projectfugu",
+      "date": "2022-07-16",
+      "url": "https://speakerdeck.com/n0bisuke2/puroziekutohe-tun-dewebfalsewei-lai-wogan-zitemiyou-number-jsfes-number-projectfugu",
+      "thumbnail": "https://files.speakerdeck.com/presentations/7d6a734c0d4543e98553d349f05451e4/preview_slide_0.jpg?22535477"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "営業撃退インターホン (リバイバル) #iotlt",
+      "date": "2022-06-23",
+      "url": "https://speakerdeck.com/n0bisuke2/ying-ye-ji-tui-intahon-ribaibaru-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/c09d0b8361934058b378b75d8577d169/preview_slide_0.jpg?21843098"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "体組織計をBLEハックしたかった話 #iotlt",
+      "date": "2022-05-18",
+      "url": "https://speakerdeck.com/n0bisuke2/ti-zu-zhi-ji-woblehatukusitakatutahua-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/86e99b294b5f4114973da43e0c52cb59/preview_slide_0.jpg?21442159"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "インターホンからBoxに画像アップロードしてみた話 #iotlt",
+      "date": "2022-04-12",
+      "url": "https://speakerdeck.com/n0bisuke2/intahonkaraboxnihua-xiang-atupurodositemitahua-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/1e9b28874fea46ce8955e543971edbf1/preview_slide_0.jpg?21069249"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "enebularの新機能を使って勝手にスイッチサイエンスTwitter Botを作る話 #iotlt",
+      "date": "2022-03-15",
+      "url": "https://speakerdeck.com/n0bisuke2/enebularfalsexin-ji-neng-woshi-tutesheng-shou-nisuitutisaiensutwitter-botwozuo-ruhua-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/795a0a5541b9414693aa378408d114c5/preview_slide_0.jpg?20779913"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "居酒屋店員になるまでの流れと 飽きっぽい僕の自分戦略を振り返る #devsumi",
+      "date": "2022-02-18",
+      "url": "https://speakerdeck.com/n0bisuke2/ju-jiu-wu-dian-yuan-ninarumadefalseliu-reto-bao-kitupoipu-falsezi-fen-zhan-lue-wozhen-rifan-ru-number-devsumi",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b900ac5942f04eb3bacd7a686e9cf4a3/preview_slide_0.jpg?20497811"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "obnizじゃないよopnizだよ。opniz Lチカ #iotlt",
+      "date": "2022-02-15",
+      "url": "https://speakerdeck.com/n0bisuke2/obnizziyanaiyoopnizdayo-opniz-ltika-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/72645c3003cc45ee9ea8232ca2296e17/preview_slide_0.jpg?20450397"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "上司のご機嫌を伺ってみるIoT #iotlt #oura",
+      "date": "2022-01-18",
+      "url": "https://speakerdeck.com/n0bisuke2/shang-si-falsegoji-xian-wosi-tutemiruiot-number-iotlt-number-oura",
+      "thumbnail": "https://files.speakerdeck.com/presentations/7a063f594f9d471eb996d4dc629b8972/preview_slide_0.jpg?20143853"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "#ヒーローズリーグ から クリスマスプレゼントでもらったSwitch BotをLT中にハック #iotlt",
+      "date": "2021-12-21",
+      "url": "https://speakerdeck.com/n0bisuke2/number-hirozurigu-kara-kurisumasupurezentodemoratutaswitch-botwoltzhong-nihatuku-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/cbc9d97d9a154f22b570e1c83b5cb8f5/preview_slide_0.jpg?19855965"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "iPaaSでコードを書かずに\"ちゃんとLINE Bot\"を作る #linedc",
+      "date": "2021-12-16",
+      "url": "https://speakerdeck.com/n0bisuke2/ipaasdekodowoshu-kazuni-tiyantoline-bot-wozuo-ru-number-linedc",
+      "thumbnail": "https://files.speakerdeck.com/presentations/ebbb2c4264014e1bb62923b12b5b4729/preview_slide_0.jpg?19823360"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "イヤホンジャックはちゃんと調べてから #iotlt",
+      "date": "2021-11-16",
+      "url": "https://speakerdeck.com/n0bisuke2/iyahonziyatukuhatiyantodiao-betekara-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b70083c886254fcb9b78ccafcacdb5cc/preview_slide_0.jpg?19570946"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ティファール忘れ問題 #iotlt",
+      "date": "2021-10-22",
+      "url": "https://speakerdeck.com/n0bisuke2/teihuaruwang-rewen-ti-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/6cb834ed2a794cc696ef9a5bae5b9d8e/preview_slide_0.jpg?19350303"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "誰でも出来る！ お手軽15万円くらいの照度センサー?！ #iotlt",
+      "date": "2021-09-15",
+      "url": "https://speakerdeck.com/n0bisuke2/shui-demochu-lai-ru-oshou-qing-15mo-yuan-kuraifalsezhao-du-sensa-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/4f6f3880ffac445aaa94e32d36019cd8/preview_slide_0.jpg?19023019"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "プロトタイピング人材を育成する今と学生時代の経験を振り返る #jsise",
+      "date": "2021-09-02",
+      "url": "https://speakerdeck.com/n0bisuke2/purototaipinguren-cai-woyu-cheng-surujin-toxue-sheng-shi-dai-falsejing-yan-wozhen-rifan-ru-number-jsise",
+      "thumbnail": "https://files.speakerdeck.com/presentations/54b41d1640184fd7a39b96f40dfcfc2d/preview_slide_0.jpg?18927079"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "紙で申請を出す居酒屋店員のシフト希望と 管理業務をちょっとスマートにする #linedc",
+      "date": "2021-08-31",
+      "url": "https://speakerdeck.com/n0bisuke2/zhi-deshen-qing-wochu-suju-jiu-wu-dian-yuan-falsesihutoxi-wang-to-guan-li-ye-wu-wotiyotutosumatonisuru-number-linedc",
+      "thumbnail": "https://files.speakerdeck.com/presentations/5808261acedd4ebbacc224b85bd247d6/preview_slide_0.jpg?18916129"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "リモート木魚 #iotlt #Arduino",
+      "date": "2021-08-18",
+      "url": "https://speakerdeck.com/n0bisuke2/rimotomu-yu-number-iotlt-number-arduino",
+      "thumbnail": "https://files.speakerdeck.com/presentations/e6aa3f348d17403aa028ec67a0784750/preview_slide_0.jpg?18801569"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "木魚でSpotify制御() #iotlt",
+      "date": "2021-07-13",
+      "url": "https://speakerdeck.com/n0bisuke2/mu-yu-despotifyzhi-yu-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b34a02e2a4d8468e9e02d6c86b4c0ab1/preview_slide_0.jpg?18526162"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "obnizのカメラをNode.jsで使ってみる #iotlt #obniz",
+      "date": "2021-06-15",
+      "url": "https://speakerdeck.com/n0bisuke2/obnizfalsekamerawonode-dot-jsdeshi-tutemiru-number-iotlt-number-obniz",
+      "thumbnail": "https://files.speakerdeck.com/presentations/2419886d8cc44f8299b84b7d7ffb42c1/preview_slide_0.jpg?18312992"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Gmailノードを作った時のよもやま #noderedjp #nodered",
+      "date": "2021-05-18",
+      "url": "https://speakerdeck.com/n0bisuke2/gmailfalsedowozuo-tutashi-falseyomoyama-number-noderedjp-number-nodered",
+      "thumbnail": "https://files.speakerdeck.com/presentations/c917ae99be6f4a2b8c452b7f7c723cb9/preview_slide_0.jpg?18084198"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "光るギブスの件 #iotlt",
+      "date": "2021-05-17",
+      "url": "https://speakerdeck.com/n0bisuke2/guang-rugibusufalsejian-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/a9d0d63f16344c74990cf977ee44b10e/preview_slide_0.jpg?18076566"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ピンのピッチ幅で苦しんだ #obniz や #gwhack の話 #iotlt",
+      "date": "2021-05-14",
+      "url": "https://speakerdeck.com/n0bisuke2/pinfalsepitutifu-deku-sinda-number-obniz-ya-number-gwhack-falsehua-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/fcc84daad5b74b548bb689e17f6e2081/preview_slide_0.jpg?18059770"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "DXLT vol2 OP資料",
+      "date": "2021-04-29",
+      "url": "https://speakerdeck.com/n0bisuke2/dxlt-vol2-opzi-liao",
+      "thumbnail": "https://files.speakerdeck.com/presentations/4c6331b53a404eecb5b17e4ec5539c88/preview_slide_0.jpg?17973637"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "最近のNode.jsでBluetooth事情 #iotlt #abandonware",
+      "date": "2021-04-15",
+      "url": "https://speakerdeck.com/n0bisuke2/zui-jin-falsenode-dot-jsdebluetoothshi-qing-number-iotlt-number-abandonware",
+      "thumbnail": "https://files.speakerdeck.com/presentations/42c715a6620e4282a836451ab6edc3cc/preview_slide_0.jpg?17876372"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ノーコードツールとプロトタイピングのフェーズ",
+      "date": "2021-03-25",
+      "url": "https://speakerdeck.com/n0bisuke2/falsekodoturutopurototaipingufalsehuezu",
+      "thumbnail": "https://files.speakerdeck.com/presentations/3dd9a37f12bd49e1a1f8a7edf2175e76/preview_slide_0.jpg?17701145"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IOTXの話など #iotlt",
+      "date": "2021-03-17",
+      "url": "https://speakerdeck.com/n0bisuke2/iotxfalsehua-nado-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/504c1c4e44e84ae499204eebf3c7ff8d/preview_slide_0.jpg?17615672"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "鋳造IoTLT vol3 #iotlt",
+      "date": "2021-03-09",
+      "url": "https://speakerdeck.com/n0bisuke2/zhu-zao-iotlt-vol3-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/df2e843e9de9417bb12aafadc1121344/preview_slide_0.jpg?17550070"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "シャトルランアップデート話 #iotlt",
+      "date": "2021-02-17",
+      "url": "https://speakerdeck.com/n0bisuke2/siyatoruranatupudetohua-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/79bce784cc87415ca543451d3b774dff/preview_slide_0.jpg?17389736"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "#DXLT メール便出し忘れ防止、電話とGoogleカレンダー連携など (学生の作品紹介)",
+      "date": "2021-01-26",
+      "url": "https://speakerdeck.com/n0bisuke2/number-dxlt-merubian-chu-siwang-refang-zhi-dian-hua-togooglekarendalian-xi-nado-xue-sheng-falsezuo-pin-shao-jie",
+      "thumbnail": "https://files.speakerdeck.com/presentations/88b9126d38ea4c2d90a198e5f832f529/preview_slide_0.jpg?17211439"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "昨年末に秋葉原に急に爆誕したお店 と Bluetoothシャッター #iotlt",
+      "date": "2021-01-19",
+      "url": "https://speakerdeck.com/n0bisuke2/zuo-nian-mo-niqiu-xie-yuan-niji-nibao-dan-sitaodian-to-bluetoothsiyatuta-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/c785ac3196c6410597790220d0eb9837/preview_slide_0.jpg?17133381"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "中華製npmのCNPMがある模様 #iotlt",
+      "date": "2020-12-16",
+      "url": "https://speakerdeck.com/n0bisuke2/zhong-hua-zhi-npmfalsecnpmgaarumo-yang-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/6f9d360b552b4d8aae76c8a7faea8472/preview_slide_0.jpg?16929523"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "WebHID APIでHIDデバイスをブラウザから制御!! #iotlt",
+      "date": "2020-11-18",
+      "url": "https://speakerdeck.com/n0bisuke/webhid-apidehiddebaisuwoburauzakarazhi-yu-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/dcfac524fab742438acbb4e14a0d738b/preview_slide_0.jpg?16725069"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IFTTTが有料化したのでIntegromatの話 #iotlt",
+      "date": "2020-10-14",
+      "url": "https://speakerdeck.com/n0bisuke/iftttgayou-liao-hua-sitafalsedeintegromatfalsehua-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/995a8cda14e14979b54fb0568f2c046d/preview_slide_0.jpg?16472993"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "M5Core2触ってみたけど上下注意 #iotlt vol67",
+      "date": "2020-09-15",
+      "url": "https://speakerdeck.com/n0bisuke/m5core2hong-tutemitakedoshang-xia-zhu-yi-number-iotlt-vol67",
+      "thumbnail": "https://files.speakerdeck.com/presentations/c6c3396d008c43759a6eb7cee15d81cd/preview_slide_0.jpg?16275465"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "PubNubを久々に使ってみたよ！ #iotlt #m5stick #pubnub #djuko",
+      "date": "2020-08-12",
+      "url": "https://speakerdeck.com/n0bisuke/pubnubwojiu-nishi-tutemitayo-number-iotlt-number-m5stick-number-pubnub-number-djuko",
+      "thumbnail": "https://files.speakerdeck.com/presentations/d88cdf05c6854392a6aed322a31caca9/preview_slide_0.jpg?16022281"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ATOM Echoでビデオ会議通知 #IoTLT",
+      "date": "2020-07-14",
+      "url": "https://speakerdeck.com/n0bisuke/atom-echodebideohui-yi-tong-zhi-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/ce70b4571f1245169cb6a79439e8024a/preview_slide_0.jpg?15837939"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "オンラインLTをやってみた所感 #devreljp",
+      "date": "2020-05-27",
+      "url": "https://speakerdeck.com/n0bisuke/onrainltwoyatutemitasuo-gan-number-devreljp",
+      "thumbnail": "https://files.speakerdeck.com/presentations/eae89a03e43341d29c54f2b9f40f992b/preview_slide_0.jpg?15550548"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "マイコンボード再活用なワイの配信環境 ~ラズパイやJetson Nanoを積ボードにしてる人必見~ #iotlt",
+      "date": "2020-05-19",
+      "url": "https://speakerdeck.com/n0bisuke/maikonbodozai-huo-yong-nawaifalsepei-xin-huan-jing-razupaiyajetson-nanowoji-bodonisiteruren-bi-jian-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/94da7fcefa3941558306e875001e0851/preview_slide_0.jpg?15498368"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "在宅テレカン時の 例の夫婦問題を解決する #iotlt #m5atom #m5stack",
+      "date": "2020-04-16",
+      "url": "https://speakerdeck.com/n0bisuke/zai-zhai-terekanshi-false-li-falsefu-fu-wen-ti-wojie-jue-suru-number-iotlt-number-m5atom-number-m5stack",
+      "thumbnail": "https://files.speakerdeck.com/presentations/f776345afd624a0c85d9ca8e3d79d457/preview_slide_0.jpg?15301774"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "嫁が来たらPCを閉じたいからアラートする #MiBand #RaspberryPi #iotlt",
+      "date": "2020-04-13",
+      "url": "https://speakerdeck.com/n0bisuke/jia-galai-tarapcwobi-zitaikaraaratosuru-number-miband-number-raspberrypi-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/32b20c5952324675974b4bc85b2d6568/preview_slide_0.jpg?15272786"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "PC盗難防止したい #iotlt",
+      "date": "2020-03-19",
+      "url": "https://speakerdeck.com/n0bisuke/pcdao-nan-fang-zhi-sitai-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/fce2069ab6144e4995abf38c7ba79387/preview_slide_0.jpg?15163474"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoTLTを支えるRPA技術の話 (の一部紹介) #yuruRPA",
+      "date": "2020-03-10",
+      "url": "https://speakerdeck.com/n0bisuke/iotltwozhi-erurpaji-shu-falsehua-false-bu-shao-jie-number-yururpa",
+      "thumbnail": "https://files.speakerdeck.com/presentations/fcf8e054fa364bf68c17676e99e595cf/preview_slide_0.jpg?15101383"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "続、Mi Band 4をJavaScriptで #iotlt vol60 at docs",
+      "date": "2020-02-14",
+      "url": "https://speakerdeck.com/n0bisuke/sok-mi-band-4wojavascriptde-number-iotlt-vol60-at-docs",
+      "thumbnail": "https://files.speakerdeck.com/presentations/e26db75364784dde9615a289030e13c2/preview_slide_0.jpg?14886686"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "#iotlt Mi Band 4ハックチャレンジ",
+      "date": "2020-01-31",
+      "url": "https://speakerdeck.com/n0bisuke/number-iotlt-mi-band-4hatukutiyarenzi",
+      "thumbnail": "https://files.speakerdeck.com/presentations/a7504035034045f4a1fadaab802e0296/preview_slide_0.jpg?14775086"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "営業撃退インターホンとその運用 #おうちハック #n_nack #iotlt",
+      "date": "2020-01-16",
+      "url": "https://speakerdeck.com/n0bisuke/ying-ye-ji-tui-intahontosofalseyun-yong-number-outihatuku-number-n-nack-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/6eb3d187b0b54c69a9923ef038cc937f/preview_slide_0.jpg?14659731"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "プロトタイピング専門スクール「プロトアウトスタジオ」1期DEMO DAYを終えて #iotlt",
+      "date": "2019-12-13",
+      "url": "https://speakerdeck.com/n0bisuke/purototaipinguzhuan-men-sukuru-purotoautosutazio-1qi-demo-daywozhong-ete-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/d2a010473149485a86c98f3f64e934d8/preview_slide_0.jpg?14458361"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "初心者が3日間で基板設計〜販売まで体験してきた話 in 深セン #iotlt",
+      "date": "2019-11-19",
+      "url": "https://speakerdeck.com/n0bisuke/chu-xin-zhe-ga3ri-jian-deji-ban-she-ji-fan-mai-madeti-yan-sitekitahua-in-shen-sen-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/94a55439f8f642cd9f423dcec1f901ba/preview_slide_0.jpg?14211444"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "M5StackシャトルランLTのリバイバル #iotlt",
+      "date": "2019-11-01",
+      "url": "https://speakerdeck.com/n0bisuke/m5stacksiyatoruranltfalseribaibaru-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/6847cdd07458478d94eac077d071e735/preview_slide_0.jpg?14048866"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "LINE API Expert制度の紹介と考察 ~LINE API Expertになるためには~ (個人的見解) #devreljp #linedc",
+      "date": "2019-10-23",
+      "url": "https://speakerdeck.com/n0bisuke/line-api-expertzhi-du-falseshao-jie-tokao-cha-line-api-expertninarutameniha-ge-ren-de-jian-jie-number-devreljp-number-linedc",
+      "thumbnail": "https://files.speakerdeck.com/presentations/6869f6698e0c41d99335c82d7b3abe7e/preview_slide_0.jpg?13955325"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "LINE API紹介",
+      "date": "2019-10-23",
+      "url": "https://speakerdeck.com/n0bisuke/line-apishao-jie",
+      "thumbnail": "https://files.speakerdeck.com/presentations/5840d201c4384e7c8724c45ecb8a4bbe/preview_slide_0.jpg?13949316"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "玄関とmacOS Catalinaのアップデート #iotlt",
+      "date": "2019-10-16",
+      "url": "https://speakerdeck.com/n0bisuke/xuan-guan-tomacos-catalinafalseatupudeto-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/7add57dadc284f278a52e8a85b1f2034/preview_slide_0.jpg?13886325"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Nintendo SwitchでLチカ?! #iotlt #nintendoswitch",
+      "date": "2019-09-21",
+      "url": "https://speakerdeck.com/n0bisuke/nintendo-switchdeltika-number-iotlt-number-nintendoswitch",
+      "thumbnail": "https://files.speakerdeck.com/presentations/f21545a5d45f42ad99bef546e536a8d8/preview_slide_0.jpg?13709313"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "LINE関連APIインプット #ハッカソン仙台",
+      "date": "2019-09-07",
+      "url": "https://speakerdeck.com/n0bisuke/lineguan-lian-apiinpututo-number-hatukasonxian-tai",
+      "thumbnail": "https://files.speakerdeck.com/presentations/d9a5537b62884bcc90718b9680879392/preview_slide_0.jpg?13513650"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IIJ Legsで外出先から社内にちょっかい出してみる #iotlt",
+      "date": "2019-08-28",
+      "url": "https://speakerdeck.com/n0bisuke/iij-legsdewai-chu-xian-karashe-nei-nitiyotukaichu-sitemiru-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/d26ee4f0b0994950aa02545064c30653/preview_slide_0.jpg?13412986"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "プロトタイピング専門スクール「プロトアウトスタジオ」の紹介LT #iotlt",
+      "date": "2019-08-20",
+      "url": "https://speakerdeck.com/n0bisuke/purototaipinguzhuan-men-sukuru-purotoautosutazio-falseshao-jie-lt-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b736d14623a547cb8254e288d30f2c12/preview_slide_0.jpg?13355643"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "スタートしたばかりのLINE OpenChat の波に乗ってみよう in 岩手 #ippp",
+      "date": "2019-08-10",
+      "url": "https://speakerdeck.com/n0bisuke/sutatositabakarifalseline-openchat-falsebo-nicheng-tutemiyou-in-yan-shou-number-ippp",
+      "thumbnail": "https://files.speakerdeck.com/presentations/220bd582f3cc48898f89a557e9c4b29f/preview_slide_0.jpg?13288220"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ヨガっぽいIoTネタ調べてみたLT #iotlt",
+      "date": "2019-08-08",
+      "url": "https://speakerdeck.com/n0bisuke/yogatupoiiotnetadiao-betemitalt-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/f2caf172081048d6a8097297ec75bb38/preview_slide_0.jpg?13268448"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "プロトタイピングスクール「プロトアウトスタジオ」の紹介 #iotlt",
+      "date": "2019-07-24",
+      "url": "https://speakerdeck.com/n0bisuke/purototaipingusukuru-purotoautosutazio-falseshao-jie-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/41b9fe47f91f4419bdda75588d66fcca/preview_slide_0.jpg?13115436"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Puck.jsで無限に俺を呼ぶ #iotlt #linethings",
+      "date": "2019-07-20",
+      "url": "https://speakerdeck.com/n0bisuke/puck-dot-jsdewu-xian-nian-wohu-bu-number-iotlt-number-linethings",
+      "thumbnail": "https://files.speakerdeck.com/presentations/8ec541337a2043228605ffde596a1b83/preview_slide_0.jpg?13084085"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ニードル脱毛でヒゲ脱毛チャレンジ #雑サミ",
+      "date": "2019-07-08",
+      "url": "https://speakerdeck.com/n0bisuke/nidorutuo-mao-dehigetuo-mao-tiyarenzi-number-za-sami",
+      "thumbnail": "https://files.speakerdeck.com/presentations/98fa099a9fb4490597ad2463683e6f9b/preview_slide_0.jpg?12995916"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "LINE Thingsシナリオセットジェネレータを作った時にハマった話 #enebular",
+      "date": "2019-06-27",
+      "url": "https://speakerdeck.com/n0bisuke/line-thingssinariosetutozieneretawozuo-tutashi-nihamatutahua-number-enebular",
+      "thumbnail": "https://files.speakerdeck.com/presentations/d5460946031046e6b695d8b7f6688c0e/preview_slide_0.jpg?12906165"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Puck.jsで俺を呼ぶIoT #iotlt vol52 at メルカリ",
+      "date": "2019-06-22",
+      "url": "https://speakerdeck.com/n0bisuke/puck-dot-jsdean-wohu-buiot-number-iotlt-vol52-at-merukari",
+      "thumbnail": "https://files.speakerdeck.com/presentations/80be9fd5f68944cc8e8a53ee43f028ec/preview_slide_0.jpg?12866111"
+    },
+    {
+      "source": "qiita",
+      "title": "LINE ThingsやLINE Beaconの立ち位置おさらいなど #linedc #linethings",
+      "date": "2019-06-04",
+      "url": "https://qiita.com/n0bisuke/items/1f552f3508fe8cf22759",
+      "thumbnail": "https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-user-contents.imgix.net%2Fhttps%253A%252F%252Fcdn.qiita.com%252Fassets%252Fpublic%252Farticle-ogp-background-afbab5eb44e0b055cce1258705637a91.png%3Fixlib%3Drb-4.1.1%26w%3D1200%26blend64%3DaHR0cHM6Ly9xaWl0YS11c2VyLXByb2ZpbGUtaW1hZ2VzLmltZ2l4Lm5ldC9odHRwcyUzQSUyRiUyRnFpaXRhLWltYWdlLXN0b3JlLnMzLmFtYXpvbmF3cy5jb20lMkYwJTJGMzUzODclMkZwcm9maWxlLWltYWdlcyUyRjE0NzM2ODY3MDU_aXhsaWI9cmItNC4xLjEmYXI9MSUzQTEmZml0PWNyb3AmbWFzaz1lbGxpcHNlJmJnPUZGRkZGRiZmbT1wbmczMiZzPWQxZGJiZWI4ZjZhMmE4YWVjZDY0ZWYwMDViMDI4ZGM2%26blend-x%3D120%26blend-y%3D467%26blend-w%3D82%26blend-h%3D82%26blend-mode%3Dnormal%26s%3Dfc242098b42dacf39b70ea903d1e5937?ixlib=rb-4.1.1&w=1200&fm=jpg&mark64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjEuMSZ3PTk2MCZoPTMyNCZ0eHQ9TElORSUyMFRoaW5ncyVFMyU4MiU4NExJTkUlMjBCZWFjb24lRTMlODElQUUlRTclQUIlOEIlRTMlODElQTElRTQlQkQlOEQlRTclQkQlQUUlRTMlODElOEElRTMlODElOTUlRTMlODIlODklRTMlODElODQlRTMlODElQUElRTMlODElQTklMjAlMjNsaW5lZGMlMjAlMjNsaW5ldGhpbmdzJnR4dC1hbGlnbj1sZWZ0JTJDdG9wJnR4dC1jb2xvcj0lMjMxRTIxMjEmdHh0LWZvbnQ9SGlyYWdpbm8lMjBTYW5zJTIwVzYmdHh0LXNpemU9NTYmdHh0LXBhZD0wJnM9NDk4MmY2MzkyZjAxNjU1Njg1ZjFmZGE2ZWQ4NWVlYjM&mark-x=120&mark-y=112&blend64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjEuMSZ3PTgzOCZoPTU4JnR4dD0lNDBuMGJpc3VrZSZ0eHQtY29sb3I9JTIzMUUyMTIxJnR4dC1mb250PUhpcmFnaW5vJTIwU2FucyUyMFc2JnR4dC1zaXplPTM2JnR4dC1wYWQ9MCZzPTZhYzg2NTZhYWY1YjY1MzM4YjFiOTk5MTRkNDMzYWQ5&blend-x=242&blend-y=480&blend-w=838&blend-h=46&blend-fit=crop&blend-crop=left%2Cbottom&blend-mode=normal&s=ae23d590376787f4ead0e72b8635ed59"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "さおりからのLINEがヤバイ #iotlt vol51",
+      "date": "2019-05-25",
+      "url": "https://speakerdeck.com/n0bisuke/saorikarafalselinegayabai-number-iotlt-vol51",
+      "thumbnail": "https://files.speakerdeck.com/presentations/88b896b8915440d3a9613cb3a725aa5d/preview_slide_0.jpg?12655461"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "令和時代のconnpassイベント管理 #iotlt #enebular",
+      "date": "2019-04-25",
+      "url": "https://speakerdeck.com/n0bisuke/ling-he-shi-dai-falseconnpassibentoguan-li-number-iotlt-number-enebular",
+      "thumbnail": "https://files.speakerdeck.com/presentations/8e239ac266fd4ba1a715c6c6382bce9e/preview_slide_0.jpg?12434258"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "インターホンv3 #iotlt",
+      "date": "2019-04-23",
+      "url": "https://speakerdeck.com/n0bisuke/intahonv3-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/89f1351e0a5b4bce8f15319c5779be25/preview_slide_0.jpg?12404242"
+    },
+    {
+      "source": "qiita",
+      "title": "enebularでTwitter運用をしたかった話 #enebular",
+      "date": "2019-03-24",
+      "url": "https://qiita.com/n0bisuke/items/7f5110ceac7999d51378",
+      "thumbnail": "https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-user-contents.imgix.net%2Fhttps%253A%252F%252Fcdn.qiita.com%252Fassets%252Fpublic%252Farticle-ogp-background-afbab5eb44e0b055cce1258705637a91.png%3Fixlib%3Drb-4.1.1%26w%3D1200%26blend64%3DaHR0cHM6Ly9xaWl0YS11c2VyLXByb2ZpbGUtaW1hZ2VzLmltZ2l4Lm5ldC9odHRwcyUzQSUyRiUyRnFpaXRhLWltYWdlLXN0b3JlLnMzLmFtYXpvbmF3cy5jb20lMkYwJTJGMzUzODclMkZwcm9maWxlLWltYWdlcyUyRjE0NzM2ODY3MDU_aXhsaWI9cmItNC4xLjEmYXI9MSUzQTEmZml0PWNyb3AmbWFzaz1lbGxpcHNlJmJnPUZGRkZGRiZmbT1wbmczMiZzPWQxZGJiZWI4ZjZhMmE4YWVjZDY0ZWYwMDViMDI4ZGM2%26blend-x%3D120%26blend-y%3D467%26blend-w%3D82%26blend-h%3D82%26blend-mode%3Dnormal%26s%3Dfc242098b42dacf39b70ea903d1e5937?ixlib=rb-4.1.1&w=1200&fm=jpg&mark64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjEuMSZ3PTk2MCZoPTMyNCZ0eHQ9ZW5lYnVsYXIlRTMlODElQTdUd2l0dGVyJUU5JTgxJThCJUU3JTk0JUE4JUUzJTgyJTkyJUUzJTgxJTk3JUUzJTgxJTlGJUUzJTgxJThCJUUzJTgxJUEzJUUzJTgxJTlGJUU4JUE5JUIxJTIwJTIzZW5lYnVsYXImdHh0LWFsaWduPWxlZnQlMkN0b3AmdHh0LWNvbG9yPSUyMzFFMjEyMSZ0eHQtZm9udD1IaXJhZ2lubyUyMFNhbnMlMjBXNiZ0eHQtc2l6ZT01NiZ0eHQtcGFkPTAmcz1jN2Q3ZTIzMTk4Y2QyOTIwMWI4ZjE3M2ZmZmVjOThjYw&mark-x=120&mark-y=112&blend64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjEuMSZ3PTgzOCZoPTU4JnR4dD0lNDBuMGJpc3VrZSZ0eHQtY29sb3I9JTIzMUUyMTIxJnR4dC1mb250PUhpcmFnaW5vJTIwU2FucyUyMFc2JnR4dC1zaXplPTM2JnR4dC1wYWQ9MCZzPTZhYzg2NTZhYWY1YjY1MzM4YjFiOTk5MTRkNDMzYWQ5&blend-x=242&blend-y=480&blend-w=838&blend-h=46&blend-fit=crop&blend-crop=left%2Cbottom&blend-mode=normal&s=5e9e3063d34ae0c834f04352d92c475d"
+    },
+    {
+      "source": "qiita",
+      "title": "Webブラウザの世界から始めるIoT入門 #gigttt",
+      "date": "2019-03-20",
+      "url": "https://qiita.com/n0bisuke/items/adeafd02e7a03df654fb",
+      "thumbnail": "https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-user-contents.imgix.net%2Fhttps%253A%252F%252Fcdn.qiita.com%252Fassets%252Fpublic%252Farticle-ogp-background-afbab5eb44e0b055cce1258705637a91.png%3Fixlib%3Drb-4.1.1%26w%3D1200%26blend64%3DaHR0cHM6Ly9xaWl0YS11c2VyLXByb2ZpbGUtaW1hZ2VzLmltZ2l4Lm5ldC9odHRwcyUzQSUyRiUyRnFpaXRhLWltYWdlLXN0b3JlLnMzLmFtYXpvbmF3cy5jb20lMkYwJTJGMzUzODclMkZwcm9maWxlLWltYWdlcyUyRjE0NzM2ODY3MDU_aXhsaWI9cmItNC4xLjEmYXI9MSUzQTEmZml0PWNyb3AmbWFzaz1lbGxpcHNlJmJnPUZGRkZGRiZmbT1wbmczMiZzPWQxZGJiZWI4ZjZhMmE4YWVjZDY0ZWYwMDViMDI4ZGM2%26blend-x%3D120%26blend-y%3D467%26blend-w%3D82%26blend-h%3D82%26blend-mode%3Dnormal%26s%3Dfc242098b42dacf39b70ea903d1e5937?ixlib=rb-4.1.1&w=1200&fm=jpg&mark64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjEuMSZ3PTk2MCZoPTMyNCZ0eHQ9V2ViJUUzJTgzJTk2JUUzJTgzJUE5JUUzJTgyJUE2JUUzJTgyJUI2JUUzJTgxJUFFJUU0JUI4JTk2JUU3JTk1JThDJUUzJTgxJThCJUUzJTgyJTg5JUU1JUE3JThCJUUzJTgyJTgxJUUzJTgyJThCSW9UJUU1JTg1JUE1JUU5JTk2JTgwJTIwJTIzZ2lndHR0JnR4dC1hbGlnbj1sZWZ0JTJDdG9wJnR4dC1jb2xvcj0lMjMxRTIxMjEmdHh0LWZvbnQ9SGlyYWdpbm8lMjBTYW5zJTIwVzYmdHh0LXNpemU9NTYmdHh0LXBhZD0wJnM9YTM0NTM2NTU5N2M4ZTg5ODY1OTBiMzM2OGUxNDc4NDU&mark-x=120&mark-y=112&blend64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjEuMSZ3PTgzOCZoPTU4JnR4dD0lNDBuMGJpc3VrZSZ0eHQtY29sb3I9JTIzMUUyMTIxJnR4dC1mb250PUhpcmFnaW5vJTIwU2FucyUyMFc2JnR4dC1zaXplPTM2JnR4dC1wYWQ9MCZzPTZhYzg2NTZhYWY1YjY1MzM4YjFiOTk5MTRkNDMzYWQ5&blend-x=242&blend-y=480&blend-w=838&blend-h=46&blend-fit=crop&blend-crop=left%2Cbottom&blend-mode=normal&s=7c071d9089b358d4495d9e2f673a6221"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "#子育Techアイデアコンテスト での #iotlt 紹介資料",
+      "date": "2019-02-24",
+      "url": "https://speakerdeck.com/n0bisuke/number-zi-yu-techaideakontesuto-defalse-number-iotlt-shao-jie-zi-liao",
+      "thumbnail": "https://files.speakerdeck.com/presentations/188fc6183eec461baa3ecf5dcaeab631/preview_slide_0.jpg?11910782"
+    },
+    {
+      "source": "qiita",
+      "title": "2019年2月版 JavaScript/Node.jsでBluetoothを触れるライブラリやAPIをまとめてみた #html5j #iotlt #linethings",
+      "date": "2019-02-19",
+      "url": "https://qiita.com/n0bisuke/items/67044681dec529c08191",
+      "thumbnail": "https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-user-contents.imgix.net%2Fhttps%253A%252F%252Fcdn.qiita.com%252Fassets%252Fpublic%252Farticle-ogp-background-afbab5eb44e0b055cce1258705637a91.png%3Fixlib%3Drb-4.1.1%26w%3D1200%26blend64%3DaHR0cHM6Ly9xaWl0YS11c2VyLXByb2ZpbGUtaW1hZ2VzLmltZ2l4Lm5ldC9odHRwcyUzQSUyRiUyRnFpaXRhLWltYWdlLXN0b3JlLnMzLmFtYXpvbmF3cy5jb20lMkYwJTJGMzUzODclMkZwcm9maWxlLWltYWdlcyUyRjE0NzM2ODY3MDU_aXhsaWI9cmItNC4xLjEmYXI9MSUzQTEmZml0PWNyb3AmbWFzaz1lbGxpcHNlJmJnPUZGRkZGRiZmbT1wbmczMiZzPWQxZGJiZWI4ZjZhMmE4YWVjZDY0ZWYwMDViMDI4ZGM2%26blend-x%3D120%26blend-y%3D467%26blend-w%3D82%26blend-h%3D82%26blend-mode%3Dnormal%26s%3Dfc242098b42dacf39b70ea903d1e5937?ixlib=rb-4.1.1&w=1200&fm=jpg&mark64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjEuMSZ3PTk2MCZoPTMyNCZ0eHQ9MjAxOSVFNSVCOSVCNDIlRTYlOUMlODglRTclODklODglMjBKYXZhU2NyaXB0JTJGTm9kZS5qcyVFMyU4MSVBN0JsdWV0b290aCVFMyU4MiU5MiVFOCVBNyVBNiVFMyU4MiU4QyVFMyU4MiU4QiVFMyU4MyVBOSVFMyU4MiVBNCVFMyU4MyU5NiVFMyU4MyVBOSVFMyU4MyVBQSVFMyU4MiU4NEFQSSVFMyU4MiU5MiVFMyU4MSVCRSVFMyU4MSVBOCVFMyU4MiU4MSVFMyU4MSVBNiVFMyU4MSVCRiVFMyU4MSU5RiUyMCUyM2h0bWw1aiUyMCUyM2lvdGwlRTIlODAlQTYmdHh0LWFsaWduPWxlZnQlMkN0b3AmdHh0LWNvbG9yPSUyMzFFMjEyMSZ0eHQtZm9udD1IaXJhZ2lubyUyMFNhbnMlMjBXNiZ0eHQtc2l6ZT01NiZ0eHQtcGFkPTAmcz1kMjFhMGVhYmFmNzc3NzNjM2JiODM0MTQzZDA3N2VmNg&mark-x=120&mark-y=112&blend64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjEuMSZ3PTgzOCZoPTU4JnR4dD0lNDBuMGJpc3VrZSZ0eHQtY29sb3I9JTIzMUUyMTIxJnR4dC1mb250PUhpcmFnaW5vJTIwU2FucyUyMFc2JnR4dC1zaXplPTM2JnR4dC1wYWQ9MCZzPTZhYzg2NTZhYWY1YjY1MzM4YjFiOTk5MTRkNDMzYWQ5&blend-x=242&blend-y=480&blend-w=838&blend-h=46&blend-fit=crop&blend-crop=left%2Cbottom&blend-mode=normal&s=3e905ad7d6bb804dad8981f9a5f0e468"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "営業撃退インターホン #devsumi #iotlt",
+      "date": "2019-02-16",
+      "url": "https://speakerdeck.com/n0bisuke/ying-ye-ji-tui-intahon-number-devsumi-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/90806f12dded4e198e4a7cfe88935304/preview_slide_0.jpg?11822134"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ポケモンマスターになりたかった話 #iotlt",
+      "date": "2018-12-20",
+      "url": "https://speakerdeck.com/n0bisuke/pokemonmasutaninaritakatutahua-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/71fcf5f0cb02443ea2153c8aa3a36d18/preview_slide_0.jpg?11474173"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "デブストコミュニティLT #iotlt の紹介（飛び込みLT） #devboost",
+      "date": "2018-12-16",
+      "url": "https://speakerdeck.com/n0bisuke/debusutokomiyuniteilt-number-iotlt-falseshao-jie-fei-biip-milt-number-devboost",
+      "thumbnail": "https://files.speakerdeck.com/presentations/bb37f057a2ab4ecda1a9339638717192/preview_slide_0.jpg?11448377"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "高専ハッカソンでの ゆるいLINE関連技術インプット #ma_2018",
+      "date": "2018-12-15",
+      "url": "https://speakerdeck.com/n0bisuke/gao-zhuan-hatukasondefalse-yuruilineguan-lian-ji-shu-inpututo-number-ma-2018",
+      "thumbnail": "https://files.speakerdeck.com/presentations/761e64017e22480089439e74c56808df/preview_slide_0.jpg?11440674"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoTLTでのゆるふわIoT事例紹介 #iotlt #oracode",
+      "date": "2018-12-12",
+      "url": "https://speakerdeck.com/n0bisuke/iotltdefalseyuruhuwaiotshi-li-shao-jie-number-iotlt-number-oracode",
+      "thumbnail": "https://files.speakerdeck.com/presentations/aaa9697c4fc6442d8356dbd51df690bf/preview_slide_0.jpg?11421260"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Clovaスキルをノンコーディングで作ろう",
+      "date": "2018-12-07",
+      "url": "https://speakerdeck.com/n0bisuke/clovasukiruwofalsenkodeingudezuo-rou",
+      "thumbnail": "https://files.speakerdeck.com/presentations/bfe7bbc244ac4a8bacbac21455211b2b/preview_slide_0.jpg?11385694"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ここ1週間 LINE Thingsで5つのデバイス 触ってみたのでまとめてみる #iotlt #linethings",
+      "date": "2018-11-30",
+      "url": "https://speakerdeck.com/n0bisuke/koko1zhou-jian-line-thingsde5tufalsedebaisu-hong-tutemitafalsedematometemiru-number-iotlt-number-linethings",
+      "thumbnail": "https://files.speakerdeck.com/presentations/6c2143614709461aa87cec21c28918c7/preview_slide_0.jpg?11330662"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "LINE Messaging APIのノードを作ってみた #nodered #noderedjp",
+      "date": "2018-11-28",
+      "url": "https://speakerdeck.com/n0bisuke/line-messaging-apifalsefalsedowozuo-tutemita-number-nodered-number-noderedjp",
+      "thumbnail": "https://files.speakerdeck.com/presentations/4a9682773b864fccafdb1869115f41a0/preview_slide_0.jpg?11321299"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "(さっそく) LINE Thingsをenebularで動かしてみたよ #linedevday #enebular",
+      "date": "2018-11-22",
+      "url": "https://speakerdeck.com/n0bisuke/satusoku-line-thingswoenebulardedong-kasitemitayo-number-linedevday-number-enebular",
+      "thumbnail": "https://files.speakerdeck.com/presentations/cd3e7c4eb7104bde9d5333d5535e1796/preview_slide_0.jpg?11285339"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "自己紹介用2018年11月",
+      "date": "2018-11-04",
+      "url": "https://speakerdeck.com/n0bisuke/zi-ji-shao-jie-yong-2018nian-11yue",
+      "thumbnail": "https://files.speakerdeck.com/presentations/42f0c543c64e4e778f4f0f57e8d82b5b/preview_slide_0.jpg?11137430"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "新センで見つけた謎デバイスたち #iotlt vol44",
+      "date": "2018-10-23",
+      "url": "https://speakerdeck.com/n0bisuke/xin-sendejian-tuketami-debaisutati-number-iotlt-vol44",
+      "thumbnail": "https://files.speakerdeck.com/presentations/e365f04e99a948df9cd376c04e9d168e/preview_slide_0.jpg?11034975"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Clova Friends Dockで赤外線制御実験 #iotlt",
+      "date": "2018-09-19",
+      "url": "https://speakerdeck.com/n0bisuke/clova-friends-dockdechi-wai-xian-zhi-yu-shi-yan-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/e1c3fb0679bc4a9b95aa250bdcd8c3c0/preview_slide_0.jpg?10790634"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Fritzingデータを作ってみたけど辛かった #iotlt",
+      "date": "2018-08-21",
+      "url": "https://speakerdeck.com/n0bisuke/fritzingdetawozuo-tutemitakedoxin-katuta-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/4fe92d1c854a4b7a91b5e6eaeb4f1e6a/preview_slide_0.jpg?10600235"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "課外活動で勉強会を主催していたら会社の事業になった話 #ippp",
+      "date": "2018-08-11",
+      "url": "https://speakerdeck.com/n0bisuke/ke-wai-huo-dong-demian-qiang-hui-wozhu-cui-siteitarahui-she-falseshi-ye-ninatutahua-number-ippp",
+      "thumbnail": "https://files.speakerdeck.com/presentations/ddc1bd3e193247bd88373da3c058a7d5/preview_slide_0.jpg?10555113"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "えねぶらぁとうんこボタン #enebular",
+      "date": "2018-08-02",
+      "url": "https://speakerdeck.com/n0bisuke/eneburaatounkobotan-number-enebular",
+      "thumbnail": "https://files.speakerdeck.com/presentations/96fa8be0ae484ad2867191465adc4faf/preview_slide_0.jpg?10499819"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ClovaとNefryをつなげてみたよ！ #iotlt",
+      "date": "2018-07-31",
+      "url": "https://speakerdeck.com/n0bisuke/clovatonefrywotunagetemitayo-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/22d537081b0749aba927311ea6acdd0b/preview_slide_0.jpg?10489371"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "焼肉防衛戦 #RPALT",
+      "date": "2018-07-14",
+      "url": "https://speakerdeck.com/n0bisuke/shao-rou-fang-wei-zhan-number-rpalt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/dcbc6df0ddce47f399867c0c22e95d94/preview_slide_0.jpg?10392977"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "データで振り返るIoTLT",
+      "date": "2018-06-30",
+      "url": "https://speakerdeck.com/n0bisuke/detadezhen-rifan-ruiotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b7a7a5d18a9c4ace8f6d512383280922/preview_slide_0.jpg?10325116"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "振り返り: 課外活動で勉強会を主催していたら会社の事業になった話 #devreljp",
+      "date": "2018-06-07",
+      "url": "https://speakerdeck.com/n0bisuke/zhen-rifan-ri-ke-wai-huo-dong-demian-qiang-hui-wozhu-cui-siteitarahui-she-falseshi-ye-ninatutahua-number-devreljp",
+      "thumbnail": "https://files.speakerdeck.com/presentations/0c0624b57a8e4b6581a5acb6e36f0b1e/preview_slide_0.jpg?10181074"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "うんこボタンハック。例のいたずらは成功するのか #iotlt",
+      "date": "2018-05-30",
+      "url": "https://speakerdeck.com/n0bisuke/unkobotanhatuku-li-falseitazurahacheng-gong-surufalseka-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b26aadcf4ec041b785a3b9feda349055/preview_slide_0.jpg?10119222"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoTLTが抱える問題とその対処… (loT警察) #iotlt",
+      "date": "2018-05-26",
+      "url": "https://speakerdeck.com/n0bisuke/iotltgabao-eruwen-ti-tosofalsedui-chu-dot-dot-dot-lotjing-cha-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/082af7ba7960407db46fa3168d71698a/preview_slide_0.jpg?10094913"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "#m5stack シャトルラン #iotlt のリメイク #m5stack_ugjp",
+      "date": "2018-05-14",
+      "url": "https://speakerdeck.com/n0bisuke/number-m5stack-siyatoruran-number-iotlt-falserimeiku-number-m5stack-ugjp",
+      "thumbnail": "https://files.speakerdeck.com/presentations/0661ce51761a4fde95f79d4ceb80e376/preview_slide_0.jpg?10016628"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "headless chromeでRPA(?) - #IoTLT の管理自動化 #RPALT",
+      "date": "2018-05-09",
+      "url": "https://speakerdeck.com/n0bisuke/headless-chromederpa-number-iotlt-falseguan-li-zi-dong-hua-number-rpalt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/418cbd935ec147dc9cafc51e8fffe8cb/preview_slide_0.jpg?9991585"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "電子工作でVUIを自作してみたよ ( HiCell... ) #vuilt #iotlt #seeed",
+      "date": "2018-04-27",
+      "url": "https://speakerdeck.com/n0bisuke/dian-zi-gong-zuo-devuiwozi-zuo-sitemitayo-hicell-dot-dot-dot-number-vuilt-number-iotlt-number-seeed",
+      "thumbnail": "https://files.speakerdeck.com/presentations/2568c1d515db4bfb8be259bca65c72e7/preview_slide_0.jpg?9931344"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "話題の #m5stack MIDI演奏っぽいのを試してみたよ #iotlt",
+      "date": "2018-04-24",
+      "url": "https://speakerdeck.com/n0bisuke/hua-ti-false-number-m5stack-midiyan-zou-tupoifalsewoshi-sitemitayo-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/083d965d965e43ecbca97c52d64a06a1/preview_slide_0.jpg?9892637"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "話題の #m5stack でシャトルラン！！そしてライブラリも #iotlt",
+      "date": "2018-04-19",
+      "url": "https://speakerdeck.com/n0bisuke/hua-ti-false-number-m5stack-desiyatoruran-sositeraiburarimo-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/1108b040d6d74ac7a2f0d061e919b1b5/preview_slide_0.jpg?9849156"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Nimで5分クッキング - IoT向け言語Nimの紹介 #iotlt",
+      "date": "2018-02-27",
+      "url": "https://speakerdeck.com/n0bisuke/nimde5fen-kutukingu-iotxiang-keyan-yu-nimfalseshao-jie-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/984eaa5822e4482bb7be31ddb04ce861/preview_slide_0.jpg?9503588"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "経済産業省北海道経済産業局「ロボット・IoTワールド」でのピッチ資料",
+      "date": "2018-02-15",
+      "url": "https://speakerdeck.com/n0bisuke/jing-ji-chan-ye-sheng-bei-hai-dao-jing-ji-chan-ye-ju-robotutoiotwarudo-defalsepitutizi-liao",
+      "thumbnail": "https://files.speakerdeck.com/presentations/78e6b01c6e8d43ee814586e87b9ccb75/preview_slide_0.jpg?9419283"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "青森IT・IoTマッチング交流会_ピッチ",
+      "date": "2018-02-06",
+      "url": "https://speakerdeck.com/n0bisuke/qing-sen-itiotmatutingujiao-liu-hui-pituti",
+      "thumbnail": "https://files.speakerdeck.com/presentations/c10bba54defa4199aeb38962818969a2/preview_slide_0.jpg?9363428"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "クリスマスなので出会い系サービスのマッチング率を上げるデバイスを作る #iotlt",
+      "date": "2017-12-28",
+      "url": "https://speakerdeck.com/n0bisuke/kurisumasunafalsedechu-hui-ixi-sabisufalsematutingulu-woshang-gerudebaisuwozuo-ru-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/5c6c9159d0ab4495885d44d22f05c7e2/preview_slide_0.jpg?9212121"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "いいね送るマン #JSオジサン #21cafe",
+      "date": "2017-12-14",
+      "url": "https://speakerdeck.com/n0bisuke/iinesong-ruman-number-jsozisan-number-21cafe",
+      "thumbnail": "https://files.speakerdeck.com/presentations/f2d94f62eff84b9683ec9e00fe1865bf/preview_slide_0.jpg?9160783"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "音声認識スピーカーを音声で制御する() #iotlt #clovawave",
+      "date": "2017-11-17",
+      "url": "https://speakerdeck.com/n0bisuke/yin-sheng-ren-shi-supikawoyin-sheng-dezhi-yu-suru-number-iotlt-number-clovawave",
+      "thumbnail": "https://files.speakerdeck.com/presentations/cf1ba9e8fc9c4237b3c3837c1504166a/preview_slide_0.jpg?8989789"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoTLTの管理をIoT化っぽくしている話 #iotlt",
+      "date": "2017-10-21",
+      "url": "https://speakerdeck.com/n0bisuke/iotltfalseguan-li-woiothua-tupokusiteiruhua-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/2fd88576b4b1439ab604472c9fbedb34/preview_slide_0.jpg?8794865"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Pepper連携の監視システム? #iotlt",
+      "date": "2017-09-15",
+      "url": "https://speakerdeck.com/n0bisuke/pepperlian-xi-falsejian-shi-sisutemu-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/a4d673e00b57428ebe22543efda38f6f/preview_slide_0.jpg?8560175"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "デブサミリバイバルと21cafeの思い出話 #21cafe",
+      "date": "2017-09-13",
+      "url": "https://speakerdeck.com/n0bisuke/debusamiribaibaruto21cafefalsesi-ichu-hua-number-21cafe",
+      "thumbnail": "https://files.speakerdeck.com/presentations/f99622758cf641689ad67f8fb41676b8/preview_slide_0.jpg?8549202"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "電気椅子IoT (Nefry BT発売開始記念) #iotlt",
+      "date": "2017-08-25",
+      "url": "https://speakerdeck.com/n0bisuke/dian-qi-yi-zi-iot-nefry-btfa-mai-kai-shi-ji-nian-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/35602570480d44cc87abbe8f1159b29d/preview_slide_0.jpg?8457796"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "【個人主催でも4000人が集まった、IoTLTグロースの秘訣を探る】 �#devsumi #devsumiB",
+      "date": "2017-07-28",
+      "url": "https://speakerdeck.com/n0bisuke/ge-ren-zhu-cui-demo4000ren-gaji-matuta-iotltgurosufalsemi-jue-wotan-ru-number-devsumi-number-devsumib",
+      "thumbnail": "https://files.speakerdeck.com/presentations/6ece5910ed5d45108bd81d8164657396/preview_slide_0.jpg?8354917"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "次世代Webログインフォーム #iotlt",
+      "date": "2017-07-14",
+      "url": "https://speakerdeck.com/n0bisuke/ci-shi-dai-webroguinhuomu-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/4cc3f7d339844f22819cc3bafaa48721/preview_slide_0.jpg?8292196"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ジーズアカデミーメンターLT_dev7期",
+      "date": "2017-07-01",
+      "url": "https://speakerdeck.com/n0bisuke/zizuakademimentalt-dev7qi",
+      "thumbnail": "https://files.speakerdeck.com/presentations/59862de7f69742be81813e7c041281c3/preview_slide_0.jpg?8239934"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "勉強会やセミナーで使えるデバイス検討 #iotlt",
+      "date": "2017-06-14",
+      "url": "https://speakerdeck.com/n0bisuke/mian-qiang-hui-yaseminadeshi-erudebaisujian-tao-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/ff88b489555a4b348e42a01cead85e42/preview_slide_0.jpg?8135371"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "WioNodeのセットアップ_Android版",
+      "date": "2017-06-07",
+      "url": "https://speakerdeck.com/n0bisuke/wionodefalsesetutoatupu-androidban",
+      "thumbnail": "https://files.speakerdeck.com/presentations/9ec734f5af634a1ea5cae826e9478f7b/preview_slide_0.jpg?8103516"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "WioNodeのセットアップ_iPhone版",
+      "date": "2017-06-07",
+      "url": "https://speakerdeck.com/n0bisuke/wionodefalsesetutoatupu-iphoneban",
+      "thumbnail": "https://files.speakerdeck.com/presentations/796a1ae3c7094c75878c068c06bfb799/preview_slide_0.jpg?8104967"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "はじめてのLINE BOT作成",
+      "date": "2017-05-14",
+      "url": "https://speakerdeck.com/n0bisuke/hazimetefalseline-botzuo-cheng",
+      "thumbnail": "https://files.speakerdeck.com/presentations/cd566e7ede4445948ff9f602a2c79719/preview_slide_0.jpg?7967252"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "GoBotでBLE制御してみたよ！ #golangjp",
+      "date": "2017-04-23",
+      "url": "https://speakerdeck.com/n0bisuke/gobotdeblezhi-yu-sitemitayo-number-golangjp",
+      "thumbnail": "https://files.speakerdeck.com/presentations/0d60f6d0b9f5495a9173b50e47e1cf4d/preview_slide_0.jpg?7865224"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoTデバイス向けのオリジナルパッケージを作ってみました #iotlt",
+      "date": "2017-04-11",
+      "url": "https://speakerdeck.com/n0bisuke/iotdebaisuxiang-kefalseorizinarupatukeziwozuo-tutemimasita-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/33a75b4b78214d3380bd0d70226e326d/preview_slide_0.jpg?7813271"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "達成率235%で終えた 開発ボードでの初CFの所感 #iotlt",
+      "date": "2017-03-24",
+      "url": "https://speakerdeck.com/n0bisuke/da-cheng-lu-235-percent-dezhong-eta-kai-fa-bododefalsechu-cffalsesuo-gan-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/f9b3d0a8c57d460788877a47853a6ef1/preview_slide_0.jpg?7727572"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ジーズアカデミー6期メンターLT #gsacademy",
+      "date": "2017-03-04",
+      "url": "https://speakerdeck.com/n0bisuke/zizuakademi6qi-mentalt-number-gsacademy",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b35f1fab510f4a84947141e3a870ed79/preview_slide_0.jpg?7627610"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "浮気男に社会的制裁を加えるマシーン_最新版.docx #iotlt #am_our",
+      "date": "2017-02-18",
+      "url": "https://speakerdeck.com/n0bisuke/fu-qi-nan-nishe-hui-de-zhi-cai-wojia-erumasin-zui-xin-ban-dot-docx-number-iotlt-number-am-our",
+      "thumbnail": "https://files.speakerdeck.com/presentations/f46eebcb43344bc6bff0634dfe34487c/preview_slide_0.jpg?7566906"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "急な開発合宿を乗りきるIoT #iotlt",
+      "date": "2017-01-31",
+      "url": "https://speakerdeck.com/n0bisuke/ji-nakai-fa-he-su-wocheng-rikiruiot-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/dc4533f1e01d440bba080cef404a559a/preview_slide_0.jpg?7489271"
+    },
+    {
+      "source": "qiita",
+      "title": "WebAudioの勉強するなら「Web Audio School」が良さそう #webaudio (プレゼン)",
+      "date": "2017-01-24",
+      "url": "https://qiita.com/n0bisuke/items/8afd1c2e52ccb9d53ea3",
+      "thumbnail": "https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-user-contents.imgix.net%2Fhttps%253A%252F%252Fcdn.qiita.com%252Fassets%252Fpublic%252Farticle-ogp-background-afbab5eb44e0b055cce1258705637a91.png%3Fixlib%3Drb-4.1.1%26w%3D1200%26blend64%3DaHR0cHM6Ly9xaWl0YS11c2VyLXByb2ZpbGUtaW1hZ2VzLmltZ2l4Lm5ldC9odHRwcyUzQSUyRiUyRnFpaXRhLWltYWdlLXN0b3JlLnMzLmFtYXpvbmF3cy5jb20lMkYwJTJGMzUzODclMkZwcm9maWxlLWltYWdlcyUyRjE0NzM2ODY3MDU_aXhsaWI9cmItNC4xLjEmYXI9MSUzQTEmZml0PWNyb3AmbWFzaz1lbGxpcHNlJmJnPUZGRkZGRiZmbT1wbmczMiZzPWQxZGJiZWI4ZjZhMmE4YWVjZDY0ZWYwMDViMDI4ZGM2%26blend-x%3D120%26blend-y%3D467%26blend-w%3D82%26blend-h%3D82%26blend-mode%3Dnormal%26s%3Dfc242098b42dacf39b70ea903d1e5937?ixlib=rb-4.1.1&w=1200&fm=jpg&mark64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjEuMSZ3PTk2MCZoPTMyNCZ0eHQ9V2ViQXVkaW8lRTMlODElQUUlRTUlOEIlODklRTUlQkMlQjclRTMlODElOTklRTMlODIlOEIlRTMlODElQUElRTMlODIlODklRTMlODAlOENXZWIlMjBBdWRpbyUyMFNjaG9vbCVFMyU4MCU4RCVFMyU4MSU4QyVFOCU4OSVBRiVFMyU4MSU5NSVFMyU4MSU5RCVFMyU4MSU4NiUyMCUyM3dlYmF1ZGlvJTIwJTI4JUUzJTgzJTk3JUUzJTgzJUFDJUUzJTgyJUJDJUUzJTgzJUIzJTI5JnR4dC1hbGlnbj1sZWZ0JTJDdG9wJnR4dC1jb2xvcj0lMjMxRTIxMjEmdHh0LWZvbnQ9SGlyYWdpbm8lMjBTYW5zJTIwVzYmdHh0LXNpemU9NTYmdHh0LXBhZD0wJnM9MGRhOTllYTJkZjBiYTkwN2IyNGUyZTdlZjk3MmJkZWM&mark-x=120&mark-y=112&blend64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjEuMSZ3PTgzOCZoPTU4JnR4dD0lNDBuMGJpc3VrZSZ0eHQtY29sb3I9JTIzMUUyMTIxJnR4dC1mb250PUhpcmFnaW5vJTIwU2FucyUyMFc2JnR4dC1zaXplPTM2JnR4dC1wYWQ9MCZzPTZhYzg2NTZhYWY1YjY1MzM4YjFiOTk5MTRkNDMzYWQ5&blend-x=242&blend-y=480&blend-w=838&blend-h=46&blend-fit=crop&blend-crop=left%2Cbottom&blend-mode=normal&s=2f483998c8de18e5160c0574a8735075"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "「CROSS ME使ったら相手に退会された話」からIoTでCROSS MEする仕組みを考えた #iotlt",
+      "date": "2016-12-08",
+      "url": "https://speakerdeck.com/n0bisuke/cross-meshi-tutaraxiang-shou-nitui-hui-saretahua-karaiotdecross-mesurushi-zu-miwokao-eta-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/c329b9b7c42e4c11997ea460302dd3e5/preview_slide_0.jpg?7325376"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "connpassでのイベント集客試行錯誤 #ヒカラボ",
+      "date": "2016-11-24",
+      "url": "https://speakerdeck.com/n0bisuke/connpassdefalseibentoji-ke-shi-xing-cuo-wu-number-hikarabo",
+      "thumbnail": "https://files.speakerdeck.com/presentations/37ff4b98332e44168953c3b6851e783d/preview_slide_0.jpg?7255913"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "新センで見つけた謎デバイスたち #iotlt vol21",
+      "date": "2016-11-17",
+      "url": "https://speakerdeck.com/n0bisuke/xin-sendejian-tuketami-debaisutati-number-iotlt-vol21",
+      "thumbnail": "https://files.speakerdeck.com/presentations/effe96f310c34aaa805a8de0fd0e4621/preview_slide_0.jpg?7209897"
+    },
+    {
+      "source": "qiita",
+      "title": "WebRTCのシグナリングサーバーにMilkcocoaを使って見るメモ #webrtcjp #mlkcca",
+      "date": "2016-09-21",
+      "url": "https://qiita.com/n0bisuke/items/2d88d5b31b9bb7e7ac1e",
+      "thumbnail": "https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-user-contents.imgix.net%2Fhttps%253A%252F%252Fcdn.qiita.com%252Fassets%252Fpublic%252Farticle-ogp-background-afbab5eb44e0b055cce1258705637a91.png%3Fixlib%3Drb-4.1.1%26w%3D1200%26blend64%3DaHR0cHM6Ly9xaWl0YS11c2VyLXByb2ZpbGUtaW1hZ2VzLmltZ2l4Lm5ldC9odHRwcyUzQSUyRiUyRnFpaXRhLWltYWdlLXN0b3JlLnMzLmFtYXpvbmF3cy5jb20lMkYwJTJGMzUzODclMkZwcm9maWxlLWltYWdlcyUyRjE0NzM2ODY3MDU_aXhsaWI9cmItNC4xLjEmYXI9MSUzQTEmZml0PWNyb3AmbWFzaz1lbGxpcHNlJmJnPUZGRkZGRiZmbT1wbmczMiZzPWQxZGJiZWI4ZjZhMmE4YWVjZDY0ZWYwMDViMDI4ZGM2%26blend-x%3D120%26blend-y%3D467%26blend-w%3D82%26blend-h%3D82%26blend-mode%3Dnormal%26s%3Dfc242098b42dacf39b70ea903d1e5937?ixlib=rb-4.1.1&w=1200&fm=jpg&mark64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjEuMSZ3PTk2MCZoPTMyNCZ0eHQ9V2ViUlRDJUUzJTgxJUFFJUUzJTgyJUI3JUUzJTgyJUIwJUUzJTgzJThBJUUzJTgzJUFBJUUzJTgzJUIzJUUzJTgyJUIwJUUzJTgyJUI1JUUzJTgzJUJDJUUzJTgzJTkwJUUzJTgzJUJDJUUzJTgxJUFCTWlsa2NvY29hJUUzJTgyJTkyJUU0JUJEJUJGJUUzJTgxJUEzJUUzJTgxJUE2JUU4JUE2JThCJUUzJTgyJThCJUUzJTgzJUExJUUzJTgzJUEyJTIwJTIzd2VicnRjanAlMjAlMjNtbGtjY2EmdHh0LWFsaWduPWxlZnQlMkN0b3AmdHh0LWNvbG9yPSUyMzFFMjEyMSZ0eHQtZm9udD1IaXJhZ2lubyUyMFNhbnMlMjBXNiZ0eHQtc2l6ZT01NiZ0eHQtcGFkPTAmcz05NTU2ZTI5ZmMzNjRlYzlhMDlkMDVlY2Q4NTk2Mjk2YQ&mark-x=120&mark-y=112&blend64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjEuMSZ3PTgzOCZoPTU4JnR4dD0lNDBuMGJpc3VrZSZ0eHQtY29sb3I9JTIzMUUyMTIxJnR4dC1mb250PUhpcmFnaW5vJTIwU2FucyUyMFc2JnR4dC1zaXplPTM2JnR4dC1wYWQ9MCZzPTZhYzg2NTZhYWY1YjY1MzM4YjFiOTk5MTRkNDMzYWQ5&blend-x=242&blend-y=480&blend-w=838&blend-h=46&blend-fit=crop&blend-crop=left%2Cbottom&blend-mode=normal&s=066fc8b9ca5b407b4539baae29b628ba"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Android+WaffleでPokemonGOライフハック #iotlt",
+      "date": "2016-09-15",
+      "url": "https://speakerdeck.com/n0bisuke/android-plus-waffledepokemongoraihuhatuku-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/18505675b449476180cef08d1cef01ef/preview_slide_0.jpg?6831893"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Node.jsで Pokemon Go おふぃすハック #iotlt",
+      "date": "2016-08-13",
+      "url": "https://speakerdeck.com/n0bisuke/node-dot-jsde-pokemon-go-ohuisuhatuku-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/93daabf2deac4ac68cb016ee2d2109d9/preview_slide_0.jpg?6694002"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "HW系オープンソースプロジェクトでの学びと報告 #iotlt",
+      "date": "2016-07-20",
+      "url": "https://speakerdeck.com/n0bisuke/hwxi-opunsosupuroziekutodefalsexue-bitobao-gao-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/0aa08d27bf5e439a92a9a1d0c514bbdb/preview_slide_0.jpg?6607812"
+    },
+    {
+      "source": "speakerdeck",
+      "title": ".studio始めますよ! #iotlt",
+      "date": "2016-06-30",
+      "url": "https://speakerdeck.com/n0bisuke/dot-studioshi-memasuyo-number-iotlt",
+      "thumbnail": "https://files.speakerdeck.com/presentations/8fe1433a624d466794d8a9f86b1a7b52/preview_slide_0.jpg?6522188"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Let's enjoy JavaScript Robotics #ヒカラボ",
+      "date": "2016-06-30",
+      "url": "https://speakerdeck.com/n0bisuke/lets-enjoy-javascript-robotics-number-hikarabo",
+      "thumbnail": "https://files.speakerdeck.com/presentations/218ea3c69e75418ebdfd892a29b97298/preview_slide_0.jpg?6522202"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoTハッカソンの流れに地方自治体も乗ってほしい #mttohoku",
+      "date": "2016-06-25",
+      "url": "https://speakerdeck.com/n0bisuke/iothatukasonfalseliu-renidi-fang-zi-zhi-ti-mocheng-tutehosii-number-mttohoku",
+      "thumbnail": "https://files.speakerdeck.com/presentations/be5012449a4b4876ac11b9aba939f040/preview_slide_0.jpg?6495764"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "GAEをざっくり解説 ~祝 Google App EngineNode.js ~ #liginc",
+      "date": "2016-06-16",
+      "url": "https://speakerdeck.com/n0bisuke/gaewozatukurijie-shuo-zhu-google-app-enginenode-dot-js-number-liginc",
+      "thumbnail": "https://files.speakerdeck.com/presentations/a2ab55f03d7548dda74975300e57561f/preview_slide_0.jpg?6452500"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoTセレクトショップの ラピットプロトタイピングとPayPal実運用",
+      "date": "2016-06-15",
+      "url": "https://speakerdeck.com/n0bisuke/iotserekutosiyotupufalse-rapitutopurototaipingutopaypalshi-yun-yong",
+      "thumbnail": "https://files.speakerdeck.com/presentations/f5dfb732775e41998f0bc574aaa17ee8/preview_slide_0.jpg?6446170"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Webエンジニア向けIoT Visualizationサービス色々  ( #iotlt  vol15 : 5分)",
+      "date": "2016-06-01",
+      "url": "https://speakerdeck.com/n0bisuke/webenziniaxiang-keiot-visualizationsabisuse-number-iotlt-vol15-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/57f99cd71e434a7abbf364ad29e01108/preview_slide_0.jpg?6380618"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "RasPiも制御できるサーバーサイドSwift (Swift愛好会 vol7 #love_swift)",
+      "date": "2016-05-30",
+      "url": "https://speakerdeck.com/n0bisuke/raspimozhi-yu-dekirusabasaidoswift-swiftai-hao-hui-vol7-number-love-swift",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b0bf615039ac4bddbeed6497532e687e/preview_slide_0.jpg?6375435"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "なぜアウトプットし続けるのか 2016ver ( cmu40回目 #cmujp :15分)",
+      "date": "2016-05-28",
+      "url": "https://speakerdeck.com/n0bisuke/nazeautopututosisok-kerufalseka-2016ver-cmu40hui-mu-number-cmujp-15fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/4fdc7207a049456e892a27a9fd0e9cc6/preview_slide_0.jpg?6366402"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "機械学習で本当のつぶやき (づや会 vol5 機械学習の話 #liginc :10分)",
+      "date": "2016-05-19",
+      "url": "https://speakerdeck.com/n0bisuke/ji-jie-xue-xi-deben-dang-falsetubuyaki-duyahui-vol5-ji-jie-xue-xi-falsehua-number-liginc-10fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/07c6413bcb0a42bd9fb5e5db9fe30f35/preview_slide_0.jpg?6313940"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoT時代のブラウザAPI (CodeGrid四周年記念パーティー #codegrid4thparty :5分)",
+      "date": "2016-05-14",
+      "url": "https://speakerdeck.com/n0bisuke/iotshi-dai-falseburauzaapi-codegridsi-zhou-nian-ji-nian-patei-number-codegrid4thparty-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/834f96282ccf477d80d14984153e52b8/preview_slide_0.jpg?6287148"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "一介のエンジニアがDevRelで事業立ち上げて 事業責任者になった時のよもやま話 (DevRelMeeup #devreljp :2時間)",
+      "date": "2016-05-08",
+      "url": "https://speakerdeck.com/n0bisuke/jie-falseensiniakadevrelteshi-ye-li-tishang-kete-shi-ye-ze-ren-zhe-ninatutashi-falseyomoyamahua-devrelmeeup-number-devreljp-2shi-jian",
+      "thumbnail": "https://files.speakerdeck.com/presentations/3cb059bf85b244d1aaf0dd249897f334/preview_slide_0.jpg?6255971"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "例の記事の裏話 (IoTLT vol14 #iotlt :5分)",
+      "date": "2016-04-22",
+      "url": "https://speakerdeck.com/n0bisuke/li-falseji-shi-falseli-hua-iotlt-vol14-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/c7ac7159a9894e4c82d718a74b9be853/preview_slide_0.jpg?6176946"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "LIGでのNode.jsでのBOT運用話 (第4回づや会 #liginct :5分)",
+      "date": "2016-04-18",
+      "url": "https://speakerdeck.com/n0bisuke/ligdefalsenode-dot-jsdefalsebotyun-yong-hua-di-4hui-duyahui-number-liginct-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/3fbddbf839b44a78adcc73f419a40c03/preview_slide_0.jpg?6147602"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "NodeBotsの話 (Node学園20時限目 #tng20 : 20分)",
+      "date": "2016-04-05",
+      "url": "https://speakerdeck.com/n0bisuke/nodebotsfalsehua-nodexue-yuan-20shi-xian-mu-number-tng20-20fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/f3dec15fffb049ed9025db9a78a6683c/preview_slide_0.jpg?6082096"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "AWSIoT雑感 (第3回 #liginc :5分)",
+      "date": "2016-03-23",
+      "url": "https://speakerdeck.com/n0bisuke/awsiotza-gan-di-3hui-number-liginc-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/9f4792e4c3a84b068ae6e75d3aa35f8b/preview_slide_0.jpg?6034093"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "NodeBotsのすゝめ (第13回 #iotlt :5分)",
+      "date": "2016-03-17",
+      "url": "https://speakerdeck.com/n0bisuke/nodebotsfalsesu-me-di-13hui-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b8a3b0e5ee2445c9905dcf9abf0e42b9/preview_slide_0.jpg?6000410"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "PubNubとMilkcocoa (MilkcocoaMeetup vol9 #mlkcca :5分)",
+      "date": "2016-03-12",
+      "url": "https://speakerdeck.com/n0bisuke/pubnubtomilkcocoa-milkcocoameetup-vol9-number-mlkcca-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b1798bcbf9cf4ab5962cab62e5cdeb2d/preview_slide_0.jpg?5982324"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "シリコンバレーで見つけたIoT (大阪 IoTLT vol1 #iotlt :5分)",
+      "date": "2016-03-04",
+      "url": "https://speakerdeck.com/n0bisuke/sirikonbaredejian-tuketaiot-da-ban-iotlt-vol1-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/8db507a44501499c970f8e679b61c1df/preview_slide_0.jpg?5947084"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Docker IoT (づや会 vol2 #liginc :5分)",
+      "date": "2016-02-16",
+      "url": "https://speakerdeck.com/n0bisuke/docker-iot-duyahui-vol2-number-liginc-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/2f193ce9d5bf42dc8d2e3254baefc2b2/preview_slide_0.jpg?5879399"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Milkcocoaのこれから (第12回 #iotlt :5分)",
+      "date": "2016-02-13",
+      "url": "https://speakerdeck.com/n0bisuke/milkcocoafalsekorekara-di-12hui-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/12e4988fec6543399b3dd29b2722c81f/preview_slide_0.jpg?5873648"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "JavaScriptでスターウォーズのBB-8を動かしたよ！ (第11回 #iotlt :5分)",
+      "date": "2016-01-15",
+      "url": "https://speakerdeck.com/n0bisuke/javascriptdesutauozufalsebb-8wodong-kasitayo-di-11hui-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/e3c5a8a08f824b6d8b28ae886a5e29ad/preview_slide_0.jpg?5776786"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoT時代のブラウザAPI (第10回 #iotlt :5分)",
+      "date": "2015-12-22",
+      "url": "https://speakerdeck.com/n0bisuke/iotshi-dai-falseburauzaapi-di-10hui-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/0e2b2871b9d04aab980c1274a383f1cd/preview_slide_0.jpg?5730983"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "エヴァに最適化したプレゼンツールを作っている (vol6 #jsオジサン :5分)",
+      "date": "2015-12-17",
+      "url": "https://speakerdeck.com/n0bisuke/evuanizui-shi-hua-sitapurezenturuwozuo-tuteiru-vol6-number-jsozisan-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/6126dee2cc94415da59aae1e6ffe13ae/preview_slide_0.jpg?5721385"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "プログラマブルな電球を探していたら謎にBLEにハマって行く話 (jsboard shibuya vol6 #jsboard :5分)",
+      "date": "2015-12-17",
+      "url": "https://speakerdeck.com/n0bisuke/puroguramaburunadian-qiu-wotan-siteitarami-niblenihamatutexing-kuhua-jsboard-shibuya-vol6-number-jsboard-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/840737c3e518430095a6f6041e5fb1f7/preview_slide_0.jpg?5720393"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoT(BLE)で苦しんだ話 (集まっtail vol4 #集まっtail :5分)",
+      "date": "2015-12-11",
+      "url": "https://speakerdeck.com/n0bisuke/iot-ble-deku-sindahua-ji-matutail-vol4-number-ji-matutail-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/e3fc72208410417b80ba9be10687a02a/preview_slide_0.jpg?5702620"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Milkcocoa x さくらインターネット対談",
+      "date": "2015-12-09",
+      "url": "https://speakerdeck.com/n0bisuke/milkcocoa-x-sakuraintanetutodui-tan",
+      "thumbnail": "https://files.speakerdeck.com/presentations/92c89b6b5d1c456f8433d91a048e82ca/preview_slide_0.jpg?5694195"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "GoでIoT ~BLE入門してみた話~ (Go Conference 2015 Winter LT #GoCon :5分)",
+      "date": "2015-12-06",
+      "url": "https://speakerdeck.com/n0bisuke/godeiot-bleru-men-sitemitahua-go-conference-2015-winter-lt-number-gocon-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/35719ad3b5384b708492ce1293593475/preview_slide_0.jpg?5685099"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoTとデザインの話 (第9回 #iotlt :5分)",
+      "date": "2015-11-20",
+      "url": "https://speakerdeck.com/n0bisuke/iottodezainfalsehua-di-9hui-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/49f58738dd474c8bba5c2bf49c2bd68e/preview_slide_0.jpg?5612301"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoTビジュアライズ今昔 (第8回 #iotlt : 5分)",
+      "date": "2015-10-16",
+      "url": "https://speakerdeck.com/n0bisuke/iotbiziyuaraizujin-xi-di-8hui-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/1399f44a2dc74c1389acbe39a8151330/preview_slide_0.jpg?5401681"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "初心者でもリアルタイムWeb構築。Milkcocoaで楽しく学ぶBaaS入門 ( ジーズアカデミー : 120分 )",
+      "date": "2015-10-05",
+      "url": "https://speakerdeck.com/n0bisuke/chu-xin-zhe-demoriarutaimuwebgou-zhu-milkcocoadele-sikuxue-bubaasru-men-zizuakademi-120fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/9550ae97b7e644f0b9346b2009d0707f/preview_slide_0.jpg?5349289"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Milkcocoa Girls オープニング (Milkcocoa Meetup vol4 #mlkcca : 5分)",
+      "date": "2015-10-01",
+      "url": "https://speakerdeck.com/n0bisuke/milkcocoa-girls-opuningu-milkcocoa-meetup-vol4-number-mlkcca-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/53607b558bb14921a988dfc40bab33de/preview_slide_0.jpg?5331936"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "ワサビ寿司ロシアンルーレット (第2回 すしルート : 5分)",
+      "date": "2015-09-20",
+      "url": "https://speakerdeck.com/n0bisuke/wasabishou-si-rosianruretuto-di-2hui-susiruto-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/6b3bd82f295f4df7ad9c6e6eda5047f2/preview_slide_0.jpg?5268593"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "課外活動が仕事に繋がった話 (第7回 #iotlt : 5分)",
+      "date": "2015-09-16",
+      "url": "https://speakerdeck.com/n0bisuke/ke-wai-huo-dong-gashi-shi-nixi-gatutahua-di-7hui-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/36be2b8e40d14ca2875e13488f6196e0/preview_slide_0.jpg?5249636"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoTLTのLT (第1回 21cafe感謝祭 : 3分)",
+      "date": "2015-09-02",
+      "url": "https://speakerdeck.com/n0bisuke/iotltfalselt-di-1hui-21cafegan-xie-ji-3fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/87f08e9b322d48c8a5e570e536144797/preview_slide_0.jpg?5192594"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Cylon.jsの闇 (第2回 #jsboardshibuya : 5分)",
+      "date": "2015-09-01",
+      "url": "https://speakerdeck.com/n0bisuke/cylon-dot-jsfalsean-di-2hui-number-jsboardshibuya-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/119467547ce14df3bcbe472a61bc0b8c/preview_slide_0.jpg?5189985"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "感情インタラクションβ~これからのIoTはグラフ化じゃないだろうか~(第6回 #iotlt : 5分)",
+      "date": "2015-08-20",
+      "url": "https://speakerdeck.com/n0bisuke/gan-qing-intarakusiyonb-korekarafalseiothagurahuhua-ziyanaidarouka-di-6hui-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/d3d06c242ae64776999ed85e4d1b3b52/preview_slide_0.jpg?5142289"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "HTML5minutesを可視化してみる! (第10回 #tritonjs : 5分)",
+      "date": "2015-08-19",
+      "url": "https://speakerdeck.com/n0bisuke/html5minuteswoke-shi-hua-sitemiru-di-10hui-number-tritonjs-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/329a4f2b04b94777a520473179033097/preview_slide_0.jpg?5140127"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "BaaSMeetup オープニング (第1回 #baasjp : 5分)",
+      "date": "2015-08-05",
+      "url": "https://speakerdeck.com/n0bisuke/baasmeetup-opuningu-di-1hui-number-baasjp-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/6f623f1c54af4245954261405e3c1735/preview_slide_0.jpg?5105960"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "IoTのIで氏んだ話 (第5回 #iotlt : 5分)",
+      "date": "2015-07-15",
+      "url": "https://speakerdeck.com/n0bisuke/iotfalseideshi-ndahua-di-5hui-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/3f319bba9cda44e7b90d6dd99bf37176/preview_slide_0.jpg?5044622"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Cylon.jsでIoT (第5回 #JSオジサン  : 5分)",
+      "date": "2015-06-25",
+      "url": "https://speakerdeck.com/n0bisuke/cylon-dot-jsdeiot-di-5hui-number-jsozisan-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/90338231216e45a28815d81cc36c8f29/preview_slide_0.jpg?4970206"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "MakeyMakeyで○○と○○をつなげてみた話 (第4回 #iotlt : 5分)",
+      "date": "2015-06-19",
+      "url": "https://speakerdeck.com/n0bisuke/makeymakeyde-to-wotunagetemitahua-di-4hui-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/fbe26e0afa5b4856b3cede06dee29aad/preview_slide_0.jpg?4941701"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "なぜ、アウトプットし続けるのか ( #集まっtail vol1 LT:5分)",
+      "date": "2015-06-12",
+      "url": "https://speakerdeck.com/n0bisuke/naze-autopututosisok-kerufalseka-number-ji-matutail-vol1-lt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/df0a343f05c54478b3f12b667d571087/preview_slide_0.jpg?4913144"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "初心者でもリアルタイムWeb構築。Milkcocoaで楽しく学ぶBaaS入門 ( #schoo : 90分 )",
+      "date": "2015-05-18",
+      "url": "https://speakerdeck.com/n0bisuke/chu-xin-zhe-demoriarutaimuwebgou-zhu-milkcocoadele-sikuxue-bubaasru-men-number-schoo-90fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/d0aee91684d244a79840fa11c9697131/preview_slide_0.jpg?4809877"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "続々とBaaSがIoT対応してきた (第３回 #iotlt : 5分)",
+      "date": "2015-05-13",
+      "url": "https://speakerdeck.com/n0bisuke/sok-tobaasgaiotdui-ying-sitekita-di-3hui-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/76bac24e68fc407f869877016c935e0a/preview_slide_0.jpg?4779742"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "新Milkcocoaの紹介LT ( 3周年 #codegrid : 5分 )",
+      "date": "2015-05-09",
+      "url": "https://speakerdeck.com/n0bisuke/xin-milkcocoafalseshao-jie-lt-3zhou-nian-number-codegrid-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/beda9ee6a20e49bbb610c82f675950e6/preview_slide_0.jpg?4759791"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "クリスマス企画を技術面から振り返り� ( #ヒカラボ : 15分)",
+      "date": "2015-04-30",
+      "url": "https://speakerdeck.com/n0bisuke/kurisumasuqi-hua-woji-shu-mian-karazhen-rifan-ri-number-hikarabo-15fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/ceaeb04d3f8547c78cfea22c30bd6bc1/preview_slide_0.jpg?4729925"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Chatwork + RaspberryPiで Juke Box (第2回 #iotlt : 5分)",
+      "date": "2015-03-31",
+      "url": "https://speakerdeck.com/n0bisuke/chatwork-plus-raspberrypide-juke-box-di-2hui-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/9dd26bdae37744f6b852ef77302c9593/preview_slide_0.jpg?4599965"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "Chatwork-RaspberryPi-Audio",
+      "date": "2015-02-25",
+      "url": "https://speakerdeck.com/n0bisuke/chatwork-raspberrypi-audio",
+      "thumbnail": "https://files.speakerdeck.com/presentations/7f95f845ccb3425584b52dd74c928df9/preview_slide_0.jpg?4464290"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "RomoとTesselでプロトタイピングを楽しんだ話 (#iotlt : 5分)",
+      "date": "2015-02-23",
+      "url": "https://speakerdeck.com/n0bisuke/romototesseldepurototaipinguwole-sindahua-number-iotlt-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/22b04da05c3d44fe90e9b07669d95c74/preview_slide_0.jpg?4460273"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "LIGのクリスマス企画の裏側~企画全体を通して~ (CMU26:15分)",
+      "date": "2015-02-21",
+      "url": "https://speakerdeck.com/n0bisuke/ligfalsekurisumasuqi-hua-falseli-ce-qi-hua-quan-ti-wotong-site-cmu26-15fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/c093d76aa2e04668b055046b3c73b872/preview_slide_0.jpg?4456488"
+    },
+    {
+      "source": "speakerdeck",
+      "title": "LIGのクリスマスを支えた技術(html5minutes:5分)",
+      "date": "2015-01-15",
+      "url": "https://speakerdeck.com/n0bisuke/ligfalsekurisumasuwozhi-etaji-shu-html5minutes-5fen",
+      "thumbnail": "https://files.speakerdeck.com/presentations/b6873e307e2c0132f67912a273297520/preview_slide_0.jpg?4338475"
+    }
+  ]
+}

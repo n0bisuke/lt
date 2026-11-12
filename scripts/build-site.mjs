@@ -8,7 +8,7 @@
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, normalize, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseDeck, renderArticle, renderSlides } from './lib/deck.mjs';
+import { kindOf, parseDeck, renderArticle, renderSlides } from './lib/deck.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
@@ -31,6 +31,7 @@ rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST, { recursive: true });
 
 const published = [];
+const shared = new Set();
 for (const name of readdirSync(DECKS).sort().reverse()) {
   const dir = join(DECKS, name);
   const mdPath = join(dir, 'deck.md');
@@ -70,6 +71,12 @@ for (const name of readdirSync(DECKS).sort().reverse()) {
   }
   // Markdown の ![](images/x) や ![bg](images/x) も拾う
   if (isMd) for (const m of source.matchAll(/\bimages\/[^\s"'()<>&;]+/g)) refs.add(normalize(decodeURI(m[0])));
+  // テーマの素材（講演テーマのフォント、時代画像、ロゴなど）はサイト直下に同じ位置で置く
+  for (const m of html.matchAll(/\.\.\/\.\.\/(design-system\/[^\s"'()<>&;?#]+)/g)) {
+    const f = decodeURI(m[1]);
+    if (!existsSync(join(ROOT, f))) errors.push(`${name}: ${f} が見つかりません`);
+    else shared.add(f);
+  }
   const out = join(DIST, name);
   const slides = join(out, 'slides');
   mkdirSync(slides, { recursive: true });
@@ -92,7 +99,7 @@ for (const name of readdirSync(DECKS).sort().reverse()) {
       warnings.push(`${name}: 未使用の画像 ${unused.length} 個はサイトに出しませんが、コミットすると公開リポジトリには残ります（--move-unused で unused/ に移せます）: ${unused.join(', ')}`);
     }
   }
-  published.push({ id: name, ...meta, article, slideCount: isMd ? rendered.count : (html.match(/<section\s+class="[^"]*\blt-slide\b/g) ?? []).length });
+  published.push({ id: name, ...meta, kind: kindOf(meta), article, slideCount: isMd ? rendered.count : (html.match(/<section\s+class="[^"]*\blt-slide\b/g) ?? []).length });
 }
 
 if (errors.length) {
@@ -114,7 +121,7 @@ for (const { name, dir, unused } of moves) {
 // デッキが読み込む共通ファイル（デッキからの相対パスをそのまま保つ）
 const P = 'design-system/project';
 const AVATAR = `${P}/assets/Logos/nobisuke-avatar.jpg`;
-for (const f of ['design-system/tokens.css', `${P}/components/bundle.css`, `${P}/components/bundle.js`, AVATAR]) {
+for (const f of ['design-system/tokens.css', `${P}/components/bundle.css`, `${P}/components/bundle.js`, AVATAR, ...shared]) {
   if (!existsSync(join(ROOT, f))) { console.error(`エラー: ${f} がありません（node scripts/build-tokens.mjs）`); process.exit(1); }
   mkdirSync(dirname(join(DIST, f)), { recursive: true });
   cpSync(join(ROOT, f), join(DIST, f));
@@ -137,7 +144,10 @@ main { max-width: 1200px; margin: 0 auto; padding: 40px 16px 80px; }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px 24px; }
 .card { display: block; text-decoration: none; }
-.card img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 1px solid var(--rule-soft); }
+.card[hidden] { display: none; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+.filters .btn[aria-pressed="true"] { background: var(--ink-strong); color: var(--paper); }
+.card img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; border: 1px solid var(--rule-soft); }
 .card h2 { margin: 12px 0 4px; font-size: 18px; font-weight: 700; line-height: 1.4; }
 .card:hover h2 { text-decoration: underline; }
 .card p { margin: 0; font-size: 14px; }
@@ -183,11 +193,42 @@ const avatarBlock = (root, heading) => `<a class="site-head" href="${root}">
   </a>`;
 
 // ---------- 一覧 ----------
-const cards = published.map((d) => `    <a class="card" href="${encodeURIComponent(d.id)}/">
+const externalPath = join(ROOT, 'external.json');
+const external = existsSync(externalPath) ? JSON.parse(readFileSync(externalPath, 'utf8')).decks : [];
+const SOURCE_NAMES = { speakerdeck: 'Speaker Deck', qiita: 'Qiita' };
+const localCard = (d) => `    <a class="card" href="${encodeURIComponent(d.id)}/" data-kind="${esc(d.kind)}">
       <img src="${encodeURIComponent(d.id)}/thumbnail.png" width="1280" height="720" loading="lazy" alt="">
       <h2>${esc(d.title)}</h2>
-      <p>${esc(dateJa(d.date))}・${d.slideCount}枚${d.event ? `<br>${esc(d.event)}` : ''}</p>
-    </a>`).join('\n');
+      <p>${esc(d.kind)}・${esc(dateJa(d.date))}・${d.slideCount}枚${d.event ? `<br>${esc(d.event)}` : ''}</p>
+    </a>`;
+const externalCard = (d) => `    <a class="card" href="${esc(d.url)}" data-kind="external">
+      <img src="${esc(d.thumbnail)}" width="1280" height="720" loading="lazy" alt="">
+      <h2>${esc(d.title)}</h2>
+      <p>${esc(dateJa(d.date))}・${esc(SOURCE_NAMES[d.source] ?? d.source)}</p>
+    </a>`;
+// 絞り込み。外部のスライドは LT か講演かを区別できないので「すべて」と「外部」にだけ出す
+const FILTERS = [['all', 'すべて'], ['LT', 'LT'], ['講演', '講演'], ['external', 'Speaker Deck・Qiita']];
+const filterBar = `  <div class="filters" role="group" aria-label="種類で絞り込む">
+${FILTERS.map(([k, label], i) => `    <button class="btn" type="button" data-filter="${esc(k)}" aria-pressed="${i === 0}">${esc(label)}</button>`).join('\n')}
+  </div>`;
+const filterScript = `<script>
+(function () {
+  var buttons = document.querySelectorAll('[data-filter]');
+  var cards = document.querySelectorAll('.card');
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var k = b.getAttribute('data-filter');
+      buttons.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      cards.forEach(function (c) { c.hidden = k !== 'all' && c.getAttribute('data-kind') !== k; });
+    });
+  });
+})();
+</script>`;
+// 同じ日付なら、このサイトのデッキを先に出す
+const cards = [
+  ...published.map((d) => ({ date: d.date, order: 0, html: localCard(d) })),
+  ...external.map((d) => ({ date: d.date, order: 1, html: externalCard(d) })),
+].sort((a, b) => b.date.localeCompare(a.date) || a.order - b.order).map((c) => c.html).join('\n');
 
 writeFileSync(join(DIST, 'index.html'), `<!doctype html>
 <html lang="ja">
@@ -201,9 +242,10 @@ ${headCommon('')}
 <body>
 <main>
   ${avatarBlock('./', '<h1>LT スライド</h1>')}
-${cards ? `  <div class="grid">\n${cards}\n  </div>` : '  <p class="empty">公開中のスライドはまだありません。</p>'}
+${cards ? `${filterBar}\n  <div class="grid">\n${cards}\n  </div>` : '  <p class="empty">公開中のスライドはまだありません。</p>'}
   <p class="site-foot"><a href="all.json">all.json</a></p>
 </main>
+${cards ? filterScript : ''}
 </body>
 </html>
 `);
@@ -296,6 +338,7 @@ writeFileSync(join(DIST, 'all.json'), JSON.stringify({
       id: d.id,
       title: d.title,
       date: d.date,
+      kind: d.kind,
       event: d.event ?? '',
       eventUrl: d.eventUrl ?? '',
       slideCount: d.slideCount,
@@ -305,6 +348,7 @@ writeFileSync(join(DIST, 'all.json'), JSON.stringify({
       thumbnail: `${url}thumbnail.png`,
     };
   }),
+  external,
 }, null, 2) + '\n');
 
 for (const w of warnings) console.log(`注意: ${w}`);

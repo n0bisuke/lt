@@ -19,3 +19,6 @@ inbox/*
 # スライドに使っていない素材とメモ
 decks/*/notes/
 decks/*/unused/
+
+# annotate-screenshot スキルの作業フォルダ（Gyazo からダウンロードした画像と注釈）
+.annotate-work/

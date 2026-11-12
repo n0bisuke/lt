@@ -6,7 +6,11 @@ import { Marp } from '@marp-team/marp-core';
 import MarkdownIt from 'markdown-it';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const THEME = join(ROOT, 'design-system/marp/iotlt.css');
+// deck.md の先頭の theme: で選ぶ。指定がなければ LT 用の iotlt
+const THEMES = ['iotlt', 'lecture'].map((t) => join(ROOT, `design-system/marp/${t}.css`));
+
+// 一覧での種類。講演テーマのデッキは「講演」、それ以外は「LT」
+export const kindOf = (meta) => (meta.theme === 'lecture' ? '講演' : 'LT');
 
 function splitLines(text) {
   // コードブロックの中の --- を区切りと間違えないように、行単位で見る
@@ -42,7 +46,8 @@ export function parseDeck(md) {
 
 export function renderSlides(md, { title = '' } = {}) {
   const marp = new Marp({ html: true, math: false, emoji: { shortcode: false, unicode: false } });
-  marp.themeSet.default = marp.themeSet.add(readFileSync(THEME, 'utf8'));
+  const [lt] = THEMES.map((t) => marp.themeSet.add(readFileSync(t, 'utf8')));
+  marp.themeSet.default = lt;
   const { html, css } = marp.render(md);
   const count = (html.match(/<svg\b[^>]*\bdata-marpit-svg/g) ?? []).length;
   const esc = title.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
@@ -96,6 +101,8 @@ export function renderArticle(md) {
       .replace(/<(\/?)h1\b/g, '<$1h2')
       .replace(/\sstyle="[^"]*"/g, '')
       .replace(/(src|poster)="images\//g, '$1="slides/images/')
+      // テーマの素材は記事のページ（/<id>/）から見てひとつ上にある
+      .replace(/(src|poster)="\.\.\/\.\.\/design-system\//g, '$1="../design-system/')
       .replace(/<img /g, '<img loading="lazy" ')
       .trim();
     const notesHtml = notes.map((n) => it.render(n)).join('');

@@ -314,6 +314,7 @@ html.lt-deck-overview, html.lt-deck-overview body { overflow: auto; height: auto
 /* Marp が出力するスライド */
 .lt-deck--mounted svg[data-marpit-svg] { display: none !important; position: fixed; inset: 0; width: 100vw; height: 100vh; }
 .lt-deck--mounted svg[data-marpit-svg].is-active { display: block !important; }
+.lt-deck--overview > .marpit { display: contents; }
 .lt-deck--overview svg[data-marpit-svg] { display: block !important; width: 480px; height: 270px; background: #fff; }
 
 @page { size: 1920px 1080px; margin: 0; }

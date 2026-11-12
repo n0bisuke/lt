@@ -7,6 +7,9 @@
     "markdown-it": "15.0.3"
   },
   "scripts": {
-    "deploy": "node scripts/deploy.mjs"
+    "deploy": "node scripts/deploy.mjs",
+    "fetch-external": "node scripts/fetch-external.mjs",
+    "check": "node scripts/lecture/check.mjs",
+    "cards": "node scripts/lecture/cards.mjs"
   }
 }
