@@ -141,6 +141,9 @@ main { max-width: 1200px; margin: 0 auto; padding: 40px 16px 80px; }
 .site-head img { width: 64px; height: 64px; flex: none; border-radius: var(--radius-avatar); box-shadow: var(--shadow-avatar); }
 .site-head h1, .site-head .site-name { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; }
 .site-head p { margin: 0; }
+.site-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; margin-bottom: 40px; }
+.site-top .site-head { margin-bottom: 0; }
+.site-top .btn { display: inline-flex; align-items: center; }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px 24px; }
 .card { display: block; text-decoration: none; }
@@ -164,7 +167,20 @@ main { max-width: 1200px; margin: 0 auto; padding: 40px 16px 80px; }
 .tag[hidden] { display: none; }
 .tag-wip { background: var(--accent-red); color: var(--paper); }
 .empty { padding: 24px 0; border-top: 1px solid var(--rule-soft); }
-.site-foot { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--rule-soft); font-size: 14px; }
+.site-foot { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--rule-soft); font-size: 14px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+.site-foot p { margin: 0; }
+
+/* 右下に追従する問い合わせ */
+.contact { position: fixed; right: 16px; bottom: 16px; z-index: 10; }
+.contact summary { list-style: none; display: inline-block; min-height: 44px; padding: 10px 18px; border: var(--stroke-rule) solid var(--ink-strong); background: var(--ink-strong); color: var(--paper); font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgb(0 0 0 / 0.18); }
+.contact summary::-webkit-details-marker { display: none; }
+.contact summary:focus-visible { outline: var(--stroke-rule) solid var(--ink-strong); outline-offset: 2px; }
+.contact[open] summary { background: var(--paper); color: var(--ink-strong); }
+.contact ul { position: absolute; right: 0; bottom: calc(100% + 8px); margin: 0; padding: 8px 0; list-style: none; min-width: 240px; border: var(--stroke-rule) solid var(--ink-strong); background: var(--paper); box-shadow: 0 4px 12px rgb(0 0 0 / 0.18); }
+.contact li a { display: block; padding: 10px 16px; text-decoration: none; }
+.contact li a:hover { background: var(--chip); }
+.contact li small { display: block; font-size: 13px; color: var(--ink-muted); }
+main { padding-bottom: 120px; }
 
 .detail { max-width: 1040px; margin: 0 auto; }
 .player { aspect-ratio: 16 / 9; border: 1px solid var(--rule-soft); background: #000; }
@@ -204,9 +220,27 @@ const avatarBlock = (root, heading) => `<a class="site-head" href="${root}">
     <div>${heading}<p>菅原のびすけ @n0bisuke</p></div>
   </a>`;
 
+// ---------- 共通の問い合わせとフッター ----------
+const CONTACTS = [
+  ['X で DM する', '@n0bisuke・お問い合わせはこちら', 'https://x.com/n0bisuke'],
+  ['Qiita', 'qiita.com/n0bisuke', 'https://qiita.com/n0bisuke'],
+  ['GitHub', 'github.com/n0bisuke', 'https://github.com/n0bisuke'],
+];
+const contactWidget = `<details class="contact">
+  <summary>お問い合わせはこちら</summary>
+  <ul>
+${CONTACTS.map(([label, sub, url]) => `    <li><a href="${esc(url)}" target="_blank" rel="noopener">${esc(label)}<small>${esc(sub)}</small></a></li>`).join('\n')}
+  </ul>
+</details>`;
+const YEAR = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' }).slice(0, 4);
+const siteFoot = (extra = '') => `  <footer class="site-foot">${extra ? `<p>${extra}</p>` : ''}<p>© ${YEAR} 菅原のびすけ</p></footer>`;
+
 // ---------- 一覧 ----------
 const externalPath = join(ROOT, 'external.json');
 const external = existsSync(externalPath) ? JSON.parse(readFileSync(externalPath, 'utf8')).decks : [];
+// 画面に出す種類の名前。all.json の kind（LT / 講演）は取得側のために変えない
+const KIND_LABELS = { 講演: '講演・セミナー' };
+const kindLabel = (k) => KIND_LABELS[k] ?? k;
 const SOURCE_NAMES = { speakerdeck: 'Speaker Deck', qiita: 'Qiita', slideshare: 'SlideShare' };
 // IoTLT の発表はタイトル・イベント名・イベントページから見分ける
 const isIotlt = (d) => /iotlt/i.test([d.title, d.event, d.eventUrl].filter(Boolean).join(' '));
@@ -218,7 +252,7 @@ const localCard = (d) => `    <a class="card" href="${encodeURIComponent(d.id)}/
       <img src="${encodeURIComponent(d.id)}/thumbnail.png" width="1280" height="720" loading="lazy" alt="">
 ${tags(d)}
       <h2>${esc(d.title)}</h2>
-      <p>${esc(d.kind)}・${esc(dateJa(d.date))}・${d.slideCount}枚${d.event ? `<br>${esc(d.event)}` : ''}</p>
+      <p>${esc(kindLabel(d.kind))}・${esc(dateJa(d.date))}・${d.slideCount}枚${d.event ? `<br>${esc(d.event)}` : ''}</p>
     </a>`;
 const externalCard = (d) => `    <a class="card" href="${esc(d.url)}" ${cardAttrs(d, 'external')}>
       <img src="${esc(d.thumbnail)}" width="1280" height="720" loading="lazy" alt="">
@@ -227,7 +261,7 @@ ${tags(d)}
       <p>${esc(dateJa(d.date))}・${esc(SOURCE_NAMES[d.source] ?? d.source)}</p>
     </a>`;
 // 絞り込み。外部のスライドは LT か講演かを区別できないので「すべて」「IoTLT」「外部」にだけ出す
-const FILTERS = [['all', 'すべて'], ['LT', 'LT'], ['講演', '講演'], ['IoTLT', 'IoTLT'], ['external', 'Speaker Deck・Qiita・SlideShare']];
+const FILTERS = [['all', 'すべて'], ['LT', 'LT'], ['講演', kindLabel('講演')], ['IoTLT', 'IoTLT'], ['external', 'Speaker Deck・Qiita・SlideShare']];
 const filterBar = `  <label class="search"><span class="visually-hidden">タイトルで検索</span><input type="search" id="q" placeholder="タイトルで検索（例：iot）" autocomplete="off"></label>
   <div class="filters" role="group" aria-label="種類で絞り込む">
 ${FILTERS.map(([k, label], i) => `    <button class="btn" type="button" data-filter="${esc(k)}" aria-pressed="${i === 0}">${esc(label)}</button>`).join('\n')}
@@ -285,10 +319,14 @@ ${headCommon('')}
 </head>
 <body>
 <main>
-  ${avatarBlock('./', '<h1>LT スライド</h1>')}
+  <div class="site-top">
+    ${avatarBlock('./', '<h1>LT スライド</h1>')}
+    <a class="btn" href="https://github.com/n0bisuke/lt" target="_blank" rel="noopener">GitHub リポジトリ</a>
+  </div>
 ${cards ? `${filterBar}\n  <div class="grid">\n${cards}\n  </div>\n  <p class="no-match" id="no-match" hidden>一致するスライドはありません。</p>` : '  <p class="empty">公開中のスライドはまだありません。</p>'}
-  <p class="site-foot"><a href="all.json">all.json</a></p>
+${siteFoot('<a href="all.json">all.json</a>')}
 </main>
+${contactWidget}
 ${cards ? filterScript : ''}
 </body>
 </html>
@@ -328,7 +366,9 @@ ${headCommon('../')}
     <h1>${esc(d.title)}</h1>
     <p class="meta">${esc(dateJa(d.date))}・${d.slideCount}枚${d.event ? `<br>発表イベント：${d.eventUrl ? `<a href="${esc(d.eventUrl)}">${esc(d.event)}</a>` : esc(d.event)}` : ''}</p>
 ${d.article ? `    <div class="article">\n${d.article}\n    </div>\n` : ''}  </article>
+${siteFoot()}
 </main>
+${contactWidget}
 <script>
 (function () {
   var frame = document.querySelector('iframe');
