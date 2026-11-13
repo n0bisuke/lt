@@ -116,6 +116,19 @@ published: true
 
 ---
 
+<!-- _class: link-cards -->
+
+# 予約の時点で、生年月日まで聞かれる
+
+<!-- card: images/reservation-form.png | ある医療機関のWeb予約フォーム（必須：氏名・フリガナ・生年月日・性別・電話番号・メール・郵便番号・住所） -->
+<article class="gl-linkcard is-image" data-card="images/reservation-form.png | ある医療機関のWeb予約フォーム（必須：氏名・フリガナ・生年月日・性別・電話番号・メール・郵便番号・住所）"><img src="images/reservation-form.png" alt=""><small class="t-note gl-muted">ある医療機関のWeb予約フォーム（必須：氏名・フリガナ・生年月日・性別・電話番号・メール・郵便番号・住所）</small></article>
+
+<p class="gl-foot t-note gl-muted">来院したら、問診票でもまた生年月日を書く</p>
+
+<!-- ある医療機関のWeb予約フォームです。予約するだけなのに、氏名、フリガナ、生年月日、性別、電話番号、メールアドレス、郵便番号、住所がすべて必須になっていました。来院したら、問診票でもまた生年月日を書きます。予約の時点で、ここまで要るでしょうか。 -->
+
+---
+
 # 順番を管理するだけなら受付番号で済むかも
 
 - 氏名・生年月日・メール・電話 => **A-023**
