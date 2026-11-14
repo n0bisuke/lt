@@ -11,14 +11,16 @@ a{color:inherit}
 img[alt="logo"]{position:absolute;top:var(--space-3);left:var(--space-3);height:48px;width:auto;background:var(--on-image)}
 footer{position:absolute;left:0;right:0;bottom:var(--space-2);text-align:center;font-size:18px;line-height:1.5;color:var(--ink-muted);word-spacing:.6em}
 footer strong{color:var(--ai);border-bottom:var(--stroke-box) solid var(--ai)}
-/* current-topic: 目次に沿った現在地を左上に常時表示 */
-section.current-topic footer{top:var(--space-2);left:var(--space-8);right:auto;bottom:auto;width:auto;padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);background:var(--tag-bg);color:var(--on-tag);text-align:left;word-spacing:normal;z-index:2}
+/* current-topic: 目次に沿った現在地を左下に控えめに表示 */
+section.current-topic footer{top:auto;left:var(--space-8);right:auto;bottom:var(--space-2);width:auto;padding:0 var(--space-1);border-radius:var(--radius-sm);background:var(--rule);color:var(--ink);font-size:18px;line-height:1.4;text-align:left;word-spacing:normal;z-index:2}
+section[data-marpit-pagination]::after{right:var(--space-3);bottom:var(--space-2);padding:0;color:var(--ink-muted);font-size:18px;line-height:1}
 section.current-topic>:is(h1,h2){top:64px}
 section.panel{background:var(--surface-panel)}
 /* 部品を指定しないスライドと補足、目次は、見出しの下で本文を縦の中央に置く（#13） */
 section:not([class]),section.panel,section.agenda{display:flex;flex-direction:column;justify-content:center}
 /* current-topic が付いた通常スライドも、見出しの下の本文を縦中央に置く */
 section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.closing){display:flex;flex-direction:column;justify-content:center}
+section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.closing)>img{display:block;max-width:100%;max-height:460px;object-fit:contain;align-self:center;margin:0 auto}
 section:not([class]) img{display:block;max-width:100%;max-height:460px;object-fit:contain;margin:0 auto}
 /* text-image: 投稿・記事など、画像内の文字を読ませたいスライド */
 section.text-image{display:flex;flex-direction:column;justify-content:center}

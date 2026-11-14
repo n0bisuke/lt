@@ -41,6 +41,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 | `design-system/marp/lecture.css` | 講演テーマ。`build-tokens.mjs` が生成するので手で編集しない |
 | `scripts/lecture/` | 講演テーマの検査（`npm run check`）とカードの展開（`npm run cards`） |
 | `scripts/lecture/build-variants.mjs` | 親 `deck.md` から版別デッキを生成する。既存版に差分があるときは手編集として保持し、明示的な `--force` のときだけ上書きする |
+| `logs/` | 修正の原因・対応・確認結果を日付付きで記録する |
 | `.agents/skills/lt-slides/SKILL.md` | Codex用のLT作成スキル。Claude Code用の `.claude/skills/lt-slides/SKILL.md` と同じ手順を保つ |
 | `.claude/skills/annotate-screenshot/` | [protoout/teachers-agent-skills](https://github.com/protoout/teachers-agent-skills) から入れた、スクショへの注釈付けと Gyazo へのアップロード（`scripts/upload-gyazo.mjs`）。トークンは `.env` の `GYAZO_ACCESS_TOKEN` で、値は読まず表示もしない。アップロードは1枚ずつ発表者に確認してから行う。初回は `npm ci --prefix .claude/skills/annotate-screenshot` |
 | `.agents/skills/lt-slides/SKILL.md` | Codex用のLT作成スキル。Claude Code用の `.claude/skills/lt-slides/SKILL.md` と同じ手順を保つ |
@@ -188,6 +189,7 @@ Markdown で書けないときだけ使います。
 
 ## 守ること
 
+- **修正を記録する。** デザインシステムや生成処理の不具合を直したら `logs/YYYY-MM-DD.md` に原因、対応、確認結果を追記します。既存の記録を消したり置き換えたりしません。
 - **発表者の手作業を最優先する。** `deck.md` や画像などに発表者が直接加えた変更は重要な成果物として扱い、生成・同期スクリプトやエージェントの編集で上書きしません。編集前に `git diff` と現在のファイルを確認し、必要な箇所だけを小さく変更します。生成物と手編集が競合したら手編集を残し、勝手に `--force` や全面書き換えをしません。VS Code の「ファイルの内容が新しい」通知では Compare を使い、Overwrite は選ばず、差分を保全してから作業します。
 - **事実を作らない。** 発表者が試していない結果、数値、デモ、感想を書きません。分からなければ `lt-slot` か「【要確認】」にします。
 - **画像を作らない。** 製品ロゴや写真を描き起こしたり、それらしい画像で埋めたりしません。生成画像は発表者が頼んだときだけ使います。
