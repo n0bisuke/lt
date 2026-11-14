@@ -45,6 +45,20 @@ const published = decks.filter((e) => isPublished(join(ROOT, 'decks', e.name))).
 const drafts = decks.map((e) => e.name).filter((n) => !published.includes(n));
 const paths = [['.', ':(exclude)decks'], ...published.map((n) => [`decks/${n}`])];
 
+// 複数版を親フォルダへ移したとき、以前の `-10min` / `-5min` フォルダの削除も公開する。
+// 公開済み variants デッキに対応し、Git 管理下にあり、作業ツリーから消えたものだけを追加する。
+for (const name of published) {
+  const dir = join(ROOT, 'decks', name);
+  const md = join(dir, 'deck.md');
+  if (!existsSync(md) || parseDeck(readFileSync(md, 'utf8')).meta.variants !== true) continue;
+  for (const suffix of ['10min', '5min']) {
+    const legacy = `decks/${name}-${suffix}`;
+    if (existsSync(join(ROOT, legacy))) continue;
+    const tracked = spawnSync('git', ['ls-files', '-z', '--', legacy], { cwd: ROOT, encoding: 'utf8' }).stdout;
+    if (tracked) paths.push([legacy]);
+  }
+}
+
 if (dryRun) {
   for (const p of paths) run('git', 'add', '-A', '-n', '--', ...p);
   console.log(`未公開のためコミットしないデッキ: ${drafts.join(', ') || 'なし'}`);
