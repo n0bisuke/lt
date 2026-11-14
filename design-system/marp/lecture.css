@@ -23,6 +23,8 @@ section.current-topic>:is(h1,h2){top:64px}
 section.panel{background:var(--surface-panel)}
 /* 部品を指定しないスライドと補足、目次は、見出しの下で本文を縦の中央に置く（#13） */
 section:not([class]),section.panel,section.agenda{display:flex;flex-direction:column;justify-content:center}
+/* current-topic が付いた通常スライドも、見出しの下の本文を縦中央に置く */
+section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.closing){display:flex;flex-direction:column;justify-content:center}
 section:not([class]) img{display:block;max-width:100%;max-height:460px;object-fit:contain;margin:0 auto}
 /* text-image: 投稿・記事など、画像内の文字を読ませたいスライド */
 section.text-image{display:flex;flex-direction:column;justify-content:center}
@@ -53,6 +55,7 @@ section.hero>:is(h1,h2){left:var(--space-8);right:auto;top:auto;bottom:var(--spa
 section.key-message{padding:0 var(--space-8);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:var(--space-3);font-size:40px;line-height:1.6}
 section.key-message>:is(h1,h2){position:static;font-size:30px;line-height:1.4;font-weight:500;color:var(--ink-muted)}
 section.key-message p{margin:0}
+section.key-message>ul{width:fit-content;max-width:100%;text-align:left}
 /* agenda: 太字が現在地。ほかは沈む */
 section.agenda{padding-left:280px}
 section.agenda li{color:var(--ink-dim)}

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // usage: node scripts/lecture/build-variants.mjs [decks/<master>]
 // variants: true の deck.md を元に、variant subfolders の deck.md を生成する。
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseDeck } from '../lib/deck.mjs';
@@ -54,7 +54,7 @@ function referencedImages(markdown) {
   return new Set([...markdown.matchAll(/images\/[^\s"'()<>&|]+/g)].map((m) => m[0]));
 }
 
-export function buildVariants(sourceDir) {
+export function buildVariants(sourceDir, { force = false } = {}) {
   const sourcePath = join(sourceDir, 'deck.md');
   const source = readFileSync(sourcePath, 'utf8');
   const { meta, body } = parseDeck(source);
@@ -76,14 +76,20 @@ export function buildVariants(sourceDir) {
     const outputDir = join(sourceDir, variant.name);
     const outputPath = join(outputDir, 'deck.md');
     mkdirSync(outputDir, { recursive: true });
-    if (!existsSync(outputPath) || readFileSync(outputPath, 'utf8') !== output) writeFileSync(outputPath, output);
+    const existing = existsSync(outputPath) ? readFileSync(outputPath, 'utf8') : null;
+    const protectedManualEdit = existing !== null && existing !== output && !force;
+    if (existing === null || (existing !== output && force)) writeFileSync(outputPath, output);
+    if (protectedManualEdit) {
+      console.warn(`${relative(ROOT, outputPath)}: 手編集を保持しました（親から再生成する場合は --force）`);
+    }
 
-    const imageDir = join(outputDir, 'images');
-    rmSync(imageDir, { recursive: true, force: true });
-    for (const image of referencedImages(output)) {
+    // 既存の画像フォルダは消さず、足りない参照画像だけを補う。
+    const imageSource = protectedManualEdit ? existing : output;
+    for (const image of referencedImages(imageSource)) {
       const from = resolve(sourceDir, image);
       const to = resolve(outputDir, image);
       if (!from.startsWith(`${resolve(sourceDir, 'images')}${sep}`)) throw new Error(`画像パスが不正です: ${image}`);
+      if (existsSync(to) && !force) continue;
       if (!existsSync(from)) throw new Error(`${sourcePath}: ${image} が見つかりません`);
       mkdirSync(dirname(to), { recursive: true });
       cpSync(from, to);
@@ -101,9 +107,12 @@ export function findVariantMasters() {
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const dirs = process.argv[2] ? [resolve(ROOT, process.argv[2])] : findVariantMasters();
+  const args = process.argv.slice(2);
+  const force = args.includes('--force');
+  const target = args.find((arg) => !arg.startsWith('--'));
+  const dirs = target ? [resolve(ROOT, target)] : findVariantMasters();
   for (const dir of dirs) {
-    const outputs = buildVariants(dir);
+    const outputs = buildVariants(dir, { force });
     console.log(`${relative(ROOT, dir)}: ${outputs.map((x) => relative(dir, x)).join(', ')} を生成しました`);
   }
 }

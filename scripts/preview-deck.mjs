@@ -165,10 +165,7 @@ function scheduleRebuild() {
 
 watch(decksRoot, { recursive: true }, (_event, filename) => {
   if (!filename || !String(filename).endsWith('.md')) return;
-  const changed = join(decksRoot, String(filename));
-  // 版別 deck.md は buildVariants の生成物。監視すると生成のたび再ビルドしてループする。
-  const master = join(dirname(dirname(changed)), 'deck.md');
-  if (existsSync(master) && parseDeck(readFileSync(master, 'utf8')).meta.variants === true) return;
+  // 版別 deck.md の手編集もプレビューに反映する。buildVariants は差分のある既存ファイルを保持する。
   scheduleRebuild();
 });
 

@@ -40,6 +40,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 | `design-system/lecture/` | 講演テーマの色・寸法（`tokens.json`）、部品（`theme.src.css`）、文書、見本、フォント、画像 |
 | `design-system/marp/lecture.css` | 講演テーマ。`build-tokens.mjs` が生成するので手で編集しない |
 | `scripts/lecture/` | 講演テーマの検査（`npm run check`）とカードの展開（`npm run cards`） |
+| `scripts/lecture/build-variants.mjs` | 親 `deck.md` から版別デッキを生成する。既存版に差分があるときは手編集として保持し、明示的な `--force` のときだけ上書きする |
 | `.agents/skills/lt-slides/SKILL.md` | Codex用のLT作成スキル。Claude Code用の `.claude/skills/lt-slides/SKILL.md` と同じ手順を保つ |
 | `.claude/skills/annotate-screenshot/` | [protoout/teachers-agent-skills](https://github.com/protoout/teachers-agent-skills) から入れた、スクショへの注釈付けと Gyazo へのアップロード（`scripts/upload-gyazo.mjs`）。トークンは `.env` の `GYAZO_ACCESS_TOKEN` で、値は読まず表示もしない。アップロードは1枚ずつ発表者に確認してから行う。初回は `npm ci --prefix .claude/skills/annotate-screenshot` |
 | `.agents/skills/lt-slides/SKILL.md` | Codex用のLT作成スキル。Claude Code用の `.claude/skills/lt-slides/SKILL.md` と同じ手順を保つ |
@@ -144,6 +145,8 @@ node scripts/build-deck.mjs decks/<デッキ名>
 
 `deck.md` から `deck.html` を作ります。ブラウザでの発表は、この `deck.html` を開いて ← → でページ送り、`f` で全画面です。
 
+版別デッキを親 `deck.md` から作り直す場合は `npm run variants -- decks/<デッキ名>` を使います。既存の版別 `deck.md` に手編集がある場合は保持されます。内容を意図して上書きするときだけ `npm run variants -- decks/<デッキ名> --force` を使います。
+
 編集しながら確認する場合は `npm run deck -- decks` を使います。表示された localhost の URL を組み込みブラウザで開くと、スライドと記事を選べます。`deck.md` を保存すると、時間別版と記事を再ビルドし、プレビューを自動更新します。終了は `Ctrl+C` です。
 
 スライドの画像を微調整するには、プレビュー左下の「画像を編集」を押します。画像をドラッグして移動し、右下の丸をドラッグして縦横比を保ったままサイズを変更できます。変更はデッキの `.lt-adjustments.json` に保存され、リセットできます。サイトを再生成するときも調整が反映されます。
@@ -185,6 +188,7 @@ Markdown で書けないときだけ使います。
 
 ## 守ること
 
+- **発表者の手作業を最優先する。** `deck.md` や画像などに発表者が直接加えた変更は重要な成果物として扱い、生成・同期スクリプトやエージェントの編集で上書きしません。編集前に `git diff` と現在のファイルを確認し、必要な箇所だけを小さく変更します。生成物と手編集が競合したら手編集を残し、勝手に `--force` や全面書き換えをしません。VS Code の「ファイルの内容が新しい」通知では Compare を使い、Overwrite は選ばず、差分を保全してから作業します。
 - **事実を作らない。** 発表者が試していない結果、数値、デモ、感想を書きません。分からなければ `lt-slot` か「【要確認】」にします。
 - **画像を作らない。** 製品ロゴや写真を描き起こしたり、それらしい画像で埋めたりしません。生成画像は発表者が頼んだときだけ使います。
 - **言葉を整えすぎない。** 発表者の短い話し言葉をそのまま使います。
