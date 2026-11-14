@@ -8,8 +8,10 @@
   },
   "scripts": {
     "deploy": "node scripts/deploy.mjs",
+    "deck": "node scripts/preview-deck.mjs",
     "fetch-external": "node scripts/fetch-external.mjs",
     "check": "node scripts/lecture/check.mjs",
-    "cards": "node scripts/lecture/cards.mjs"
+    "cards": "node scripts/lecture/cards.mjs",
+    "variants": "node scripts/lecture/build-variants.mjs"
   }
 }

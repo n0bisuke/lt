@@ -24,7 +24,7 @@ img[alt="avatar"]{border-radius:50%;object-fit:cover;background:var(--on-image)}
 .gl-author img{width:72px;height:72px;border-radius:50%;object-fit:cover}
 section.title-slide .gl-author p{font-size:22px;line-height:1.4;color:var(--ink)}
 /* speaker-profile */
-section.speaker-profile{padding:104px var(--space-8) 0 220px}
+section.speaker-profile{padding:120px var(--space-8) var(--space-6) 220px;display:flex;flex-direction:column;justify-content:center}
 section.speaker-profile img[alt="avatar"]{position:absolute;left:var(--space-6);top:104px;width:128px;height:128px}
 section.speaker-profile p{font-size:22px;line-height:1.5;color:var(--ink-muted)}
 section.speaker-profile ul+p+ul{font-size:24px;line-height:1.6;margin-top:var(--space-1)}

@@ -58,6 +58,12 @@ scripts/export-pdf.sh decks/sample_bbq
 
 ブラウザで `deck.html` を開きます。← → でページ送り、`f` で全画面です。`deck.html?overview` で全スライドを一覧できます。
 
+編集中はライブプレビューを使えます。次のコマンドを実行して表示された localhost の URL を組み込みブラウザで開きます。一覧からスライドと記事を選べます。エディタで `deck.md` を保存すると、版と記事を再生成してプレビューを自動更新します。終了はターミナルで `Ctrl+C` です。
+
+```bash
+npm run deck -- decks
+```
+
 ## フォルダ
 
 - `design-system/project/`：デザインシステムの本体（`tokens.json`、`README.md`、`components/`）

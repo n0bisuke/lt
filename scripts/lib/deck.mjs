@@ -44,7 +44,7 @@ export function parseDeck(md) {
   return { meta, body: fm ? src.slice(fm[0].length) : src };
 }
 
-export function renderSlides(md, { title = '' } = {}) {
+export function renderSlides(md, { title = '', assetPrefix = '../../design-system' } = {}) {
   const marp = new Marp({ html: true, math: false, emoji: { shortcode: false, unicode: false } });
   const [lt] = THEMES.map((t) => marp.themeSet.add(readFileSync(t, 'utf8')));
   marp.themeSet.default = lt;
@@ -60,8 +60,8 @@ export function renderSlides(md, { title = '' } = {}) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc}</title>
 <style>${css}</style>
-<link rel="stylesheet" href="../../design-system/project/components/bundle.css">
-<script src="../../design-system/project/components/bundle.js"></script>
+<link rel="stylesheet" href="${assetPrefix}/project/components/bundle.css">
+<script src="${assetPrefix}/project/components/bundle.js"></script>
 </head>
 <body>
 <main class="lt-deck">

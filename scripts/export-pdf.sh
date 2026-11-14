@@ -5,6 +5,16 @@ DECK_DIR="$(cd "$1" && pwd)"
 NAME="$(basename "$DECK_DIR")"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
+# Nested variants keep stable public IDs in frontmatter, not in the folder name.
+if [ -f "$DECK_DIR/deck.md" ]; then
+  if grep -q '^variants: true$' "$DECK_DIR/deck.md"; then
+    echo "$DECK_DIR/deck.md は複数版の編集元です。出力先の 15min/、10min/、5min/ を指定してください" >&2
+    exit 1
+  fi
+  DECK_ID="$(sed -n 's/^id:[[:space:]]*//p' "$DECK_DIR/deck.md" | head -n 1 | tr -d '\"')"
+  [ -n "$DECK_ID" ] && NAME="$DECK_ID"
+fi
+
 if grep -q '"source": "pdf"' "$DECK_DIR/deck.json" 2>/dev/null; then
   echo "$NAME は PDF から取り込んだデッキです。元の PDF を上書きしないよう書き出しません" >&2
   exit 1

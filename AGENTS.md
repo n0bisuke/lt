@@ -25,9 +25,11 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 | パス | 内容 |
 | --- | --- |
 | `inbox/` | 発表者が画像やメモを入れるフォルダ。Git には入らない |
-| `decks/<YYYYMMDD>_<短い英語名>/` | スライド置き場。`deck.md`、`images/`、`images.md`、`notes/`、書き出した PDF とサムネイル。PDF から取り込んだデッキだけは `index.html` と `deck.json` |
+| `decks/<YYYYMMDD>_<短い英語名>/` | スライド置き場。`deck.md`、`images/`、`notes/`。複数時間版は同じフォルダ内に `15min/`、`10min/` などの生成済み版を置きます。PDF から取り込んだデッキだけは `index.html` と `deck.json` |
 | `design-system/marp/theme.src.css` | Markdown の要素と見た目の対応。`iotlt.css` はここから生成されるので手で編集しない |
 | `scripts/build-deck.mjs` | `deck.md` から確認用の `deck.html` を作る |
+| `scripts/lecture/build-variants.mjs` | 1つの `deck.md` から時間別の版を生成する |
+| `scripts/preview-deck.mjs` | スライドと記事をlocalhostで配信し、`deck.md` の保存で再ビルド・プレビュー更新する |
 | `design-system/project/tokens.json` | 色・文字・余白の唯一の定義元 |
 | `design-system/project/components/bundle.css` | 部品の配置 |
 | `design-system/project/components/bundle.js` | ページ送りなどの実行コード |
@@ -48,6 +50,8 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 ## スライドの作り方
 
 発表者とチャットで話しながら、次の手順で作ります。`inbox/` の素材はあってもなくても始められます。Claude Code の `/lt-slides` も同じ流れです。公開とコミットは頼まれるまでしません。
+
+**ブラウザーを使うとき：** Webページの閲覧やスライドのプレビュー確認には Codex 内蔵ブラウザーを使います。発表者が明示的に頼まない限り、ホスト側の Chrome / Chrome Dev / Brave は起動・使用しません。PDF書き出しなどのコマンドがこれらを起動する場合も、内蔵ブラウザーを使う方法を先に探します。
 
 1. **デッキを用意して取り込む。** 次のコマンドで `decks/<名前>/` を作ります。`inbox/` の画像は `images/` に、メモなどは `notes/` に入ります。あとから `inbox/` に足された分は、同じコマンドをもう一度実行すれば取り込めます。
 
@@ -137,6 +141,20 @@ node scripts/build-deck.mjs decks/<デッキ名>
 ```
 
 `deck.md` から `deck.html` を作ります。ブラウザでの発表は、この `deck.html` を開いて ← → でページ送り、`f` で全画面です。
+
+編集しながら確認する場合は `npm run deck -- decks` を使います。表示された localhost の URL を組み込みブラウザで開くと、スライドと記事を選べます。`deck.md` を保存すると、時間別版と記事を再ビルドし、プレビューを自動更新します。終了は `Ctrl+C` です。
+
+複数時間版の元データは親フォルダの `deck.md` です。スライドの先頭に `<!-- only: 15min,10min -->` のように書くと、その版だけに載ります。指定がないスライドは全版に載ります。5分版だけ文面を変える場合は、同じ位置に `<!-- only: 5min -->` を付けた別スライドを続けて置きます。`npm run deck -- decks` と `npm run deploy` は、公開前に時間別の版を自動生成します。
+
+```bash
+npm run variants -- decks/<デッキ名>
+```
+
+生成版を含むデッキ一覧をローカルで配信します。起動後に表示される URL を Codex 内蔵ブラウザーで開きます。ホスト側ブラウザーは起動しません。終了は `Ctrl+C` です。
+
+```bash
+npm run deck -- decks
+```
 
 VS Code では Marp for VS Code 拡張を入れると、`deck.md` のプレビューで確認しながら直せます。テーマの設定は `.vscode/settings.json` に入っています。
 

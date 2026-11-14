@@ -6,9 +6,10 @@
 //   /all.json    一覧の API
 // PDF とサムネイルはフォントを揃えるため手元で作ってコミットしておく（scripts/export-pdf.sh）。
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
-import { dirname, join, normalize, relative, sep } from 'node:path';
+import { basename, dirname, join, normalize, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { kindOf, parseDeck, renderArticle, renderSlides } from './lib/deck.mjs';
+import { buildVariants, findVariantMasters } from './lecture/build-variants.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
@@ -23,6 +24,8 @@ const warnings = [];
 const moves = [];
 const baseUrl = JSON.parse(readFileSync(join(ROOT, 'site.json'), 'utf8')).baseUrl.replace(/\/$/, '');
 
+for (const master of findVariantMasters()) buildVariants(master);
+
 function allFiles(dir) {
   return readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? allFiles(join(dir, e.name)) : [join(dir, e.name)]));
 }
@@ -30,37 +33,58 @@ function allFiles(dir) {
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST, { recursive: true });
 
+function collectDeckDirs(dir) {
+  const entries = readdirSync(dir, { withFileTypes: true });
+  const hasDeck = entries.some((entry) => entry.isFile() && ['deck.md', 'deck.json'].includes(entry.name));
+  const found = hasDeck ? [dir] : [];
+  for (const entry of entries.sort((a, b) => a.name.localeCompare(b.name))) {
+    if (!entry.isDirectory() || ['images', 'notes', 'unused'].includes(entry.name)) continue;
+    found.push(...collectDeckDirs(join(dir, entry.name)));
+  }
+  return found;
+}
+
 const published = [];
 const shared = new Set();
-for (const name of readdirSync(DECKS).sort().reverse()) {
-  const dir = join(DECKS, name);
+for (const dir of collectDeckDirs(DECKS)) {
+  const folderName = basename(dir);
   const mdPath = join(dir, 'deck.md');
   const metaPath = join(dir, 'deck.json');
   const isMd = existsSync(mdPath);
   if (!isMd && !existsSync(metaPath)) continue;
   const source = isMd ? readFileSync(mdPath, 'utf8') : null;
   const meta = isMd ? parseDeck(source).meta : JSON.parse(readFileSync(metaPath, 'utf8'));
+  if (meta.variants === true) continue;
   if (meta.published !== true) continue;
+  const id = meta.id ?? folderName;
+  // path lets a versioned deck keep a nested public route without changing its API id.
+  const route = meta.path ?? id;
+  const routeParts = String(route).split('/');
+  if (!routeParts.length || routeParts.some((part) => !/^[a-zA-Z0-9._-]+$/.test(part) || part === '.' || part === '..')) {
+    errors.push(`${id}: path は英数字・._- のパス区切りで指定してください`);
+    continue;
+  }
 
   const htmlPath = isMd ? mdPath : join(dir, 'index.html');
   // Markdown のデッキは、ここで HTML と記事に変換する
-  const rendered = isMd ? renderSlides(source, { title: meta.title ?? '' }) : null;
+  const renderSource = isMd ? (meta.path ? source : source.replaceAll('../../../design-system/', '../../design-system/')) : null;
+  const rendered = isMd ? renderSlides(renderSource, { title: meta.title ?? '' }) : null;
   const html = isMd ? rendered.html : readFileSync(htmlPath, 'utf8');
-  const article = isMd ? renderArticle(source) : '';
-  const pdfPath = join(dir, `${name}.pdf`);
+  const article = isMd ? renderArticle(renderSource) : '';
+  const pdfPath = join(dir, `${id}.pdf`);
   const thumbPath = join(dir, 'thumbnail.png');
 
-  if (/class="[^"]*\blt-slot\b/.test(source ?? html)) errors.push(`${name}: 差し替えていない lt-slot が残っています`);
-  if ((source ?? html).includes('【要確認】')) errors.push(`${name}: 【要確認】が残っています`);
-  if (!meta.title || !/^\d{4}-\d{2}-\d{2}$/.test(meta.date ?? '')) errors.push(`${name}: deck.json の title か date（YYYY-MM-DD）が正しくありません`);
-  if (meta.eventUrl && !/^https?:\/\//.test(meta.eventUrl)) errors.push(`${name}: deck.json の eventUrl は http(s) の URL にしてください`);
-  if (!existsSync(thumbPath)) errors.push(`${name}: thumbnail.png がありません（scripts/export-pdf.sh decks/${name}）`);
+  if (/class="[^"]*\blt-slot\b/.test(source ?? html)) errors.push(`${id}: 差し替えていない lt-slot が残っています`);
+  if ((source ?? html).includes('【要確認】')) errors.push(`${id}: 【要確認】が残っています`);
+  if (!meta.title || !/^\d{4}-\d{2}-\d{2}$/.test(meta.date ?? '')) errors.push(`${id}: deck.json の title か date（YYYY-MM-DD）が正しくありません`);
+  if (meta.eventUrl && !/^https?:\/\//.test(meta.eventUrl)) errors.push(`${id}: deck.json の eventUrl は http(s) の URL にしてください`);
+  if (!existsSync(thumbPath)) errors.push(`${id}: thumbnail.png がありません（scripts/export-pdf.sh decks/${relative(DECKS, dir)}）`);
   if (!existsSync(pdfPath)) {
-    errors.push(`${name}: PDF がありません（scripts/export-pdf.sh decks/${name}）`);
+    errors.push(`${id}: PDF がありません（scripts/export-pdf.sh decks/${relative(DECKS, dir)}）`);
   } else {
     const mb = statSync(pdfPath).size / 1024 / 1024;
-    if (mb > MAX_PDF_MB) errors.push(`${name}: PDF が ${Math.round(mb)}MB あり、GitHub に置けません`);
-    if (!process.env.CI && statSync(pdfPath).mtimeMs < statSync(htmlPath).mtimeMs) warnings.push(`${name}: PDF が index.html より古いです`);
+    if (mb > MAX_PDF_MB) errors.push(`${id}: PDF が ${Math.round(mb)}MB あり、GitHub に置けません`);
+    if (!process.env.CI && statSync(pdfPath).mtimeMs < statSync(htmlPath).mtimeMs) warnings.push(`${id}: PDF が index.html より古いです`);
   }
 
   // スライドが使っているファイルだけを公開する（未使用の画像やメモは出さない）
@@ -74,19 +98,19 @@ for (const name of readdirSync(DECKS).sort().reverse()) {
   // テーマの素材（講演テーマのフォント、時代画像、ロゴなど）はサイト直下に同じ位置で置く
   for (const m of html.matchAll(/\.\.\/\.\.\/(design-system\/[^\s"'()<>&;?#]+)/g)) {
     const f = decodeURI(m[1]);
-    if (!existsSync(join(ROOT, f))) errors.push(`${name}: ${f} が見つかりません`);
+    if (!existsSync(join(ROOT, f))) errors.push(`${id}: ${f} が見つかりません`);
     else shared.add(f);
   }
-  const out = join(DIST, name);
+  const out = join(DIST, ...routeParts);
   const slides = join(out, 'slides');
   mkdirSync(slides, { recursive: true });
   // slides/ は decks/<id>/ と同じ深さなので、../../design-system のパスはそのまま使える
   writeFileSync(join(slides, 'index.html'), html);
-  if (existsSync(pdfPath)) cpSync(pdfPath, join(out, `${name}.pdf`));
+  if (existsSync(pdfPath)) cpSync(pdfPath, join(out, `${id}.pdf`));
   if (existsSync(thumbPath)) cpSync(thumbPath, join(out, 'thumbnail.png'));
   for (const r of refs) {
     const from = join(dir, r);
-    if (r.startsWith('..') || !existsSync(from)) { errors.push(`${name}: ${r} が見つかりません`); continue; }
+    if (r.startsWith('..') || !existsSync(from)) { errors.push(`${id}: ${r} が見つかりません`); continue; }
     mkdirSync(dirname(join(slides, r)), { recursive: true });
     cpSync(from, join(slides, r));
   }
@@ -94,12 +118,12 @@ for (const name of readdirSync(DECKS).sort().reverse()) {
   if (existsSync(imagesDir)) {
     const unused = allFiles(imagesDir).map((f) => relative(dir, f).split(sep).join('/')).filter((f) => !refs.has(normalize(f)));
     if (unused.length && MOVE_UNUSED) {
-      moves.push({ name, dir, unused });
+      moves.push({ name: id, dir, unused });
     } else if (unused.length) {
-      warnings.push(`${name}: 未使用の画像 ${unused.length} 個はサイトに出しませんが、コミットすると公開リポジトリには残ります（--move-unused で unused/ に移せます）: ${unused.join(', ')}`);
+      warnings.push(`${id}: 未使用の画像 ${unused.length} 個はサイトに出しませんが、コミットすると公開リポジトリには残ります（--move-unused で unused/ に移せます）: ${unused.join(', ')}`);
     }
   }
-  published.push({ id: name, ...meta, kind: kindOf(meta), article, slideCount: isMd ? rendered.count : (html.match(/<section\s+class="[^"]*\blt-slide\b/g) ?? []).length });
+  published.push({ id, route: routeParts.join('/'), ...meta, kind: kindOf(meta), article, slideCount: isMd ? rendered.count : (html.match(/<section\s+class="[^"]*\blt-slide\b/g) ?? []).length });
 }
 
 if (errors.length) {
@@ -127,7 +151,8 @@ for (const f of ['design-system/tokens.css', `${P}/components/bundle.css`, `${P}
   cpSync(join(ROOT, f), join(DIST, f));
 }
 
-const urlOf = (d) => `${baseUrl}/${encodeURIComponent(d.id)}/`;
+const encodeRoute = (route) => route.split('/').map(encodeURIComponent).join('/');
+const urlOf = (d) => `${baseUrl}/${encodeRoute(d.route ?? d.id)}/`;
 const dateJa = (s) => { const [y, m, d] = s.split('-').map(Number); return `${y}年${m}月${d}日`; };
 
 writeFileSync(join(DIST, 'site.css'), `@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700&display=swap");
@@ -248,8 +273,8 @@ const isIotlt = (d) => /iotlt/i.test([d.title, d.event, d.eventUrl].filter(Boole
 const todayJst = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' });
 const cardAttrs = (d, kind) => `data-kind="${esc(kind)}" data-date="${esc(d.date)}"${isIotlt(d) ? ' data-iotlt' : ''}`;
 const tags = (d) => `      <div class="tags">${isIotlt(d) ? '<span class="tag">IoTLT</span>' : ''}<span class="tag tag-wip"${d.date > todayJst ? '' : ' hidden'}>WIP</span></div>`;
-const localCard = (d) => `    <a class="card" href="${encodeURIComponent(d.id)}/" ${cardAttrs(d, d.kind)}>
-      <img src="${encodeURIComponent(d.id)}/thumbnail.png" width="1280" height="720" loading="lazy" alt="">
+const localCard = (d) => `    <a class="card" href="${encodeRoute(d.route ?? d.id)}/" ${cardAttrs(d, d.kind)}>
+      <img src="${encodeRoute(d.route ?? d.id)}/thumbnail.png" width="1280" height="720" loading="lazy" alt="">
 ${tags(d)}
       <h2>${esc(d.title)}</h2>
       <p>${esc(kindLabel(d.kind))}・${esc(dateJa(d.date))}・${d.slideCount}枚${d.event ? `<br>${esc(d.event)}` : ''}</p>
@@ -335,11 +360,14 @@ ${cards ? filterScript : ''}
 // ---------- 個別ページ ----------
 for (const d of published) {
   const id = encodeURIComponent(d.id);
+  const routeParts = (d.route ?? d.id).split('/');
+  const routePath = join(DIST, ...routeParts);
+  const rootPrefix = '../'.repeat(routeParts.length);
   const description = [dateJa(d.date), d.event].filter(Boolean).join(' ');
-  writeFileSync(join(DIST, d.id, 'index.html'), `<!doctype html>
+  writeFileSync(join(routePath, 'index.html'), `<!doctype html>
 <html lang="ja">
 <head>
-${headCommon('../')}
+${headCommon(rootPrefix)}
 <title>${esc(d.title)} - 菅原のびすけ</title>
 <meta name="description" content="${esc(description)}">
 <meta property="og:title" content="${esc(d.title)}">
@@ -351,7 +379,7 @@ ${headCommon('../')}
 </head>
 <body>
 <main>
-  ${avatarBlock('../', '<p class="site-name">LT スライド</p>')}
+  ${avatarBlock(rootPrefix, '<p class="site-name">LT スライド</p>')}
   <article class="detail">
     <div class="player"><iframe src="slides/" title="${esc(d.title)}" allowfullscreen></iframe></div>
     <div class="controls">
@@ -360,7 +388,7 @@ ${headCommon('../')}
       <button class="btn" id="next" type="button" aria-label="次のスライド">→</button>
       <div class="end">
         <button class="btn" id="full" type="button">全画面</button>
-        <a class="btn" href="${id}.pdf" download>PDF</a>
+        <a class="btn" href="${encodeURIComponent(d.id)}.pdf" download>PDF</a>
       </div>
     </div>
     <h1>${esc(d.title)}</h1>
