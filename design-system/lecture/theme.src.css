@@ -11,9 +11,16 @@ a{color:inherit}
 img[alt="logo"]{position:absolute;top:var(--space-3);left:var(--space-3);height:48px;width:auto;background:var(--on-image)}
 footer{position:absolute;left:0;right:0;bottom:var(--space-2);text-align:center;font-size:18px;line-height:1.5;color:var(--ink-muted);word-spacing:.6em}
 footer strong{color:var(--ai);border-bottom:var(--stroke-box) solid var(--ai)}
+/* current-topic: 目次に沿った現在地を左上に常時表示 */
+section.current-topic footer{top:var(--space-2);left:var(--space-8);right:auto;bottom:auto;width:auto;padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);background:var(--tag-bg);color:var(--on-tag);text-align:left;word-spacing:normal;z-index:2}
+section.current-topic>:is(h1,h2){top:64px}
 section.panel{background:var(--surface-panel)}
 /* 部品を指定しないスライドと補足、目次は、見出しの下で本文を縦の中央に置く（#13） */
 section:not([class]),section.panel,section.agenda{display:flex;flex-direction:column;justify-content:center}
+section:not([class]) img{display:block;max-width:100%;max-height:460px;object-fit:contain;margin:0 auto}
+/* text-image: 投稿・記事など、画像内の文字を読ませたいスライド */
+section.text-image{display:flex;flex-direction:column;justify-content:center}
+section.text-image img{display:block;width:100%;max-width:980px;max-height:520px;object-fit:contain;margin:0 auto}
 /* title-slide */
 section.title-slide{padding:0 var(--space-6) 0 var(--space-8);display:flex;flex-direction:column;justify-content:center;gap:var(--space-3)}
 section.title-slide>:is(h1,h2){position:static;text-align:left;font-size:46px;line-height:1.3;font-weight:700}
@@ -38,7 +45,7 @@ section.hero{padding:0}
 section.hero>:is(h1,h2){left:var(--space-8);right:auto;top:auto;bottom:var(--space-8);text-align:left;font-size:74px;line-height:1.35;font-weight:700;letter-spacing:.04em;color:var(--on-image);background:var(--hero-scrim);padding:var(--space-1) var(--space-4)}
 /* key-message */
 section.key-message{padding:0 var(--space-8);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:var(--space-3);font-size:40px;line-height:1.6}
-section.key-message>:is(h1,h2){position:static;font-size:22px;line-height:1.5;font-weight:400;color:var(--ink-muted)}
+section.key-message>:is(h1,h2){position:static;font-size:30px;line-height:1.4;font-weight:500;color:var(--ink-muted)}
 section.key-message p{margin:0}
 /* agenda: 太字が現在地。ほかは沈む */
 section.agenda{padding-left:280px}

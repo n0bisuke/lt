@@ -23,6 +23,7 @@
 | 章の始まり | `hero` |
 | 記事や画像のURL | `link-cards` |
 | 記事の要点を自分の言葉で | `source-cards` |
+| 投稿・記事など、画像内の文字を読ませる | `text-image` |
 | 同じ分野のツール | `tool-gallery` |
 | 会場の声 | `poll-result` |
 | 分類の中の注目点 | `zone-compare` |
