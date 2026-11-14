@@ -117,6 +117,7 @@ section.actor-flow{padding-top:96px}
 section.zone-compare{padding-top:104px}
 /* 列の数に合わせて均等に分ける（#14） */
 .gl-zones{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:var(--space-3)}
+section.zone-compare .gl-zones{width:100%}
 section.zone-compare{display:flex;flex-direction:column;justify-content:center}
 /* 2列のときは、本文と同じ大きさの文字にする */
 .gl-zones:has(> .gl-zone:nth-child(2):last-child) .gl-zone .t-sub{font-size:28px;line-height:1.7}
@@ -126,6 +127,9 @@ section.zone-compare{display:flex;flex-direction:column;justify-content:center}
 .gl-zone.is-focus{background:var(--zone)}
 .gl-zone p{margin:0}
 .gl-zone .gl-out{margin-top:var(--space-2);font-weight:700}
+/* code blocks */
+section pre{width:100%;margin:0;padding:var(--space-3) var(--space-4);overflow:hidden;border-left:6px solid var(--rule);background:var(--surface-panel);font-family:var(--font-mono);font-size:28px;line-height:1.6;white-space:pre-wrap}
+section pre code{font-family:inherit}
 /* phase-chart */
 section.phase-chart{padding:72px var(--space-8) var(--space-2)}
 section.phase-chart h1{top:var(--space-2)}
