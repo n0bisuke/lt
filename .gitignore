@@ -11,6 +11,7 @@ node_modules/
 dist/
 design-system/tokens.css
 decks/**/deck.html
+decks/**/*.pdf
 
 # 取り込み前の画像と元ファイル
 inbox/*

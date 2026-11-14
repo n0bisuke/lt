@@ -43,8 +43,16 @@ function rebuildAll() {
   for (const master of findVariantMasters()) buildVariants(master);
   deckDirs.clear();
   collectDeckDirs(decksRoot);
+  const publishedTitles = new Set([...deckDirs]
+    .map((dir) => ({ dir, meta: parseDeck(readFileSync(join(dir, 'deck.md'), 'utf8')).meta }))
+    .filter(({ meta }) => meta.published === true)
+    .map(({ meta }) => meta.title));
+  for (const dir of [...deckDirs]) {
+    const { meta } = parseDeck(readFileSync(join(dir, 'deck.md'), 'utf8'));
+    if (meta.published !== true && publishedTitles.has(meta.title)) deckDirs.delete(dir);
+  }
   for (const dir of deckDirs) buildDeck(dir);
-  const site = spawnSync(process.execPath, ['scripts/build-site.mjs'], {
+  const site = spawnSync(process.execPath, ['scripts/build-site.mjs', '--preview'], {
     cwd: root,
     stdio: 'inherit',
   });

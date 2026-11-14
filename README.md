@@ -50,7 +50,7 @@ VS Code で Marp for VS Code 拡張（`marp-team.marp-vscode`）を入れ、`dec
 
 ## 発表と書き出し
 
-PDF、サムネイル、確認用の `deck.html` を作ります。
+Actions が公開時にPDFとサムネイルを生成します。手元でPDFが必要な場合だけ、次のコマンドで作ります（PDFはGitに追加しません）。
 
 ```bash
 scripts/export-pdf.sh decks/sample_bbq

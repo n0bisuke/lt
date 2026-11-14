@@ -40,7 +40,9 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 | `design-system/lecture/` | 講演テーマの色・寸法（`tokens.json`）、部品（`theme.src.css`）、文書、見本、フォント、画像 |
 | `design-system/marp/lecture.css` | 講演テーマ。`build-tokens.mjs` が生成するので手で編集しない |
 | `scripts/lecture/` | 講演テーマの検査（`npm run check`）とカードの展開（`npm run cards`） |
+| `.agents/skills/lt-slides/SKILL.md` | Codex用のLT作成スキル。Claude Code用の `.claude/skills/lt-slides/SKILL.md` と同じ手順を保つ |
 | `.claude/skills/annotate-screenshot/` | [protoout/teachers-agent-skills](https://github.com/protoout/teachers-agent-skills) から入れた、スクショへの注釈付けと Gyazo へのアップロード（`scripts/upload-gyazo.mjs`）。トークンは `.env` の `GYAZO_ACCESS_TOKEN` で、値は読まず表示もしない。アップロードは1枚ずつ発表者に確認してから行う。初回は `npm ci --prefix .claude/skills/annotate-screenshot` |
+| `.agents/skills/lt-slides/SKILL.md` | Codex用のLT作成スキル。Claude Code用の `.claude/skills/lt-slides/SKILL.md` と同じ手順を保つ |
 | `site.json` | 公開先の URL（`all.json` と個別ページの絶対 URL に使う） |
 | `scripts/fetch-external.mjs` | Speaker Deck と Qiita のスライド情報を `external.json` に保存する（`npm run fetch-external`、数分かかる）。`npm run deploy` では Speaker Deck だけを更新する。SlideShare はボット対策で取得できないので、`external.json` に手で書いた分を残す |
 | `external.json` | 一覧に載せる外部スライド。リンク先は各サービスの個別ページで、サムネイルも各サービスの URL を使う |
@@ -77,7 +79,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 
 1. 公開の前に、顔が写っている人、画面に映った個人情報や API キー、引用の許可を確認するよう発表者に伝えます。
 2. `deck.md` の先頭を `published: true` にします（PDF から取り込んだデッキは `deck.json` の `"published": true`）。
-3. サイトを組み立てて内容を検証します。ローカルの `npm run deploy` は PDF を作りません。GitHub Actions が公開ビルド時に PDF とサムネイルを生成します。`lt-slot` か「【要確認】」が残っている、PDF がない、画像が見つからない場合はエラーで止まります。
+3. サイトを組み立てて内容を検証します。ローカルの `npm run deploy` は PDF を作りません。GitHub Actions が変更のあったデッキの PDF とサムネイルを生成して公開成果物に含めます。`lt-slot` か「【要確認】」が残っている、公開用 Actions で PDF が作れない、画像が見つからない場合はエラーで止まります。
 
    ```bash
    npm run export-pdf
@@ -96,7 +98,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 
    サイトを組み立て直してエラーがなければ、`git add`、`commit`、`push` まで行います。`decks/` は `published: true` のデッキだけを add します。公開リポジトリでは、コミットした内容はすべて誰でも読めるので、`git add .` や `git add decks` を直接使いません。`npm run deploy -- --dry-run` で、コミットされるファイルを先に確認できます。
 
-PDF とサムネイルは GitHub Actions で WeasyPrint と Poppler を使って生成します。ブラウザーは使いません。手元で PDF を作る場合は `npm run export-pdf` を使い、事前に `brew install weasyprint poppler` を実行します。
+PDF とサムネイルは GitHub Actions で WeasyPrint と Poppler を使って生成し、`dist/` から公開します。PDF は Git に追加しません。Actions は push のたび公開デッキのPDFを再生成します。ブラウザーは使いません。手元で PDF を作る場合は `npm run export-pdf` を使い、事前に `brew install weasyprint poppler` を実行します。
 
 | URL | 内容 |
 | --- | --- |

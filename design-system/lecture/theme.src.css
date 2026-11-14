@@ -2,7 +2,7 @@
 section{position:relative;width:1280px;height:720px;box-sizing:border-box;overflow:hidden;padding:120px var(--space-8) var(--space-8);background:var(--surface);color:var(--ink);font-family:var(--font-sans);font-size:28px;line-height:1.7;font-weight:400;word-break:normal}
 section *{box-sizing:border-box}
 h1,h2,h3,p{margin:0}
-h1{position:absolute;top:var(--space-4);left:var(--space-8);right:var(--space-8);text-align:center;font-size:34px;line-height:1.4;font-weight:500}
+section>h1,section>h2{position:absolute;top:var(--space-4);left:var(--space-8);right:var(--space-8);text-align:center;font-size:34px;line-height:1.4;font-weight:500}
 p+p,ul+p,p+ul{margin-top:var(--space-3)}
 strong,b{font-weight:700}
 ul{margin:0;padding-left:1.1em;list-style:disc}
@@ -16,7 +16,7 @@ section.panel{background:var(--surface-panel)}
 section:not([class]),section.panel,section.agenda{display:flex;flex-direction:column;justify-content:center}
 /* title-slide */
 section.title-slide{padding:0 var(--space-6) 0 var(--space-8);display:flex;flex-direction:column;justify-content:center;gap:var(--space-3)}
-section.title-slide h1{position:static;text-align:left;font-size:46px;line-height:1.3;font-weight:700}
+section.title-slide>:is(h1,h2){position:static;text-align:left;font-size:46px;line-height:1.3;font-weight:700}
 section.title-slide p:last-of-type{font-size:22px;line-height:1.5;color:var(--ink-muted)}
 /* 発表者のアイコン。![avatar](...) で置く */
 img[alt="avatar"]{border-radius:50%;object-fit:cover;background:var(--on-image)}
@@ -31,14 +31,14 @@ section.speaker-profile ul+p+ul{font-size:24px;line-height:1.6;margin-top:var(--
 /* brand */
 section.brand{padding:0 var(--space-8);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:var(--space-3)}
 section.brand img[alt="logo"]{position:static;height:92px}
-section.brand h1{position:static;font-size:38px;line-height:1.5;font-weight:700;letter-spacing:.1em}
-section.brand h1+p{font-size:22px;line-height:1.5;color:var(--ink-muted)}
+section.brand>:is(h1,h2){position:static;font-size:38px;line-height:1.5;font-weight:700;letter-spacing:.1em}
+section.brand>:is(h1,h2)+p{font-size:22px;line-height:1.5;color:var(--ink-muted)}
 /* hero */
 section.hero{padding:0}
-section.hero h1{left:var(--space-8);right:auto;top:auto;bottom:var(--space-8);text-align:left;font-size:74px;line-height:1.35;font-weight:700;letter-spacing:.04em;color:var(--on-image);background:var(--hero-scrim);padding:var(--space-1) var(--space-4)}
+section.hero>:is(h1,h2){left:var(--space-8);right:auto;top:auto;bottom:var(--space-8);text-align:left;font-size:74px;line-height:1.35;font-weight:700;letter-spacing:.04em;color:var(--on-image);background:var(--hero-scrim);padding:var(--space-1) var(--space-4)}
 /* key-message */
 section.key-message{padding:0 var(--space-8);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:var(--space-3);font-size:40px;line-height:1.6}
-section.key-message h1{position:static;font-size:22px;line-height:1.5;font-weight:400;color:var(--ink-muted)}
+section.key-message>:is(h1,h2){position:static;font-size:22px;line-height:1.5;font-weight:400;color:var(--ink-muted)}
 section.key-message p{margin:0}
 /* agenda: 太字が現在地。ほかは沈む */
 section.agenda{padding-left:280px}
@@ -47,7 +47,7 @@ section.agenda strong{color:var(--ink)}
 section.agenda.overview li{color:var(--ink)}
 /* era-slide */
 section.era-slide{padding:124px var(--space-8) 72px var(--space-6);font-size:36px}
-section.era-slide h1{left:0;right:0;font-size:46px;line-height:1.3;font-weight:700}
+section.era-slide>:is(h1,h2){left:0;right:0;font-size:46px;line-height:1.3;font-weight:700}
 section.era-slide ul ul{font-size:28px;line-height:1.7}
 section.era-slide.recap li{color:var(--ink-dim)}
 section.era-slide.recap strong{color:var(--ink)}
@@ -78,6 +78,7 @@ section.era-map{padding:0}
 .gl-source{border:1px solid var(--rule);border-radius:var(--radius-sm);padding:var(--space-3);display:flex;flex-direction:column;gap:var(--space-2);min-height:340px;margin-top:var(--space-3)}
 .gl-source p{margin:0}
 .gl-source small{color:var(--ink-muted);margin-top:auto}
+.gl-source__screenshot{display:block;width:100%;height:220px;object-fit:contain;object-position:center;border:1px solid var(--rule);background:var(--surface-panel)}
 /* tool-gallery */
 .gl-tool{text-align:center;display:flex;flex-direction:column;gap:var(--space-1);margin-top:var(--space-3)}
 .gl-tool p{margin:0;color:var(--ink-muted)}
@@ -126,7 +127,7 @@ section pre{width:100%;margin:0;padding:var(--space-3) var(--space-4);overflow:h
 section pre code{font-family:inherit}
 /* phase-chart */
 section.phase-chart{padding:72px var(--space-8) var(--space-2)}
-section.phase-chart h1{top:var(--space-2)}
+section.phase-chart>:is(h1,h2){top:var(--space-2)}
 .gl-chart{display:block;width:100%;height:340px}
 .gl-line{fill:none;stroke-width:4}
 .gl-line--blue{stroke:var(--data-blue)}
@@ -159,8 +160,9 @@ section.phase-chart h1{top:var(--space-2)}
 .gl-say--ai>div{background:var(--ai-tint)}
 /* closing */
 section.closing img[alt="qr"]{position:absolute;right:var(--space-8);top:220px;width:200px;height:200px}
-section.closing{padding-right:300px}
-section.closing p:last-of-type{font-size:18px;line-height:1.5;color:var(--ink-muted)}
+section.closing{display:flex;flex-direction:column;justify-content:center;gap:var(--space-2);font-size:32px;line-height:1.6}
+section.closing:has(img[alt="qr"]){padding-right:300px}
+section.closing p:last-of-type{font-size:24px;line-height:1.5;font-weight:700;color:var(--ink)}
 /* link-cards: <!-- card: URL --> から生成するカード */
 section.link-cards{display:flex;justify-content:center;align-items:flex-start;gap:var(--space-3)}
 .gl-linkcard{flex:1 1 0;min-width:0;max-width:720px;display:flex;flex-direction:column;gap:var(--space-1);border:1px solid var(--rule);border-radius:var(--radius-sm);padding:var(--space-2);overflow:hidden}

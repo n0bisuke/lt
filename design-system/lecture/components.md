@@ -98,6 +98,9 @@
 - 記事本文を転載せず、要約します。
 - 1枚に3件までにします。
 - 出典のない主張には使いません。
+- 元ページの見た目が理解を助ける場合は、Codexの組み込みブラウザーでページを撮影してカードの先頭に添えます。スクリーンショットは `images/cards/` に保存し、媒体名・日付・リンクをカードに残します。
+- 画像を使う場合の形: `<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/source-page.png" alt="出典ページの見出しと要点"><strong class="t-body">要点</strong><p class="t-sub">自分の言葉での要約。</p><small class="t-note"><a href="https://example.com">媒体名 / 日付</a></small></article>`
+- スクリーンショットを取得できない場合は、代替画像を作らずテキストカードを使います。
 
 ## `link-cards`
 
@@ -173,6 +176,8 @@ URLからプレビューカードを作るスライドです。URLがまだな�
 ## `closing`
 
 講演の主張を繰り返し、聞き手の次の行動を示すスライドです。
+
+本文はスライドの縦中央に置き、最後の行動は本文より大きく強調します。
 
 **用意するもの:** 主張、行動の呼びかけ1文。案内するページがあれば、そのURLとQRコード画像。
 

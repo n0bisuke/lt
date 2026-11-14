@@ -17,6 +17,8 @@ const DIST = join(ROOT, 'dist');
 const DECKS = join(ROOT, 'decks');
 const MAX_PDF_MB = 90; // GitHub は 100MB を超えるファイルを受け付けない
 const MOVE_UNUSED = process.argv.includes('--move-unused');
+const PREVIEW = process.argv.includes('--preview');
+const REQUIRE_ARTIFACTS = process.argv.includes('--require-artifacts');
 const SITE_TITLE = 'LT スライド - 菅原のびすけ';
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -97,9 +99,9 @@ for (const dir of collectDeckDirs(DECKS)) {
   if ((source ?? html).includes('【要確認】')) errors.push(`${id}: 【要確認】が残っています`);
   if (!meta.title || !/^\d{4}-\d{2}-\d{2}$/.test(meta.date ?? '')) errors.push(`${id}: deck.json の title か date（YYYY-MM-DD）が正しくありません`);
   if (meta.eventUrl && !/^https?:\/\//.test(meta.eventUrl)) errors.push(`${id}: deck.json の eventUrl は http(s) の URL にしてください`);
-  if (!existsSync(thumbPath)) errors.push(`${id}: thumbnail.png がありません（scripts/export-pdf.sh decks/${relative(DECKS, dir)}）`);
+  if (!existsSync(thumbPath) && REQUIRE_ARTIFACTS) errors.push(`${id}: thumbnail.png がありません（ActionsでPDF出力してください）`);
   if (!existsSync(pdfPath)) {
-    errors.push(`${id}: PDF がありません（scripts/export-pdf.sh decks/${relative(DECKS, dir)}）`);
+    if (REQUIRE_ARTIFACTS) errors.push(`${id}: PDF がありません（ActionsでPDF出力してください）`);
   } else {
     const mb = statSync(pdfPath).size / 1024 / 1024;
     if (mb > MAX_PDF_MB) errors.push(`${id}: PDF が ${Math.round(mb)}MB あり、GitHub に置けません`);
@@ -114,6 +116,11 @@ for (const dir of collectDeckDirs(DECKS)) {
   }
   // Markdown の ![](images/x) や ![bg](images/x) も拾う
   if (isMd) for (const m of source.matchAll(/\bimages\/[^\s"'()<>&;]+/g)) refs.add(normalize(decodeURI(m[0])));
+  const missingRefs = [...refs].filter((r) => r.startsWith('..') || !existsSync(join(dir, r)));
+  if (missingRefs.length && PREVIEW) {
+    console.warn(`プレビュー対象から除外: ${relative(DECKS, dir)}（不足画像: ${missingRefs.join(', ')}）`);
+    continue;
+  }
   // テーマの素材（講演テーマのフォント、時代画像、ロゴなど）はサイト直下に同じ位置で置く
   for (const m of html.matchAll(/(?:\.\.\/)+(design-system\/[^\s"'()<>&;?#]+)/g)) {
     const f = decodeURI(m[1]);
@@ -154,6 +161,8 @@ for (const dir of collectDeckDirs(DECKS)) {
       .sort((a, b) => new Date(b) - new Date(a))[0],
     variantGroup,
     variantName: variantGroup ? variantName : null,
+    hasPdf: existsSync(pdfPath),
+    hasThumbnail: existsSync(thumbPath),
   });
 }
 
@@ -326,7 +335,7 @@ const todayJst = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo'
 const cardAttrs = (d, kind) => `data-kind="${esc(kind)}" data-date="${esc(d.date)}"${isIotlt(d) ? ' data-iotlt' : ''}`;
 const tags = (d) => `      <div class="tags">${isIotlt(d) ? '<span class="tag">IoTLT</span>' : ''}<span class="tag tag-wip"${d.date > todayJst ? '' : ' hidden'}>WIP</span></div>`;
 const localCard = (d) => `    <a class="card" href="${encodeRoute(d.route ?? d.id)}/" ${cardAttrs(d, d.kind)}>
-      <img src="${encodeRoute(d.route ?? d.id)}/thumbnail.png" width="1280" height="720" loading="lazy" alt="">
+${d.hasThumbnail ? `      <img src="${encodeRoute(d.route ?? d.id)}/thumbnail.png" width="1280" height="720" loading="lazy" alt="">` : ''}
 ${tags(d)}
       <h2>${esc(d.title)}</h2>
       <p>${esc(kindLabel(d.kind))}・${esc(dateJa(d.date))}・${d.versions ? `${d.versions.length}つの${d.versions.some((version) => version.variantName === 'v0.1') ? 'バージョン' : '発表時間版'}` : `${d.slideCount}枚`}${d.event ? `<br>${esc(d.event)}` : ''}</p>
@@ -450,7 +459,7 @@ ${headCommon(rootPrefix)}
       <button class="btn" id="next" type="button" aria-label="次のスライド">→</button>
       <div class="end">
         <button class="btn" id="full" type="button">全画面</button>
-        <a class="btn" href="${encodeURIComponent(d.id)}.pdf" download>PDF</a>
+      ${d.hasPdf ? `<a class="btn" href="${encodeURIComponent(d.id)}.pdf" download>PDF</a>` : ''}
       </div>
     </div>
     <h1>${esc(d.title)}</h1>
@@ -529,7 +538,7 @@ writeFileSync(join(DIST, 'all.json'), JSON.stringify({
       updatedAt: d.updatedAt,
       url,
       slides: `${url}slides/`,
-      pdf: `${url}${encodeURIComponent(d.id)}.pdf`,
+      ...(d.hasPdf ? { pdf: `${url}${encodeURIComponent(d.id)}.pdf` } : {}),
       thumbnail: `${url}thumbnail.png`,
     };
   }),

@@ -76,7 +76,8 @@ for (const file of files) {
   const body = front ? text.slice(front[0].length) : text;
   body.split(/\n---\n/).forEach((slide, i) => {
     if (/^(<!--[\s\S]*?-->|\s|!\[[^\]]*\]\([^)]*\))*$/.test(slide)) return;
-    if (!/^# /m.test(slide)) fail(`${rel} スライド${i + 1}`, '見出し（# ）がありません');
+    const heading = i === 0 ? /^# /m : /^## /m;
+    if (!heading.test(slide)) fail(`${rel} スライド${i + 1}`, i === 0 ? '記事タイトルの見出し（# ）がありません' : '話題の見出し（## ）がありません');
   });
 }
 

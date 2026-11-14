@@ -95,7 +95,7 @@ export function renderArticle(md, { assetPrefix = '../' } = {}) {
     }).replace(/!\[bg[^\]]*\]/g, '![]').trim();
     // 1枚目と自己紹介はページの見出しと重なるので記事には入れない
     if (/\b(title|profile)\b/.test(cls)) continue;
-    const heading = (/^#\s+(.+)$/m.exec(text) ?? [])[1] ?? '';
+    const heading = (/^#{1,6}\s+(.+)$/m.exec(text) ?? [])[1] ?? '';
     const plain = text.replace(/\s+/g, ' ');
     const html = it.render(text)
       .replace(/<(\/?)h1\b/g, '<$1h2')
@@ -109,7 +109,7 @@ export function renderArticle(md, { assetPrefix = '../' } = {}) {
     if (!html && !notesHtml) continue;
     const prev = parts[parts.length - 1];
     // スライドを複製して段階的に見せた分は、最後の1枚だけ残す
-    if (prev && heading && prev.heading === heading && plain.includes(prev.plain.replace(/^# .+? /, ''))) {
+    if (prev && heading && prev.heading === heading && plain.includes(prev.plain.replace(/^#{1,6} .+? /, ''))) {
       parts[parts.length - 1] = { heading, plain, html, notes: [prev.notes, notesHtml].filter(Boolean).join('') };
     } else {
       parts.push({ heading, plain, html, notes: notesHtml });
