@@ -7,6 +7,7 @@
 // PDF とサムネイルはフォントを揃えるため手元で作ってコミットしておく（scripts/export-pdf.sh）。
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, normalize, relative, sep } from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { kindOf, parseDeck, renderArticle, renderSlides } from './lib/deck.mjs';
 import { buildVariants, findVariantMasters } from './lecture/build-variants.mjs';
@@ -23,6 +24,14 @@ const errors = [];
 const warnings = [];
 const moves = [];
 const baseUrl = JSON.parse(readFileSync(join(ROOT, 'site.json'), 'utf8')).baseUrl.replace(/\/$/, '');
+
+function updatedAtFor(sourcePath) {
+  const repoPath = relative(ROOT, sourcePath);
+  const dirty = spawnSync('git', ['status', '--porcelain', '--', repoPath], { cwd: ROOT, encoding: 'utf8' }).stdout?.trim();
+  if (dirty) return statSync(sourcePath).mtime.toISOString();
+  const committed = spawnSync('git', ['log', '-1', '--format=%cI', '--', repoPath], { cwd: ROOT, encoding: 'utf8' }).stdout?.trim();
+  return committed || statSync(sourcePath).mtime.toISOString();
+}
 
 for (const master of findVariantMasters()) buildVariants(master);
 
@@ -59,6 +68,13 @@ for (const dir of collectDeckDirs(DECKS)) {
   const id = meta.id ?? folderName;
   // path lets a versioned deck keep a nested public route without changing its API id.
   const route = meta.path ?? id;
+  const parentDir = dirname(dir);
+  const variantName = basename(dir);
+  const parentDeck = join(parentDir, 'deck.md');
+  const parentIsVariantMaster = existsSync(parentDeck) && parseDeck(readFileSync(parentDeck, 'utf8')).meta.variants === true;
+  const variantGroup = parentIsVariantMaster && ['15min', '10min', '5min'].includes(variantName)
+    ? relative(DECKS, parentDir)
+    : null;
   const routeParts = String(route).split('/');
   if (!routeParts.length || routeParts.some((part) => !/^[a-zA-Z0-9._-]+$/.test(part) || part === '.' || part === '..')) {
     errors.push(`${id}: path は英数字・._- のパス区切りで指定してください`);
@@ -67,10 +83,11 @@ for (const dir of collectDeckDirs(DECKS)) {
 
   const htmlPath = isMd ? mdPath : join(dir, 'index.html');
   // Markdown のデッキは、ここで HTML と記事に変換する
-  const renderSource = isMd ? (meta.path ? source : source.replaceAll('../../../design-system/', '../../design-system/')) : null;
-  const rendered = isMd ? renderSlides(renderSource, { title: meta.title ?? '' }) : null;
+  const assetPrefix = `${'../'.repeat(routeParts.length + 1)}design-system`;
+  const renderSource = isMd ? source : null;
+  const rendered = isMd ? renderSlides(renderSource, { title: meta.title ?? '', assetPrefix }) : null;
   const html = isMd ? rendered.html : readFileSync(htmlPath, 'utf8');
-  const article = isMd ? renderArticle(renderSource) : '';
+  const article = isMd ? renderArticle(renderSource, { assetPrefix: '../'.repeat(routeParts.length) }) : '';
   const pdfPath = join(dir, `${id}.pdf`);
   const thumbPath = join(dir, 'thumbnail.png');
 
@@ -96,7 +113,7 @@ for (const dir of collectDeckDirs(DECKS)) {
   // Markdown の ![](images/x) や ![bg](images/x) も拾う
   if (isMd) for (const m of source.matchAll(/\bimages\/[^\s"'()<>&;]+/g)) refs.add(normalize(decodeURI(m[0])));
   // テーマの素材（講演テーマのフォント、時代画像、ロゴなど）はサイト直下に同じ位置で置く
-  for (const m of html.matchAll(/\.\.\/\.\.\/(design-system\/[^\s"'()<>&;?#]+)/g)) {
+  for (const m of html.matchAll(/(?:\.\.\/)+(design-system\/[^\s"'()<>&;?#]+)/g)) {
     const f = decodeURI(m[1]);
     if (!existsSync(join(ROOT, f))) errors.push(`${id}: ${f} が見つかりません`);
     else shared.add(f);
@@ -123,7 +140,17 @@ for (const dir of collectDeckDirs(DECKS)) {
       warnings.push(`${id}: 未使用の画像 ${unused.length} 個はサイトに出しませんが、コミットすると公開リポジトリには残ります（--move-unused で unused/ に移せます）: ${unused.join(', ')}`);
     }
   }
-  published.push({ id, route: routeParts.join('/'), ...meta, kind: kindOf(meta), article, slideCount: isMd ? rendered.count : (html.match(/<section\s+class="[^"]*\blt-slide\b/g) ?? []).length });
+  published.push({
+    id,
+    route: routeParts.join('/'),
+    ...meta,
+    kind: kindOf(meta),
+    article,
+    slideCount: isMd ? rendered.count : (html.match(/<section\s+class="[^"]*\blt-slide\b/g) ?? []).length,
+    updatedAt: updatedAtFor(isMd ? mdPath : metaPath),
+    variantGroup,
+    variantName: variantGroup ? variantName : null,
+  });
 }
 
 if (errors.length) {
@@ -154,6 +181,23 @@ for (const f of ['design-system/tokens.css', `${P}/components/bundle.css`, `${P}
 const encodeRoute = (route) => route.split('/').map(encodeURIComponent).join('/');
 const urlOf = (d) => `${baseUrl}/${encodeRoute(d.route ?? d.id)}/`;
 const dateJa = (s) => { const [y, m, d] = s.split('-').map(Number); return `${y}年${m}月${d}日`; };
+const updatedJa = (s) => new Intl.DateTimeFormat('ja-JP', {
+  timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false,
+}).format(new Date(s));
+
+const variantOrder = { '15min': 0, '10min': 1, '5min': 2 };
+const groupedVersions = new Map();
+for (const deck of published) {
+  if (!deck.variantGroup) continue;
+  if (!groupedVersions.has(deck.variantGroup)) groupedVersions.set(deck.variantGroup, []);
+  groupedVersions.get(deck.variantGroup).push(deck);
+}
+const listablePublished = published.filter((deck) => !deck.variantGroup);
+for (const versions of groupedVersions.values()) {
+  versions.sort((a, b) => variantOrder[a.variantName] - variantOrder[b.variantName]);
+  for (const version of versions) version.versions = versions;
+  listablePublished.push(versions.find((version) => version.variantName === '15min') ?? versions[0]);
+}
 
 writeFileSync(join(DIST, 'site.css'), `@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700&display=swap");
 * { box-sizing: border-box; }
@@ -218,6 +262,10 @@ main { padding-bottom: 120px; }
 .btn[hidden] { display: none; }
 .detail h1 { margin: 32px 0 8px; font-size: 32px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; }
 .detail .meta { margin: 0; }
+.last-updated { margin: 10px 0 0; text-align: right; color: var(--ink-muted); font-size: 13px; }
+.versions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 20px; }
+.versions-label { margin-right: 4px; color: var(--ink-muted); font-size: 14px; }
+.versions .btn[aria-current="page"] { background: var(--ink-strong); color: var(--paper); }
 .article { margin-top: 48px; font-size: 17px; line-height: 1.9; overflow-wrap: anywhere; }
 .article section { padding: 24px 0; border-top: 1px solid var(--rule-soft); }
 .article h2 { margin: 0 0 12px; font-size: 22px; font-weight: 700; line-height: 1.4; letter-spacing: -0.02em; }
@@ -277,7 +325,7 @@ const localCard = (d) => `    <a class="card" href="${encodeRoute(d.route ?? d.i
       <img src="${encodeRoute(d.route ?? d.id)}/thumbnail.png" width="1280" height="720" loading="lazy" alt="">
 ${tags(d)}
       <h2>${esc(d.title)}</h2>
-      <p>${esc(kindLabel(d.kind))}・${esc(dateJa(d.date))}・${d.slideCount}枚${d.event ? `<br>${esc(d.event)}` : ''}</p>
+      <p>${esc(kindLabel(d.kind))}・${esc(dateJa(d.date))}・${d.versions ? `${d.versions.length}つの発表時間版` : `${d.slideCount}枚`}${d.event ? `<br>${esc(d.event)}` : ''}</p>
     </a>`;
 const externalCard = (d) => `    <a class="card" href="${esc(d.url)}" ${cardAttrs(d, 'external')}>
       <img src="${esc(d.thumbnail)}" width="1280" height="720" loading="lazy" alt="">
@@ -329,7 +377,7 @@ const filterScript = `<script>
 </script>`;
 // 同じ日付なら、このサイトのデッキを先に出す
 const cards = [
-  ...published.map((d) => ({ date: d.date, order: 0, html: localCard(d) })),
+  ...listablePublished.map((d) => ({ date: d.date, order: 0, html: localCard(d) })),
   ...external.map((d) => ({ date: d.date, order: 1, html: externalCard(d) })),
 ].sort((a, b) => b.date.localeCompare(a.date) || a.order - b.order).map((c) => c.html).join('\n');
 
@@ -363,6 +411,13 @@ for (const d of published) {
   const routeParts = (d.route ?? d.id).split('/');
   const routePath = join(DIST, ...routeParts);
   const rootPrefix = '../'.repeat(routeParts.length);
+  const versionSelector = d.versions?.length > 1
+    ? `<nav class="versions" aria-label="発表時間を選択"><span class="versions-label">発表時間</span>${d.versions.map((version) => {
+      const current = version.id === d.id;
+      const label = { '15min': '15分', '10min': '10分', '5min': '5分' }[version.variantName] ?? version.variantName;
+      return `<a class="btn" href="${rootPrefix}${encodeRoute(version.route)}/"${current ? ' aria-current="page"' : ''}>${label}版</a>`;
+    }).join('')}</nav>`
+    : '';
   const description = [dateJa(d.date), d.event].filter(Boolean).join(' ');
   writeFileSync(join(routePath, 'index.html'), `<!doctype html>
 <html lang="ja">
@@ -393,6 +448,8 @@ ${headCommon(rootPrefix)}
     </div>
     <h1>${esc(d.title)}</h1>
     <p class="meta">${esc(dateJa(d.date))}・${d.slideCount}枚${d.event ? `<br>発表イベント：${d.eventUrl ? `<a href="${esc(d.eventUrl)}">${esc(d.event)}</a>` : esc(d.event)}` : ''}</p>
+    <p class="last-updated"><time datetime="${esc(d.updatedAt)}">最終更新：${esc(updatedJa(d.updatedAt))}</time></p>
+${versionSelector ? `    ${versionSelector}\n` : ''}
 ${d.article ? `    <div class="article">\n${d.article}\n    </div>\n` : ''}  </article>
 ${siteFoot()}
 </main>
@@ -437,6 +494,14 @@ ${contactWidget}
 </body>
 </html>
 `);
+
+  // 以前の /<id>/ URL は残し、版別パスへ転送する。
+  if (d.variantGroup && d.route !== d.id) {
+    const legacyDir = join(DIST, d.id);
+    const target = `../${encodeRoute(d.route)}/`;
+    mkdirSync(legacyDir, { recursive: true });
+    writeFileSync(join(legacyDir, 'index.html'), `<!doctype html><html lang="ja"><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=${target}"><title>スライドのURLが変わりました</title><p><a href="${target}">新しいURLへ移動</a></p></html>\n`);
+  }
 }
 
 writeFileSync(join(DIST, '.nojekyll'), '');
@@ -454,6 +519,7 @@ writeFileSync(join(DIST, 'all.json'), JSON.stringify({
       event: d.event ?? '',
       eventUrl: d.eventUrl ?? '',
       slideCount: d.slideCount,
+      updatedAt: d.updatedAt,
       url,
       slides: `${url}slides/`,
       pdf: `${url}${encodeURIComponent(d.id)}.pdf`,

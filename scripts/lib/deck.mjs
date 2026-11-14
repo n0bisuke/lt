@@ -77,7 +77,7 @@ ${html}
 // 記事: 発表者ノート（<!-- --> のコメント）を本文として、スライドの内容と順に並べる
 const DIRECTIVE = /^\s*_?[A-Za-z]+\s*:/;
 
-export function renderArticle(md) {
+export function renderArticle(md, { assetPrefix = '../' } = {}) {
   const { body } = parseDeck(md);
   const it = new MarkdownIt({ html: true, linkify: true, breaks: true });
   const parts = [];
@@ -101,8 +101,8 @@ export function renderArticle(md) {
       .replace(/<(\/?)h1\b/g, '<$1h2')
       .replace(/\sstyle="[^"]*"/g, '')
       .replace(/(src|poster)="images\//g, '$1="slides/images/')
-      // テーマの素材は記事のページ（/<id>/）から見てひとつ上にある
-      .replace(/(src|poster)="\.\.\/\.\.\/design-system\//g, '$1="../design-system/')
+      // テーマの素材は記事ページの階層から site root へ戻った先にある
+      .replace(/(src|poster)="(?:\.\.\/)+design-system\//g, `$1="${assetPrefix}design-system/`)
       .replace(/<img /g, '<img loading="lazy" ')
       .trim();
     const notesHtml = notes.map((n) => it.render(n)).join('');

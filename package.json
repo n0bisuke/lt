@@ -4,6 +4,7 @@
   "type": "module",
   "dependencies": {
     "@marp-team/marp-core": "4.4.0",
+    "fullbleed": "0.9.1",
     "markdown-it": "15.0.3"
   },
   "scripts": {

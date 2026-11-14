@@ -36,10 +36,11 @@ function splitSlides(body) {
 function replaceFrontmatter(markdown, meta) {
   const match = /^---\n([\s\S]*?)\n---\n?/.exec(markdown);
   if (!match) throw new Error('variants master に YAML frontmatter がありません');
-  const lines = match[1].split('\n').filter((line) => !/^(?:id|title|variants):\s*/.test(line));
+  const lines = match[1].split('\n').filter((line) => !/^(?:id|title|variants|path):\s*/.test(line));
   const title = JSON.stringify(`${meta.title ?? ''}${meta.titleSuffix}`);
   lines.push(`id: ${meta.id}`);
   lines.push(`title: ${title}`);
+  lines.push(`path: ${meta.path}`);
   return `---\n${lines.join('\n')}\n---`;
 }
 
@@ -63,9 +64,11 @@ export function buildVariants(sourceDir) {
 
   for (const variant of VARIANTS) {
     const selected = slides.map((slide) => selectedSlide(slide, variant.name)).filter(Boolean);
+    const baseRoute = meta.path ?? meta.id ?? relative(DECKS, sourceDir).split(sep).at(-1);
     const frontmatter = replaceFrontmatter(source, {
       ...meta,
       id: `${meta.id ?? relative(DECKS, sourceDir).split(sep).at(-1)}${variant.idSuffix}`,
+      path: variant.name === '15min' ? baseRoute : `${baseRoute}/${variant.name}`,
       titleSuffix: variant.titleSuffix,
     });
     const output = `${frontmatter}\n\n${selected.join('\n\n---\n\n')}\n`
