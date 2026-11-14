@@ -79,7 +79,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 
 1. 公開の前に、顔が写っている人、画面に映った個人情報や API キー、引用の許可を確認するよう発表者に伝えます。
 2. `deck.md` の先頭を `published: true` にします（PDF から取り込んだデッキは `deck.json` の `"published": true`）。
-3. サイトを組み立てて内容を検証します。ローカルの `npm run deploy` は PDF を作りません。GitHub Actions が変更のあったデッキの PDF とサムネイルを生成して公開成果物に含めます。`lt-slot` か「【要確認】」が残っている、公開用 Actions で PDF が作れない、画像が見つからない場合はエラーで止まります。
+3. サイトを組み立てて内容を検証します。ローカルの `npm run deploy` は PDF を作りません。GitHub Actions は前回のPDF成果物を短期間保持し、変更されたデッキだけ再生成して公開成果物に含めます。前回成果物がない場合は全件を生成します。`lt-slot` か「【要確認】」が残っている、公開用 Actions で PDF が作れない、画像が見つからない場合はエラーで止まります。
 
    ```bash
    npm run export-pdf
@@ -98,7 +98,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 
    サイトを組み立て直してエラーがなければ、`git add`、`commit`、`push` まで行います。`decks/` は `published: true` のデッキだけを add します。公開リポジトリでは、コミットした内容はすべて誰でも読めるので、`git add .` や `git add decks` を直接使いません。`npm run deploy -- --dry-run` で、コミットされるファイルを先に確認できます。
 
-PDF とサムネイルは GitHub Actions で WeasyPrint と Poppler を使って生成し、`dist/` から公開します。PDF は Git に追加しません。Actions は push のたび公開デッキのPDFを再生成します。ブラウザーは使いません。手元で PDF を作る場合は `npm run export-pdf` を使い、事前に `brew install weasyprint poppler` を実行します。
+PDF とサムネイルは GitHub Actions で WeasyPrint と Poppler を使って生成し、`dist/` から公開します。PDF は Git に追加しません。Actions は前回の成果物を7日間保持して変更デッキだけ再生成します。成果物がない場合は全デッキを生成します。ブラウザーは使いません。手元で PDF を作る場合は `npm run export-pdf` を使い、事前に `brew install weasyprint poppler` を実行します。
 
 | URL | 内容 |
 | --- | --- |

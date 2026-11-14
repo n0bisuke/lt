@@ -31,6 +31,7 @@ path: 20261115_moiken-minotake-security/5min
 - プロトタイピングスクール「プロトアウトスタジオ」
 - デジタルハリウッド大学大学院 非常勤講師
   - プロダクトプロトタイピング
+- ソフトウェアエンジニア出身
 
 個人活動
 
@@ -45,11 +46,11 @@ path: 20261115_moiken-minotake-security/5min
 ## 医療者は、現場の困りごとから作っている
 
 <div class="gl-cards gl-cards--2">
-<article class="gl-source"><strong class="t-body">受付・順番待ちシステム</strong><p class="t-sub">産院の院長がChatGPTに相談しながら、院内LANで使う呼び出しシステムを作成。</p><small class="t-note"><a href="https://x.com/A_Mochizuki/status/2111079943400808872">産院のいんちょ / X / 2026年10月16日</a></small></article>
-<article class="gl-source"><strong class="t-body">理学療法士の申し送りWebアプリ</strong><p class="t-sub">問診票とWebアプリで情報共有の手間を減らすことを目指した、もいせん4期生の個人制作。</p><small class="t-note"><a href="https://note.com/moicen_/n/n8f66749ddcff">もいせん公式note / 2023年4月29–30日</a></small></article>
+<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/d6a77accf72b.webp" alt="投稿で紹介された受付・呼出し画面"><strong class="t-body">院内LANで使う呼び出しシステム</strong><p class="t-sub">産院の院長がChatGPTに相談しながら作成。投稿では実際の呼出し画面を紹介しています。</p><small class="t-note"><a href="https://x.com/A_Mochizuki/status/2111079943400808872">産院のいんちょ / X / 2026年10月16日</a></small></article>
+<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/moicen-graduate-outpatient-tools-note.png" alt="もいせん受講生による外来効率化ツールのnote記事"><strong class="t-body">外来の前・中・後を助ける3つのツール</strong><p class="t-sub">もいせん受講生の整形外科医が、LINE問診・カルテ音声入力・LINEセルフケア案内を制作。</p><small class="t-note"><a href="https://note.com/dr_grid/n/nb44daadafdbf">Drグリッド / note / 2026年7月8日</a></small></article>
 </div>
 
-<!-- AIと一緒に形にする医療者の事例に加え、もいせん4期生が理学療法士の申し送りを助けるWebアプリを個人制作した事例もあります。記事では作品と受賞が紹介されていますが、実運用や効果検証については確認できません。出典: 産院のいんちょ https://x.com/A_Mochizuki/status/2111079943400808872、もいせん公式note https://note.com/moicen_/n/n8f66749ddcff -->
+<!-- 現場の困りごとを起点に、医療者が自分で作った事例です。後者は受講生本人の振り返り記事で、外来の前・中・後に使う3つのツールを紹介しています。記事で確認できるのは本人による制作物の紹介で、効果の独立した検証ではありません。出典: 産院のいんちょ https://x.com/A_Mochizuki/status/2111079943400808872、Drグリッド https://note.com/dr_grid/n/nb44daadafdbf -->
 
 ---
 
@@ -59,7 +60,7 @@ path: 20261115_moiken-minotake-security/5min
 
 **作ったものと、設計の工夫を発信しよう。**
 
-<!-- 今日の話は、作るのを止めるためのセキュリティではありません。医療現場を知る人が、セキュリティを意識しながら作って試す。そのために、使う人・作る人・管理する人にできることを考えます。何を集めないと決めたか、どこまで試したかも発信できると、指摘や不安に設計意図をもって答えられます。 -->
+<!-- セキュリティが心配だから作らない、ではなく、気をつける点を設計しながら作って試す。作ったものだけでなく、何を考えてどう試したかも共有できると、利用者の不安や指摘に設計意図をもって答えられます。 -->
 
 ---
 
@@ -85,10 +86,11 @@ path: 20261115_moiken-minotake-security/5min
 
 ## フォームは、必要な項目だけにする
 
-- 入力が減る => 患者さんの手間が減る
+- 年代だけ知りたい => 生年月日を聞かない
+- 地域だけ知りたい => 住所全部を聞かない
 - 持つ情報が減る => 守る情報も減る
 
-<!-- 「フォームを作るな」ではなく、必要な項目だけのフォームにします。入力の負担や入力ミスが減り、作った側が守るデータも少なくできます。 -->
+<!-- 何十代の人が多いか知りたいだけなら、生年月日ではなく年代で足ります。地域の傾向を見たいだけなら、番地までの住所は要りません。目的に合わせて必要な粒度だけ聞けば、入力の負担も、作った側が守る情報も減らせます。 -->
 
 ---
 
@@ -104,11 +106,11 @@ path: 20261115_moiken-minotake-security/5min
 
 ## 管理する人は、安全に試せる場を作る
 
-- ダミーデータを使える
-- 公開範囲を限定できる
-- 本番のシステムや患者情報から切り離す
+- 試作にはダミーデータを使う
+- まずは公開範囲を絞る
+- 本番システムや患者情報から分ける
 
-<!-- 管理者や組織には、禁止だけでなく、試作できる環境を用意する役割があります。ダミーデータで、公開範囲を限定して、本番環境から切り離して試せる場所があると、作る経験を安全に積みやすくなります。 -->
+<!-- 管理する人には、禁止だけでなく試作できる環境を用意する役割があります。まずダミーデータで、公開範囲を絞り、本番システムや患者情報から切り離して試す。試作をそのまま実運用に移さず、実運用に進む時は組織のルールや管理方法を改めて確認します。 -->
 
 ---
 

@@ -12,7 +12,7 @@ IoTLT などの LT スライドと、講演用のスライドを AI で作るた
 
 手順とルールは `AGENTS.md` にまとめてあるので、AGENTS.md を読むエージェントならそのまま使えます。
 
-Claude Code では `/lt-slides` で始められます。エージェントが話の内容や構成を質問しながら作ります。その場で分からないところは「【要確認】」としてデッキに残します。
+Claude Code では `/lt-slides`、Codex では `.agents/skills/lt-slides/` のスキルを使えます。エージェントが話の内容や構成を質問しながら作ります。その場で分からないところは「【要確認】」としてデッキに残します。
 
 `decks/<日付>_<名前>/deck.md` ができます。この1つのファイルから、オンラインのデッキ、記事、PDF が作られます。素材は `images/` と `notes/` に振り分けられ、元のファイルは `inbox/_used/` に残ります。点線の `lt-slot` が残っていたら、実物の写真に差し替えれば完成です。
 
@@ -50,10 +50,10 @@ VS Code で Marp for VS Code 拡張（`marp-team.marp-vscode`）を入れ、`dec
 
 ## 発表と書き出し
 
-Actions が公開時にPDFとサムネイルを生成します。手元でPDFが必要な場合だけ、次のコマンドで作ります（PDFはGitに追加しません）。
+Actions は変更されたデッキのPDFとサムネイルだけを生成します。前回の生成物がない場合は全件を作ります。PDFはGitに追加しません。手元でPDFが必要な場合だけ、次のコマンドで作れます。
 
 ```bash
-scripts/export-pdf.sh decks/sample_bbq
+npm run export-pdf -- decks/sample_bbq
 ```
 
 ブラウザで `deck.html` を開きます。← → でページ送り、`f` で全画面です。`deck.html?overview` で全スライドを一覧できます。
@@ -68,8 +68,8 @@ npm run deck -- decks
 
 - `design-system/project/`：デザインシステムの本体（`tokens.json`、`README.md`、`components/`）
 - `decks/`：スライド置き場（`sample_bbq` は見本）
-- `AGENTS.md`：AI エージェント向けの手順とルール（`CLAUDE.md` と `.claude/skills/lt-slides/` はここを参照するだけ）
+- `AGENTS.md`：AI エージェント向けの手順とルール。Codex用スキルは `.agents/skills/lt-slides/`、Claude Code用は `.claude/skills/lt-slides/`
 - `inbox/`：素材の入れ場所（Git には入りません）
 - `scripts/`：素材の取り込み、トークンの CSS 生成、PDF 書き出し、サイト生成
 
-`tokens.json` を変えたら `node scripts/build-tokens.mjs` を実行します（PDF 書き出しでは自動で実行されます）。
+`tokens.json` を変えたら `node scripts/build-tokens.mjs` を実行します（Actionsや手元でのPDF書き出しでは自動で実行されます）。

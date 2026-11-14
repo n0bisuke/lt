@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: read
   contents: read
   pages: write
   id-token: write
@@ -22,14 +23,55 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v7
         with:
           node-version: 24
       - run: npm ci
       - run: sudo apt-get update && sudo apt-get install -y weasyprint poppler-utils
       - run: node scripts/build-tokens.mjs
-      - run: node scripts/export-pdf.mjs
+      - name: Restore PDFs from the previous Pages run
+        id: pdf-cache
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          run_id="$(gh run list --workflow pages.yml --branch main --status success --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
+          restored=false
+          if [ -n "$run_id" ] && gh run download "$run_id" --repo "$GITHUB_REPOSITORY" --name lt-pdf-assets --dir "$RUNNER_TEMP/previous-pdfs"; then
+            mkdir -p "$RUNNER_TEMP/previous-pdfs/extracted"
+            if tar -xzf "$RUNNER_TEMP/previous-pdfs/pdf-assets.tar.gz" -C "$RUNNER_TEMP/previous-pdfs/extracted" \
+              && [ -d "$RUNNER_TEMP/previous-pdfs/extracted/decks" ] \
+              && [ -s "$RUNNER_TEMP/previous-pdfs/extracted/pdf-assets-base-sha.txt" ]; then
+              cp -a "$RUNNER_TEMP/previous-pdfs/extracted/decks/." "$GITHUB_WORKSPACE/decks/"
+              restored=true
+              echo "base-sha=$(cat "$RUNNER_TEMP/previous-pdfs/extracted/pdf-assets-base-sha.txt")" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+          echo "restored=$restored" >> "$GITHUB_OUTPUT"
+      - name: Export PDFs for changed decks
+        if: steps.pdf-cache.outputs.restored == 'true'
+        run: node scripts/export-pdf.mjs --changed
+        env:
+          PDF_BASE_SHA: ${{ steps.pdf-cache.outputs.base-sha }}
+      - name: Export all PDFs when no previous artifact is available
+        if: steps.pdf-cache.outputs.restored != 'true'
+        run: node scripts/export-pdf.mjs
       - run: node scripts/build-site.mjs --require-artifacts
+      - name: Archive PDFs for the next run
+        run: |
+          mkdir -p "$RUNNER_TEMP/pdf-assets/decks"
+          while IFS= read -r -d '' file; do
+            mkdir -p "$RUNNER_TEMP/pdf-assets/$(dirname "$file")"
+            cp "$file" "$RUNNER_TEMP/pdf-assets/$file"
+          done < <(find decks -type f \( -name '*.pdf' -o -name 'thumbnail.png' \) -print0)
+          printf '%s\n' "$GITHUB_SHA" > "$RUNNER_TEMP/pdf-assets/pdf-assets-base-sha.txt"
+          tar -czf "$RUNNER_TEMP/pdf-assets.tar.gz" -C "$RUNNER_TEMP/pdf-assets" .
+      - uses: actions/upload-artifact@v5
+        with:
+          name: lt-pdf-assets
+          path: ${{ runner.temp }}/pdf-assets.tar.gz
+          retention-days: 7
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
