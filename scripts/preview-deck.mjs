@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // usage: npm run deck -- decks
 // デッキをビルドし、localhost で配信する。ブラウザーは別途開く。
-import { createReadStream, existsSync, readdirSync, readFileSync, statSync, watch } from 'node:fs';
+import { createReadStream, existsSync, readdirSync, readFileSync, statSync, watch, writeFileSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { spawnSync } from 'node:child_process';
-import { extname, join, resolve, sep } from 'node:path';
+import { basename, dirname, extname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildVariants, findVariantMasters } from './lecture/build-variants.mjs';
 import { parseDeck } from './lib/deck.mjs';
@@ -53,7 +53,7 @@ function rebuildAll() {
 
 rebuildAll();
 
-const decks = [...deckDirs].map((dir) => {
+const allDecks = [...deckDirs].map((dir) => {
   const md = readFileSync(join(dir, 'deck.md'), 'utf8');
   const { meta } = parseDeck(md);
   return {
@@ -63,6 +63,19 @@ const decks = [...deckDirs].map((dir) => {
     published: meta.published === true,
   };
 });
+const decks = [];
+const listedVariantGroups = new Set();
+for (const deck of allDecks) {
+  const parent = dirname(deck.dir);
+  const masterPath = join(parent, 'deck.md');
+  const isVariant = existsSync(masterPath) && parseDeck(readFileSync(masterPath, 'utf8')).meta.variants === true;
+  if (!isVariant) { decks.push(deck); continue; }
+  const group = relative(decksRoot, parent);
+  if (listedVariantGroups.has(group)) continue;
+  listedVariantGroups.add(group);
+  const main = allDecks.find((candidate) => dirname(candidate.dir) === parent && basename(candidate.dir) === '15min') ?? deck;
+  decks.push({ ...main, route: main.route.split('/')[0] });
+}
 
 const escapeHtml = (text) => String(text).replace(/[&<>"']/g, (c) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -70,12 +83,56 @@ const escapeHtml = (text) => String(text).replace(/[&<>"']/g, (c) => ({
 const listPage = `<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LTデッキ一覧</title><style>body{font:18px/1.7 system-ui,sans-serif;max-width:900px;margin:48px auto;padding:0 24px;color:#171717}h1{font-size:30px}li{margin:8px 0}a{color:inherit;margin-right:16px}</style><h1>ローカルのLTデッキ</h1><ul>${decks.map(({ dir, title, route, published }) => {
   const path = dir.slice(root.length + 1).split(sep).map(encodeURIComponent).join('/');
   const routePath = String(route).split('/').map(encodeURIComponent).join('/');
-  return `<li><a href="/${path}/deck.html">スライド：${escapeHtml(title)}</a>${published ? `<a href="/${routePath}/">記事</a>` : ''}</li>`;
+  return `<li><a href="/${path}/deck.html">スライド：${escapeHtml(title)}</a>${published ? `<a href="/${routePath}/">詳細・版を選ぶ</a>` : ''}</li>`;
 }).join('')}</ul></html>`;
 
 const reloadClients = new Set();
 const reloadScript = '<script>new EventSource("/__preview-reload").onmessage=()=>location.reload()</script>';
+const editorScript = '<script src="/__preview-editor.js"></script>';
 const clients = `data: reload\n\n`;
+
+function adjustmentFile(dir) { return join(dir, '.lt-adjustments.json'); }
+function readAdjustments(dir) {
+  const path = adjustmentFile(dir);
+  if (!existsSync(path)) return {};
+  try { return JSON.parse(readFileSync(path, 'utf8')); }
+  catch { return {}; }
+}
+
+function readRequest(req, res) {
+  let body = '';
+  req.setEncoding('utf8');
+  req.on('data', (part) => {
+    body += part;
+    if (body.length > 32_768) { res.writeHead(413).end('Too large'); req.destroy(); }
+  });
+  req.on('end', () => {
+    try {
+      const payload = JSON.parse(body);
+      const dir = resolve(root, payload.deck ?? '');
+      if (!deckDirs.has(dir) || !dir.startsWith(`${decksRoot}${sep}`)) throw new Error('Unknown deck');
+      if (!/^\d+:\d+:(?:\d+\.)*\d+$/.test(payload.key ?? '')) throw new Error('Invalid target');
+      if (payload.reset === true) {
+        const adjustments = readAdjustments(dir);
+        delete adjustments[payload.key];
+        writeFileSync(adjustmentFile(dir), `${JSON.stringify(adjustments, null, 2)}\n`);
+        res.writeHead(200, { 'content-type': 'application/json' }).end(JSON.stringify(adjustments));
+        return;
+      }
+      const { x, y, width, height } = payload.adjustment ?? {};
+      if (![x, y].every((n) => Number.isFinite(n) && Math.abs(n) <= 3000)
+        || ![width, height].every((n) => n === null || (Number.isFinite(n) && n >= 24 && n <= 4000))) {
+        throw new Error('Invalid adjustment');
+      }
+      const adjustments = readAdjustments(dir);
+      adjustments[payload.key] = { x: Math.round(x), y: Math.round(y), width: width === null ? null : Math.round(width), height: height === null ? null : Math.round(height) };
+      writeFileSync(adjustmentFile(dir), `${JSON.stringify(adjustments, null, 2)}\n`);
+      res.writeHead(200, { 'content-type': 'application/json' }).end(JSON.stringify(adjustments));
+    } catch (error) {
+      res.writeHead(400, { 'content-type': 'text/plain; charset=utf-8' }).end(error.message);
+    }
+  });
+}
 
 let rebuildTimer;
 let rebuilding = false;
@@ -99,7 +156,12 @@ function scheduleRebuild() {
 }
 
 watch(decksRoot, { recursive: true }, (_event, filename) => {
-  if (!filename || String(filename).endsWith('.md')) scheduleRebuild();
+  if (!filename || !String(filename).endsWith('.md')) return;
+  const changed = join(decksRoot, String(filename));
+  // 版別 deck.md は buildVariants の生成物。監視すると生成のたび再ビルドしてループする。
+  const master = join(dirname(dirname(changed)), 'deck.md');
+  if (existsSync(master) && parseDeck(readFileSync(master, 'utf8')).meta.variants === true) return;
+  scheduleRebuild();
 });
 
 const types = {
@@ -136,6 +198,23 @@ const server = createServer((req, res) => {
     return;
   }
 
+  if (pathname === '/__preview-editor.js') {
+    res.writeHead(200, { 'content-type': types['.js'] });
+    createReadStream(join(root, 'scripts/preview-editor.js')).pipe(res);
+    return;
+  }
+  if (pathname === '/__preview-adjustments' && req.method === 'GET') {
+    const deck = new URL(req.url, 'http://localhost').searchParams.get('deck') ?? '';
+    const dir = resolve(root, deck);
+    if (!deckDirs.has(dir) || !dir.startsWith(`${decksRoot}${sep}`)) { res.writeHead(404).end('Unknown deck'); return; }
+    res.writeHead(200, { 'content-type': 'application/json' }).end(JSON.stringify(readAdjustments(dir)));
+    return;
+  }
+  if (pathname === '/__preview-adjustments' && req.method === 'POST') {
+    readRequest(req, res);
+    return;
+  }
+
   if (pathname === '/decks' || pathname === '/decks/') {
     res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }).end(listPage);
     return;
@@ -150,7 +229,18 @@ const server = createServer((req, res) => {
     return;
   }
 
-  const file = resolve(root, `.${pathname}`);
+  let file = resolve(root, `.${pathname}`);
+  if (!existsSync(file) && pathname.startsWith('/decks/') && pathname.endsWith('/deck.html')) {
+    const parent = dirname(file);
+    const masterPath = join(parent, 'deck.md');
+    if (existsSync(masterPath) && parseDeck(readFileSync(masterPath, 'utf8')).meta.variants === true) {
+      const target = `${pathname.slice(0, -'deck.html'.length)}15min/deck.html`;
+      if (existsSync(join(parent, '15min', 'deck.html'))) {
+        res.writeHead(302, { location: target }).end();
+        return;
+      }
+    }
+  }
   const inside = (directory) => file.startsWith(`${directory}${sep}`);
   const pathParts = file.slice(decksRoot.length + 1).split(sep);
   const isDeckPage = ['deck.html', 'index.html'].includes(pathParts.at(-1));
@@ -164,7 +254,10 @@ const server = createServer((req, res) => {
 
   res.writeHead(200, { 'content-type': types[extname(file).toLowerCase()] ?? 'application/octet-stream' });
   if (file.endsWith('deck.html')) {
-    res.end(readFileSync(file, 'utf8').replace('</body>', `${reloadScript}</body>`));
+    const deck = relative(root, dirname(file)).split(sep).join('/');
+    const adjustmentJson = JSON.stringify(readAdjustments(dirname(file))).replaceAll('<', '\\u003c');
+    const state = `<script>window.LT_PREVIEW_DECK=${JSON.stringify(deck)};window.LT_ADJUSTMENTS=${adjustmentJson}</script>`;
+    res.end(readFileSync(file, 'utf8').replace('</body>', `${state}${editorScript}${reloadScript}</body>`));
     return;
   }
   createReadStream(file).pipe(res);

@@ -9,7 +9,7 @@ import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, r
 import { basename, dirname, join, normalize, relative, sep } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { kindOf, parseDeck, renderArticle, renderSlides } from './lib/deck.mjs';
+import { applySlideAdjustments, kindOf, parseDeck, renderArticle, renderSlides } from './lib/deck.mjs';
 import { buildVariants, findVariantMasters } from './lecture/build-variants.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -72,7 +72,7 @@ for (const dir of collectDeckDirs(DECKS)) {
   const variantName = basename(dir);
   const parentDeck = join(parentDir, 'deck.md');
   const parentIsVariantMaster = existsSync(parentDeck) && parseDeck(readFileSync(parentDeck, 'utf8')).meta.variants === true;
-  const variantGroup = parentIsVariantMaster && ['15min', '10min', '5min'].includes(variantName)
+  const variantGroup = parentIsVariantMaster
     ? relative(DECKS, parentDir)
     : null;
   const routeParts = String(route).split('/');
@@ -86,7 +86,9 @@ for (const dir of collectDeckDirs(DECKS)) {
   const assetPrefix = `${'../'.repeat(routeParts.length + 1)}design-system`;
   const renderSource = isMd ? source : null;
   const rendered = isMd ? renderSlides(renderSource, { title: meta.title ?? '', assetPrefix }) : null;
-  const html = isMd ? rendered.html : readFileSync(htmlPath, 'utf8');
+  const adjustmentPath = join(dir, '.lt-adjustments.json');
+  const adjustments = existsSync(adjustmentPath) ? JSON.parse(readFileSync(adjustmentPath, 'utf8')) : {};
+  const html = isMd ? applySlideAdjustments(rendered.html, adjustments) : readFileSync(htmlPath, 'utf8');
   const article = isMd ? renderArticle(renderSource, { assetPrefix: '../'.repeat(routeParts.length) }) : '';
   const pdfPath = join(dir, `${id}.pdf`);
   const thumbPath = join(dir, 'thumbnail.png');
@@ -147,7 +149,9 @@ for (const dir of collectDeckDirs(DECKS)) {
     kind: kindOf(meta),
     article,
     slideCount: isMd ? rendered.count : (html.match(/<section\s+class="[^"]*\blt-slide\b/g) ?? []).length,
-    updatedAt: updatedAtFor(isMd ? mdPath : metaPath),
+    updatedAt: [updatedAtFor(isMd ? mdPath : metaPath),
+      ...(existsSync(adjustmentPath) ? [updatedAtFor(adjustmentPath)] : [])]
+      .sort((a, b) => new Date(b) - new Date(a))[0],
     variantGroup,
     variantName: variantGroup ? variantName : null,
   });
@@ -185,7 +189,7 @@ const updatedJa = (s) => new Intl.DateTimeFormat('ja-JP', {
   timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false,
 }).format(new Date(s));
 
-const variantOrder = { '15min': 0, '10min': 1, '5min': 2 };
+const variantOrder = { '15min': 0, '10min': 1, '5min': 2, 'v0.1': 3 };
 const groupedVersions = new Map();
 for (const deck of published) {
   if (!deck.variantGroup) continue;
@@ -325,7 +329,7 @@ const localCard = (d) => `    <a class="card" href="${encodeRoute(d.route ?? d.i
       <img src="${encodeRoute(d.route ?? d.id)}/thumbnail.png" width="1280" height="720" loading="lazy" alt="">
 ${tags(d)}
       <h2>${esc(d.title)}</h2>
-      <p>${esc(kindLabel(d.kind))}・${esc(dateJa(d.date))}・${d.versions ? `${d.versions.length}つの発表時間版` : `${d.slideCount}枚`}${d.event ? `<br>${esc(d.event)}` : ''}</p>
+      <p>${esc(kindLabel(d.kind))}・${esc(dateJa(d.date))}・${d.versions ? `${d.versions.length}つの${d.versions.some((version) => version.variantName === 'v0.1') ? 'バージョン' : '発表時間版'}` : `${d.slideCount}枚`}${d.event ? `<br>${esc(d.event)}` : ''}</p>
     </a>`;
 const externalCard = (d) => `    <a class="card" href="${esc(d.url)}" ${cardAttrs(d, 'external')}>
       <img src="${esc(d.thumbnail)}" width="1280" height="720" loading="lazy" alt="">
@@ -412,10 +416,10 @@ for (const d of published) {
   const routePath = join(DIST, ...routeParts);
   const rootPrefix = '../'.repeat(routeParts.length);
   const versionSelector = d.versions?.length > 1
-    ? `<nav class="versions" aria-label="発表時間を選択"><span class="versions-label">発表時間</span>${d.versions.map((version) => {
+    ? `<nav class="versions" aria-label="デッキのバージョンを選択"><span class="versions-label">バージョン</span>${d.versions.map((version) => {
       const current = version.id === d.id;
-      const label = { '15min': '15分', '10min': '10分', '5min': '5分' }[version.variantName] ?? version.variantName;
-      return `<a class="btn" href="${rootPrefix}${encodeRoute(version.route)}/"${current ? ' aria-current="page"' : ''}>${label}版</a>`;
+      const label = { '15min': '15分版', '10min': '10分版', '5min': '5分版', 'v0.1': '旧版（v0.1）' }[version.variantName] ?? version.variantName;
+      return `<a class="btn" href="${rootPrefix}${encodeRoute(version.route)}/"${current ? ' aria-current="page"' : ''}>${label}</a>`;
     }).join('')}</nav>`
     : '';
   const description = [dateJa(d.date), d.event].filter(Boolean).join(' ');
@@ -434,7 +438,10 @@ ${headCommon(rootPrefix)}
 </head>
 <body>
 <main>
-  ${avatarBlock(rootPrefix, '<p class="site-name">LT スライド</p>')}
+  <div class="site-top">
+    ${avatarBlock(rootPrefix, '<p class="site-name">LT スライド</p>')}
+    <a class="btn" href="https://github.com/n0bisuke/lt" target="_blank" rel="noopener">GitHub リポジトリ</a>
+  </div>
   <article class="detail">
     <div class="player"><iframe src="slides/" title="${esc(d.title)}" allowfullscreen></iframe></div>
     <div class="controls">
@@ -447,7 +454,7 @@ ${headCommon(rootPrefix)}
       </div>
     </div>
     <h1>${esc(d.title)}</h1>
-    <p class="meta">${esc(dateJa(d.date))}・${d.slideCount}枚${d.event ? `<br>発表イベント：${d.eventUrl ? `<a href="${esc(d.eventUrl)}">${esc(d.event)}</a>` : esc(d.event)}` : ''}</p>
+  <p class="meta">${esc(dateJa(d.date))}・${d.slideCount}枚${d.variantName === 'v0.1' ? '・旧版' : ''}${d.event ? `<br>発表イベント：${d.eventUrl ? `<a href="${esc(d.eventUrl)}">${esc(d.event)}</a>` : esc(d.event)}` : ''}</p>
     <p class="last-updated"><time datetime="${esc(d.updatedAt)}">最終更新：${esc(updatedJa(d.updatedAt))}</time></p>
 ${versionSelector ? `    ${versionSelector}\n` : ''}
 ${d.article ? `    <div class="article">\n${d.article}\n    </div>\n` : ''}  </article>

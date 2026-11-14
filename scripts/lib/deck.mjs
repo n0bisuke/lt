@@ -117,3 +117,20 @@ export function renderArticle(md, { assetPrefix = '../' } = {}) {
   }
   return parts.map((p) => `<section>\n${p.html}\n${p.notes}</section>`).join('\n');
 }
+
+export function applySlideAdjustments(html, adjustments = {}) {
+  const rules = [];
+  for (const [key, value] of Object.entries(adjustments)) {
+    const match = /^(\d+):(\d+):((?:\d+\.)*\d+)$/.exec(key);
+    if (!match || !value || !Number.isInteger(value.x) || !Number.isInteger(value.y)) continue;
+    const [slide, section, ...path] = [Number(match[1]), Number(match[2]), ...match[3].split('.').map(Number)];
+    let selector = `svg[data-marpit-svg]:nth-of-type(${slide + 1}) > foreignObject:nth-of-type(${section + 1}) > section`;
+    for (const child of path) selector += ` > :nth-child(${child + 1})`;
+    const declarations = [`translate:${value.x}px ${value.y}px!important`];
+    if (Number.isInteger(value.width)) declarations.push(`width:${value.width}px!important`);
+    if (Number.isInteger(value.height)) declarations.push(`height:${value.height}px!important`);
+    rules.push(`${selector}{${declarations.join(';')}}`);
+  }
+  if (!rules.length) return html;
+  return html.replace('</head>', `<style data-lt-adjustments>${rules.join('\n')}</style>\n</head>`);
+}

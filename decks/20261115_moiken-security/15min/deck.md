@@ -7,6 +7,7 @@ eventUrl: "https://moiken02.vercel.app/"
 published: true
 id: 20261115_moiken-security
 title: "医療者もガンガン作ろう！作って試す時代の身の丈セキュリティ"
+path: 20261115_moiken-security
 ---
 
 <!-- _class: title-slide -->

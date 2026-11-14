@@ -25,7 +25,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 | パス | 内容 |
 | --- | --- |
 | `inbox/` | 発表者が画像やメモを入れるフォルダ。Git には入らない |
-| `decks/<YYYYMMDD>_<短い英語名>/` | スライド置き場。`deck.md`、`images/`、`notes/`。複数時間版は同じフォルダ内に `15min/`、`10min/` などの生成済み版を置きます。PDF から取り込んだデッキだけは `index.html` と `deck.json` |
+| `decks/<YYYYMMDD>_<短い英語名>/` | スライド置き場。`deck.md`、`images/`、`notes/`。ローカル画像編集の調整値は `.lt-adjustments.json` に保存します。複数時間版は同じフォルダ内に `15min/`、`10min/` などの生成済み版を置きます。PDF から取り込んだデッキだけは `index.html` と `deck.json` |
 | `design-system/marp/theme.src.css` | Markdown の要素と見た目の対応。`iotlt.css` はここから生成されるので手で編集しない |
 | `scripts/build-deck.mjs` | `deck.md` から確認用の `deck.html` を作る |
 | `scripts/lecture/build-variants.mjs` | 1つの `deck.md` から時間別の版を生成する |
@@ -36,7 +36,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 | `design-system/tokens.css` | `tokens.json` から生成されるファイル。手で編集しない |
 | `scripts/build-tokens.mjs` | `tokens.css` を生成する |
 | `scripts/new-deck.mjs` | デッキを用意し、`inbox/` の中身を取り込む |
-| `scripts/export-pdf.sh` | デッキを PDF に書き出し、1枚目から `thumbnail.png` を作る |
+| `scripts/export-pdf.mjs` | WeasyPrint と Poppler でブラウザーを使わず PDF とサムネイルを作る |
 | `design-system/lecture/` | 講演テーマの色・寸法（`tokens.json`）、部品（`theme.src.css`）、文書、見本、フォント、画像 |
 | `design-system/marp/lecture.css` | 講演テーマ。`build-tokens.mjs` が生成するので手で編集しない |
 | `scripts/lecture/` | 講演テーマの検査（`npm run check`）とカードの展開（`npm run cards`） |
@@ -51,7 +51,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 
 発表者とチャットで話しながら、次の手順で作ります。`inbox/` の素材はあってもなくても始められます。Claude Code の `/lt-slides` も同じ流れです。公開とコミットは頼まれるまでしません。
 
-**ブラウザーを使うとき：** Webページの閲覧やスライドのプレビュー確認には Codex 内蔵ブラウザーを使います。発表者が明示的に頼まない限り、ホスト側の Chrome / Chrome Dev / Brave は起動・使用しません。PDF書き出しなどのコマンドがこれらを起動する場合も、内蔵ブラウザーを使う方法を先に探します。
+**ブラウザーを使うとき：** Webページの閲覧やスライドのプレビュー確認には Codex 内蔵ブラウザーを使います。ホスト側の Chrome / Chrome Dev / Brave は使いません。PDF は WeasyPrint と Poppler で生成します。
 
 1. **デッキを用意して取り込む。** 次のコマンドで `decks/<名前>/` を作ります。`inbox/` の画像は `images/` に、メモなどは `notes/` に入ります。あとから `inbox/` に足された分は、同じコマンドをもう一度実行すれば取り込めます。
 
@@ -68,7 +68,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 3. **構成を決める。** 取り込んだ画像の内容も踏まえ、1枚1行で見出しを書き出して、発表者と相談します。5分なら15〜25枚が目安で、1枚に1つの話だけを載せます。見出しは項目名ではなく文にします。
 4. **デッキを書く。** `deck.md` にスライドを書きます。先頭の `event` にイベント名を、`eventUrl` に connpass などのイベントページの URL を入れます。URL が渡されたらそのページを開き、イベント名と日付を確かめます。記事として読めるように、話す内容を発表者ノート（`<!-- -->`）に書きます。ノートも材料にある事実だけを書きます。
 5. **画像を入れる。** `![](images/xxx.jpg)` で入れます。話に合わない画像は無理に使いません。足りないものは `lt-slot` にして、何を用意するかを書きます。
-6. **書き出して確認する。** 下のコマンドで PDF を作り、全ページを見て、文字のはみ出し、タイトルの折り返し、画像との重なりを直します。ブラウザで `deck.html?overview` を開くと全スライドを一覧できます。
+6. **書き出して確認する。** ローカルの確認には `npm run deck -- decks` でプレビューを開きます。PDF が必要なときだけ `npm run export-pdf` で作成できます。
 7. **報告する。** デッキと PDF のパス、使わなかった画像、残っている `lt-slot`、「【要確認】」の一覧を伝えます。
 
 ## 公開する
@@ -77,10 +77,10 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 
 1. 公開の前に、顔が写っている人、画面に映った個人情報や API キー、引用の許可を確認するよう発表者に伝えます。
 2. `deck.md` の先頭を `published: true` にします（PDF から取り込んだデッキは `deck.json` の `"published": true`）。
-3. PDF を書き出してサイトを組み立てます。`lt-slot` か「【要確認】」が残っている、PDF がない、画像が見つからない場合はエラーで止まります。
+3. サイトを組み立てて内容を検証します。ローカルの `npm run deploy` は PDF を作りません。GitHub Actions が公開ビルド時に PDF とサムネイルを生成します。`lt-slot` か「【要確認】」が残っている、PDF がない、画像が見つからない場合はエラーで止まります。
 
    ```bash
-   scripts/export-pdf.sh decks/<デッキ名>
+   npm run export-pdf
    ```
 
    ```bash
@@ -96,7 +96,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 
    サイトを組み立て直してエラーがなければ、`git add`、`commit`、`push` まで行います。`decks/` は `published: true` のデッキだけを add します。公開リポジトリでは、コミットした内容はすべて誰でも読めるので、`git add .` や `git add decks` を直接使いません。`npm run deploy -- --dry-run` で、コミットされるファイルを先に確認できます。
 
-PDF とサムネイルは Yu Gothic で出力するため手元で作ってコミットします。GitHub Actions はこれらを作らず、コミット済みのファイルをそのまま公開します。
+PDF とサムネイルは GitHub Actions で WeasyPrint と Poppler を使って生成します。ブラウザーは使いません。手元で PDF を作る場合は `npm run export-pdf` を使い、事前に `brew install weasyprint poppler` を実行します。
 
 | URL | 内容 |
 | --- | --- |
@@ -128,7 +128,7 @@ swift scripts/mosaic-page.swift decks/<デッキ名> <ページ番号> 24 x,y,w,
 scripts/export-pdf.sh decks/<デッキ名>
 ```
 
-`tokens.css` を生成してから、`decks/<デッキ名>/<デッキ名>.pdf` を書き出します。Chrome、Chrome Dev、Brave のいずれかと Node.js が必要です。
+後方互換用のコマンドです。`npm run export-pdf` と同じく、WeasyPrint と Poppler を使って PDF とサムネイルを書き出します。ブラウザーは使いません。
 
 ```bash
 node scripts/build-tokens.mjs
@@ -143,6 +143,8 @@ node scripts/build-deck.mjs decks/<デッキ名>
 `deck.md` から `deck.html` を作ります。ブラウザでの発表は、この `deck.html` を開いて ← → でページ送り、`f` で全画面です。
 
 編集しながら確認する場合は `npm run deck -- decks` を使います。表示された localhost の URL を組み込みブラウザで開くと、スライドと記事を選べます。`deck.md` を保存すると、時間別版と記事を再ビルドし、プレビューを自動更新します。終了は `Ctrl+C` です。
+
+スライドの画像を微調整するには、プレビュー左下の「画像を編集」を押します。画像をドラッグして移動し、右下の丸をドラッグして縦横比を保ったままサイズを変更できます。変更はデッキの `.lt-adjustments.json` に保存され、リセットできます。サイトを再生成するときも調整が反映されます。
 
 複数時間版の元データは親フォルダの `deck.md` です。スライドの先頭に `<!-- only: 15min,10min -->` のように書くと、その版だけに載ります。指定がないスライドは全版に載ります。5分版だけ文面を変える場合は、同じ位置に `<!-- only: 5min -->` を付けた別スライドを続けて置きます。`npm run deck -- decks` と `npm run deploy` は、公開前に時間別の版を自動生成します。
 
