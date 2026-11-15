@@ -4,7 +4,7 @@
 
 部品は2つに分かれます。
 
-- **どの話題でも使う部品:** `title-slide`、`speaker-profile`、`brand`、`hero`、`key-message`、`agenda`、`source-cards`、`link-cards`、`tool-gallery`、`poll-result`、`zone-compare`、`phase-chart`、`closing`
+- **どの話題でも使う部品:** `title-slide`、`speaker-profile`、`brand`、`hero`、`key-message`、`summary`、`agenda`、`media-split`、`source-cards`、`link-cards`、`tool-gallery`、`poll-result`、`zone-compare`、`phase-chart`、`closing`
 - **生成AIの話で使う部品:** `era-slide`、`era-map`、`actor-flow`、`prompt-block`。時代の比喩や、人とAIの担当を示すときだけ使います。
 
 ## `title-slide`
@@ -61,6 +61,17 @@
 - 2回目以降の再掲には `stage` を `_class` に足します。
 - 図や画像を足しません。
 
+## `summary`
+
+発表の最後に、持ち帰ってほしい要点を箇条書きで揃えて示します。`key-message` の強い主張を伝える見た目とは分け、項目を順に読み返せるサイズにします。
+
+**用意するもの:** まとめの見出し、3〜5個の要点。補足は各要点に1〜3個まで。
+
+- 主項目はすべて30pxで統一します。
+- 補足項目はすべて24pxで統一します。
+- 強調のために一部の項目だけ太字や別サイズにしません。
+- リスト全体はスライドの中央に置き、左揃えにします。
+
 ## `agenda`
 
 講演の目次です。今話す項目だけを濃くして、ほかを沈めます。
@@ -71,9 +82,19 @@
 - 章の切り替わりごとに同じ構成で再掲します。
 - 項目の順序と文言を途中で変えません。
 
+## `media-split`
+
+左側に箇条書き、右側に画像を置く2段組です。画面や写真を見ながら、要点を一緒に説明するときに使います。
+
+**用意するもの:** 短い箇条書き3〜5項目、内容に合う画像1枚、必要なら画像の出典。
+
+- 画像は右列の中央に置き、幅と高さを本文領域に収めます。
+- 出典は画像の下に置きます。
+- 見出しは通常どおりスライド上部に置きます。
+
 ## 現在の話題ラベル
 
-目次に沿って、スライド左下に現在の話題を小さなグレーの帯で表示します。`current-topic` クラスと `_footer` を使います。ページ番号は右下に小さく表示します。
+目次に沿って、スライド左上に現在の話題を小さな薄いグレーの帯で表示します。`current-topic` クラスと `_footer` を使います。ページ番号は右下に小さく表示します。
 
 ```markdown
 <!-- _class: current-topic -->
@@ -113,6 +134,7 @@
 - 記事本文を転載せず、要約します。
 - 1枚に3件までにします。
 - 出典のない主張には使いません。
+- カードの下にメッセージを添える場合は `.gl-foot` を使い、カードとの間に十分な余白を取ります。スライド下端と現在地ラベルからも距離を取ります。
 - 元ページの見た目が理解を助ける場合は、Codexの組み込みブラウザーでページを撮影してカードの先頭に添えます。スクリーンショットは `images/cards/` に保存し、媒体名・日付・リンクをカードに残します。
 - 画像を使う場合の形: `<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/source-page.png" alt="出典ページの見出しと要点"><strong class="t-body">要点</strong><p class="t-sub">自分の言葉での要約。</p><small class="t-note"><a href="https://example.com">媒体名 / 日付</a></small></article>`
 - スクリーンショットを取得できない場合は、代替画像を作らずテキストカードを使います。

@@ -4,12 +4,16 @@
   const adjustments = window.LT_ADJUSTMENTS || {};
   const style = document.createElement('style');
   style.textContent = `
-    #lt-edit-toolbar{position:fixed;z-index:2147483000;left:16px;bottom:16px;display:flex;align-items:center;gap:8px;padding:10px 12px;background:#171717;color:#fff;font:14px/1.4 system-ui,sans-serif;border-radius:6px;box-shadow:0 4px 18px #0006}
+    #lt-edit-toolbar{position:fixed;z-index:2147483000;right:16px;bottom:16px;display:flex;align-items:center;gap:8px;padding:10px 12px;background:#171717;color:#fff;font:14px/1.4 system-ui,sans-serif;border-radius:6px;box-shadow:0 4px 18px #0006}
     #lt-edit-toolbar[hidden]{display:none}#lt-edit-toolbar button{border:1px solid #fff;background:#fff;color:#171717;padding:7px 12px;font:inherit;font-weight:700;cursor:pointer}
     #lt-edit-toolbar .lt-edit-help{max-width:420px}#lt-edit-toolbar .lt-edit-status{color:#d2f5dc;min-width:48px}
     #lt-edit-toolbar:not(.active) .lt-edit-help,#lt-edit-toolbar:not(.active) [data-action="reset"],#lt-edit-toolbar:not(.active) .lt-edit-status{display:none}
     #lt-edit-outline{position:fixed;z-index:2147482999;border:2px solid #00a8ff;box-shadow:0 0 0 99999px #0015;pointer-events:none;display:none}
     #lt-edit-handle{position:absolute;right:-8px;bottom:-8px;width:16px;height:16px;padding:0;border:2px solid #fff;border-radius:50%;background:#00a8ff;box-shadow:0 1px 4px #0008;pointer-events:auto;cursor:nwse-resize}
+    #lt-preview-timer{position:fixed;z-index:2147483000;left:16px;bottom:16px;display:flex;align-items:center;gap:5px;padding:4px 7px;border:1px solid #0002;border-radius:5px;background:#f5f5f5d9;color:#555;font:12px/1.3 system-ui,sans-serif;opacity:.72;transition:opacity .15s}
+    #lt-preview-timer:hover,#lt-preview-timer:focus-within{opacity:1}
+    #lt-preview-timer button{width:20px;height:20px;padding:0;border:0;background:transparent;color:inherit;font:inherit;cursor:pointer}
+    #lt-preview-timer time{min-width:42px;text-align:center;font-variant-numeric:tabular-nums}
     html.lt-editing svg[data-marpit-svg]{cursor:crosshair}html.lt-editing [data-lt-edit-selected]{outline:2px solid #00a8ff!important;outline-offset:2px;cursor:move!important}
   `;
   document.head.append(style);
@@ -18,6 +22,51 @@
   toolbar.hidden = false;
   toolbar.innerHTML = '<button type="button" data-action="toggle">画像を編集</button><span class="lt-edit-help">画像をドラッグで移動。右下の丸で縦横比を保ってサイズ変更。</span><button type="button" data-action="reset" disabled>画像をリセット</button><span class="lt-edit-status" aria-live="polite"></span>';
   document.body.append(toolbar);
+  const timer = document.createElement('div');
+  timer.id = 'lt-preview-timer';
+  timer.innerHTML = '<button type="button" data-action="toggle" aria-label="タイマー開始" title="タイマー開始">▶</button><time>00:00</time><button type="button" data-action="reset" aria-label="タイマーをリセット" title="タイマーをリセット">↺</button>';
+  document.body.append(timer);
+  const timerToggle = timer.querySelector('[data-action="toggle"]');
+  const timerDisplay = timer.querySelector('time');
+  const timerStorageKey = `lt-preview-timer:${window.LT_PREVIEW_DECK}`;
+  let timerState = { elapsed: 0, startedAt: null };
+  try {
+    const saved = JSON.parse(localStorage.getItem(timerStorageKey) || 'null');
+    if (saved && Number.isFinite(saved.elapsed)) timerState = saved;
+  } catch {}
+  function elapsedNow() {
+    return timerState.elapsed + (timerState.startedAt ? Date.now() - timerState.startedAt : 0);
+  }
+  function renderTimer() {
+    const seconds = Math.floor(elapsedNow() / 1000);
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const rest = seconds % 60;
+    timerDisplay.textContent = hours ? `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(rest).padStart(2, '0')}` : `${String(minutes).padStart(2, '0')}:${String(rest).padStart(2, '0')}`;
+    const running = Boolean(timerState.startedAt);
+    timerToggle.textContent = running ? 'Ⅱ' : '▶';
+    timerToggle.setAttribute('aria-label', running ? 'タイマー一時停止' : 'タイマー開始');
+    timerToggle.title = running ? 'タイマー一時停止' : 'タイマー開始';
+  }
+  function saveTimerState() {
+    try { localStorage.setItem(timerStorageKey, JSON.stringify(timerState)); } catch {}
+    renderTimer();
+  }
+  timerToggle.addEventListener('click', () => {
+    if (timerState.startedAt) {
+      timerState.elapsed = elapsedNow();
+      timerState.startedAt = null;
+    } else {
+      timerState.startedAt = Date.now();
+    }
+    saveTimerState();
+  });
+  timer.querySelector('[data-action="reset"]').addEventListener('click', () => {
+    timerState = { elapsed: 0, startedAt: null };
+    saveTimerState();
+  });
+  renderTimer();
+  setInterval(renderTimer, 250);
   const outline = document.createElement('div');
   outline.id = 'lt-edit-outline';
   outline.innerHTML = '<button id="lt-edit-handle" type="button" aria-label="サイズを変更"></button>';
