@@ -16,5 +16,9 @@
     "check": "node scripts/lecture/check.mjs",
     "cards": "node scripts/lecture/cards.mjs",
     "variants": "node scripts/lecture/build-variants.mjs"
+  },
+  "devDependencies": {
+    "pdf-lib": "^1.17.1",
+    "playwright": "^1.65.1"
   }
 }
