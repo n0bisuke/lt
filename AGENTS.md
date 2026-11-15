@@ -44,6 +44,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 | `scripts/lecture/build-variants.mjs` | 親 `deck.md` から版別デッキを生成する。既存版に差分があるときは手編集として保持し、明示的な `--force` のときだけ上書きする |
 | `logs/` | 修正の原因・対応・確認結果を日付付きで記録する |
 | `.agents/skills/lt-slides/SKILL.md` | Codex用のLT作成スキル。Claude Code用の `.claude/skills/lt-slides/SKILL.md` と同じ手順を保つ |
+| `.agents/skills/qr-code-generator/SKILL.md` | URLからPNG形式のQRコードを作るCodexスキル。Claude Code用の `.claude/skills/qr-code-generator/SKILL.md` と同じ手順を保つ |
 | `.claude/skills/annotate-screenshot/` | [protoout/teachers-agent-skills](https://github.com/protoout/teachers-agent-skills) から入れた、スクショへの注釈付けと Gyazo へのアップロード（`scripts/upload-gyazo.mjs`）。トークンは `.env` の `GYAZO_ACCESS_TOKEN` で、値は読まず表示もしない。アップロードは1枚ずつ発表者に確認してから行う。初回は `npm ci --prefix .claude/skills/annotate-screenshot` |
 | `.agents/skills/lt-slides/SKILL.md` | Codex用のLT作成スキル。Claude Code用の `.claude/skills/lt-slides/SKILL.md` と同じ手順を保つ |
 | `site.json` | 公開先の URL（`all.json` と個別ページの絶対 URL に使う） |

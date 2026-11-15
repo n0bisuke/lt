@@ -438,22 +438,21 @@ path: 20261115_moiken-minotake-security/10min
 
 ---
 
-<!-- _class: key-message current-topic -->
-<!-- _footer: 4. 作って試し、設計の工夫を発信する -->
-
-
-
-## アンケートはこちら
-
-**［アンケートのQRコードをここに表示（後で差し替え）］**
-
-<!-- 興味がある方はこちら。アンケートに回答してください。 -->
-
----
-
 <!-- _class: link-cards current-topic -->
 <!-- _footer: 4. 作って試し、設計の工夫を発信する -->
 
 ## 最新事例は「漏らされったー」で
 
-<article class="gl-linkcard"><strong class="t-sub"><a href="https://morasaretter.suke.dev/">漏らされったー</a></strong><small class="t-note gl-muted">情報漏えいの事例を追いかける / <a href="https://morasaretter.suke.dev/">morasaretter.suke.dev</a></small></article>
+<!-- card: images/morasaretter-og.png | 出典: morasaretter.suke.dev -->
+<article class="gl-linkcard is-image" data-card="images/morasaretter-og.png | 出典: morasaretter.suke.dev"><img src="images/morasaretter-og.png" alt=""><small class="t-note gl-muted">出典: morasaretter.suke.dev</small></article>
+
+---
+<!-- only: 15min,10min -->
+<!-- _class: diagram current-topic -->
+<!-- _footer: 4. 作って試し、設計の工夫を発信する -->
+
+## 興味ある人はこちら！
+
+![アンケートフォームを開くQRコード](images/final-survey-qr.png)
+
+<!-- アンケートフォーム: https://forms.gle/sWkm89bvMTUSXED37 -->

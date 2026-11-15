@@ -25,9 +25,9 @@ section.panel{background:var(--surface-panel)}
 /* 部品を指定しないスライドと補足、目次は、見出しの下で本文を縦の中央に置く（#13） */
 section:not([class]),section.panel,section.agenda{display:flex;flex-direction:column;justify-content:center}
 /* current-topic が付いた通常スライドも、見出しの下の本文を縦中央に置く */
-section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.media-split):not(.diagram):not(.closing){display:flex;flex-direction:column;justify-content:center}
-section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.media-split):not(.diagram):not(.closing) p:has(>img){display:flex;align-items:center;justify-content:center;margin:0}
-section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.media-split):not(.diagram):not(.closing) p>img{display:block;width:auto;height:auto;max-width:100%;max-height:460px;object-fit:contain}
+section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.media-split):not(.diagram):not(.qr-prompt):not(.closing){display:flex;flex-direction:column;justify-content:center}
+section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.media-split):not(.diagram):not(.qr-prompt):not(.closing) p:has(>img){display:flex;align-items:center;justify-content:center;margin:0}
+section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.media-split):not(.diagram):not(.qr-prompt):not(.closing) p>img{display:block;width:auto;height:auto;max-width:100%;max-height:460px;object-fit:contain}
 section:not([class]) img{display:block;max-width:100%;max-height:460px;object-fit:contain;margin:0 auto}
 /* diagram: 16:9の図解を本文の表示領域いっぱいに使う */
 section.diagram{display:flex;align-items:center;justify-content:center;padding:56px var(--space-6) 64px}

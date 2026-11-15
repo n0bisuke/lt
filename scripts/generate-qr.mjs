@@ -37,4 +37,5 @@ await QRCode.toFile(output, input, {
 });
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-console.log(`QRコードを保存しました: ${relative(root, output) || output}`);
+const repoPath = relative(root, output);
+console.log(`QRコードを保存しました: ${repoPath.startsWith('..') ? output : repoPath}`);

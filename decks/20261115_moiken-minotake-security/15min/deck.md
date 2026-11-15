@@ -216,7 +216,7 @@ path: 20261115_moiken-minotake-security
 <!-- メールエイリアスを使うと、登録先ごとに別のメールアドレスを使いながら、受信は自分のメールにまとめられます。 -->
 
 ---
-<!-- _class: source-cards current-topic -->
+<!-- _class: source-cards current-topic panel -->
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い > 使う側編 -->
 
 ## メールアドレスを直接渡さない方法
@@ -240,6 +240,7 @@ path: 20261115_moiken-minotake-security
 ![登録先Aで漏えいした場合](images/alias-email-flow-leaked.svg)
 
 <!-- Aで使った専用アドレスが漏れても、B/C用のアドレスや本来のメールとは分かれているので、他への影響を抑えやすくなります。パスワードの使い回しなど、別の情報まで保護するものではありません。 -->
+
 
 ---
 
@@ -321,17 +322,17 @@ path: 20261115_moiken-minotake-security
 
 ---
 
-<!-- _class: source-cards current-topic -->
-<!-- _footer: 2. 使う人・作る人ができる情報の扱い > 作る側編 -->
+<!-- _class: media-split current-topic panel -->
+<!-- _footer: 2. 使う人・作る人ができる情報の扱い > 使う側編 -->
 
-## JRE MALLでは、名前をそのまま入れない
+## 本名も電話番号もエイリアスで
 
-<div class="gl-cards gl-cards--2">
-<article class="gl-source"><img class="gl-source__screenshot" src="images/jre-mall-account.png" alt="JRE MALLの会員画面。表示名はS R"><strong class="t-body">会員画面</strong></article>
-<article class="gl-source"><img class="gl-source__screenshot" src="images/jre-mall-member-info.png" alt="JRE MALLの会員情報編集画面。氏名欄はSとR"><strong class="t-body">会員情報の編集</strong></article>
-</div>
+- 電話番号：IP電話サービスを持っておこう
+- 名前：イニシャルでよい場合は、そうしましょう
 
-<!-- JRE MALLは、個人的にはいけてないところがあって。名前をそのまま入れないなど、自分で情報を守りながら使っています。こういう工夫も、使う側でできることです。 -->
+![JRE MALLの会員画面と、イニシャルで登録した会員情報のスクリーンショット](images/jre-mall-screenshots-paired.svg)
+
+<!-- 電話番号を登録するときは、IP電話サービスを持っておく。名前も本名でなくてよい場合は、イニシャルで登録する。JRE MALLの画面では、表示名と氏名をイニシャルにしています。こういう工夫も使う側でできることです。 -->
 
 ---
 
@@ -551,22 +552,21 @@ path: 20261115_moiken-minotake-security
 
 ---
 
-<!-- _class: key-message current-topic -->
-<!-- _footer: 4. 作って試し、設計の工夫を発信する -->
-
-
-
-## アンケートはこちら
-
-**［アンケートのQRコードをここに表示（後で差し替え）］**
-
-<!-- 興味がある方はこちら。アンケートに回答してください。 -->
-
----
-
 <!-- _class: link-cards current-topic -->
 <!-- _footer: 4. 作って試し、設計の工夫を発信する -->
 
 ## 最新事例は「漏らされったー」で
 
-<article class="gl-linkcard"><strong class="t-sub"><a href="https://morasaretter.suke.dev/">漏らされったー</a></strong><small class="t-note gl-muted">情報漏えいの事例を追いかける / <a href="https://morasaretter.suke.dev/">morasaretter.suke.dev</a></small></article>
+<!-- card: images/morasaretter-og.png | 出典: morasaretter.suke.dev -->
+<article class="gl-linkcard is-image" data-card="images/morasaretter-og.png | 出典: morasaretter.suke.dev"><img src="images/morasaretter-og.png" alt=""><small class="t-note gl-muted">出典: morasaretter.suke.dev</small></article>
+
+---
+<!-- only: 15min,10min -->
+<!-- _class: diagram current-topic -->
+<!-- _footer: 4. 作って試し、設計の工夫を発信する -->
+
+## 興味ある人はこちら！
+
+![アンケートフォームを開くQRコード](images/final-survey-qr.png)
+
+<!-- アンケートフォーム: https://forms.gle/sWkm89bvMTUSXED37 -->
