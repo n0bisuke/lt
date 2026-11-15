@@ -1,5 +1,5 @@
 #!/bin/bash
-# Legacy entry point: Node.js / Fullbleed で PDF とサムネイルを出力（ブラウザー不使用）
+# Legacy entry point: Node.js / Playwright で PDF とサムネイルを出力
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"

@@ -4,7 +4,7 @@
 //   /<id>/       個別ページ（プレイヤー、PDF）
 //   /<id>/slides/ スライド本体
 //   /all.json    一覧の API
-// PDF とサムネイルはフォントを揃えるため手元で作ってコミットしておく（scripts/export-pdf.sh）。
+// PDF とサムネイルは別の GitHub Actions で生成し、Pages 公開に含める。
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, normalize, relative, sep } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -19,6 +19,7 @@ const MAX_PDF_MB = 90; // GitHub は 100MB を超えるファイルを受け付�
 const MOVE_UNUSED = process.argv.includes('--move-unused');
 const PREVIEW = process.argv.includes('--preview');
 const REQUIRE_ARTIFACTS = process.argv.includes('--require-artifacts');
+const SKIP_VARIANTS = process.argv.includes('--skip-variants');
 const SITE_TITLE = 'LT スライド - 菅原のびすけ';
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -35,7 +36,7 @@ function updatedAtFor(sourcePath) {
   return committed || statSync(sourcePath).mtime.toISOString();
 }
 
-for (const master of findVariantMasters()) buildVariants(master);
+if (!SKIP_VARIANTS) for (const master of findVariantMasters()) buildVariants(master);
 
 function allFiles(dir) {
   return readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? allFiles(join(dir, e.name)) : [join(dir, e.name)]));
@@ -65,18 +66,25 @@ for (const dir of collectDeckDirs(DECKS)) {
   if (!isMd && !existsSync(metaPath)) continue;
   const source = isMd ? readFileSync(mdPath, 'utf8') : null;
   const meta = isMd ? parseDeck(source).meta : JSON.parse(readFileSync(metaPath, 'utf8'));
-  if (meta.variants === true) continue;
   if (meta.published !== true) continue;
+  const isVariantMaster = isMd && meta.variants === true;
   const id = meta.id ?? folderName;
   // path lets a versioned deck keep a nested public route without changing its API id.
   const route = meta.path ?? id;
   const parentDir = dirname(dir);
-  const variantName = basename(dir);
+  const childVariantName = basename(dir);
   const parentDeck = join(parentDir, 'deck.md');
-  const parentIsVariantMaster = existsSync(parentDeck) && parseDeck(readFileSync(parentDeck, 'utf8')).meta.variants === true;
-  const variantGroup = parentIsVariantMaster
-    ? relative(DECKS, parentDir)
+  const parentMeta = existsSync(parentDeck) ? parseDeck(readFileSync(parentDeck, 'utf8')).meta : {};
+  const parentIsVariantMaster = parentMeta.variants === true;
+  if (parentIsVariantMaster) {
+    const configured = String(parentMeta.variantNames ?? '15min,10min,5min').split(',').map((name) => name.trim());
+    // 15分版は親デッキ自身。旧15min/や設定外の版は公開対象にしない。
+    if (childVariantName === '15min' || !configured.includes(childVariantName)) continue;
+  }
+  const variantGroup = parentIsVariantMaster || isVariantMaster
+    ? relative(DECKS, isVariantMaster ? dir : parentDir)
     : null;
+  const variantName = isVariantMaster ? 'parent' : parentIsVariantMaster ? childVariantName : null;
   const routeParts = String(route).split('/');
   if (!routeParts.length || routeParts.some((part) => !/^[a-zA-Z0-9._-]+$/.test(part) || part === '.' || part === '..')) {
     errors.push(`${id}: path は英数字・._- のパス区切りで指定してください`);
@@ -167,7 +175,7 @@ for (const dir of collectDeckDirs(DECKS)) {
     variantGroup,
     variantName: variantGroup ? variantName : null,
     hasPdf: existsSync(pdfPath),
-    hasThumbnail: existsSync(thumbPath),
+    hasThumbnail: Boolean(thumbPath && existsSync(thumbPath)),
   });
 }
 
@@ -203,7 +211,7 @@ const updatedJa = (s) => new Intl.DateTimeFormat('ja-JP', {
   timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false,
 }).format(new Date(s));
 
-const variantOrder = { '15min': 0, '10min': 1, '5min': 2, 'v0.1': 3 };
+const variantOrder = { parent: 0, '10min': 1, '15min': 2, '5min': 3, 'v0.1': 4 };
 const groupedVersions = new Map();
 for (const deck of published) {
   if (!deck.variantGroup) continue;
@@ -214,7 +222,7 @@ const listablePublished = published.filter((deck) => !deck.variantGroup);
 for (const versions of groupedVersions.values()) {
   versions.sort((a, b) => variantOrder[a.variantName] - variantOrder[b.variantName]);
   for (const version of versions) version.versions = versions;
-  listablePublished.push(versions.find((version) => version.variantName === '15min') ?? versions[0]);
+  listablePublished.push(versions.find((version) => version.variantName === 'parent') ?? versions[0]);
 }
 
 writeFileSync(join(DIST, 'site.css'), `@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700&display=swap");
@@ -432,7 +440,7 @@ for (const d of published) {
   const versionSelector = d.versions?.length > 1
     ? `<nav class="versions" aria-label="デッキのバージョンを選択"><span class="versions-label">バージョン</span>${d.versions.map((version) => {
       const current = version.id === d.id;
-      const label = { '15min': '15分版', '10min': '10分版', '5min': '5分版', 'v0.1': '旧版（v0.1）' }[version.variantName] ?? version.variantName;
+      const label = { parent: '親デッキ', '10min': '10分版', '15min': '15分版', '5min': '5分版', 'v0.1': '旧版（v0.1）' }[version.variantName] ?? version.variantName;
       return `<a class="btn" href="${rootPrefix}${encodeRoute(version.route)}/"${current ? ' aria-current="page"' : ''}>${label}</a>`;
     }).join('')}</nav>`
     : '';

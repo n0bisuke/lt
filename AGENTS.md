@@ -25,7 +25,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 | パス | 内容 |
 | --- | --- |
 | `inbox/` | 発表者が画像やメモを入れるフォルダ。Git には入らない |
-| `decks/<YYYYMMDD>_<短い英語名>/` | スライド置き場。`deck.md`、`images/`、`notes/`。ローカル画像編集の調整値は `.lt-adjustments.json` に保存します。複数時間版は同じフォルダ内に `15min/`、`10min/` などの生成済み版を置きます。PDF から取り込んだデッキだけは `index.html` と `deck.json` |
+| `decks/<YYYYMMDD>_<短い英語名>/` | スライド置き場。`deck.md`、`images/`、`notes/`。ローカル画像編集の調整値は `.lt-adjustments.json` に保存します。親 `deck.md` がメインで、追加の時間版だけ同じフォルダ内に `10min/` などの子フォルダとして置きます。PDF から取り込んだデッキだけは `index.html` と `deck.json` |
 | `design-system/marp/theme.src.css` | Markdown の要素と見た目の対応。`iotlt.css` はここから生成されるので手で編集しない |
 | `scripts/build-deck.mjs` | `deck.md` から確認用の `deck.html` を作る |
 | `scripts/lecture/build-variants.mjs` | 1つの `deck.md` から時間別の版を生成する |
@@ -37,7 +37,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 | `scripts/build-tokens.mjs` | `tokens.css` を生成する |
 | `scripts/new-deck.mjs` | デッキを用意し、`inbox/` の中身を取り込む |
 | `scripts/generate-qr.mjs` | URLから読み取りやすいPNG形式のQRコードを作る（`npm run qr -- <URL> <出力先.png>`） |
-| `scripts/export-pdf.mjs` | WeasyPrint と Poppler でブラウザーを使わず PDF とサムネイルを作る |
+| `scripts/export-pdf.mjs` | Node.js / Playwright / Chromium で PDF とサムネイルを作る |
 | `.github/workflows/pdf-export.yml` | PDF とサムネイルを Pages 公開と独立して生成する |
 | `design-system/lecture/` | 講演テーマの色・寸法（`tokens.json`）、部品（`theme.src.css`）、文書、見本、フォント、画像 |
 | `design-system/marp/lecture.css` | 講演テーマ。`build-tokens.mjs` が生成するので手で編集しない |
@@ -58,7 +58,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 
 発表者とチャットで話しながら、次の手順で作ります。`inbox/` の素材はあってもなくても始められます。Claude Code の `/lt-slides` も同じ流れです。公開とコミットは頼まれるまでしません。
 
-**ブラウザーを使うとき：** Webページの閲覧やスライドのプレビュー確認には Codex 内蔵ブラウザーを使います。ホスト側の Chrome / Chrome Dev / Brave は使いません。PDF は WeasyPrint と Poppler で生成します。
+**ブラウザーを使うとき：** Webページの閲覧やスライドのプレビュー確認には Codex 内蔵ブラウザーを使います。ホスト側の Chrome / Chrome Dev / Brave は使いません。PDF とサムネイルは Playwright が管理する Chromium で生成します。
 
 1. **デッキを用意して取り込む。** 次のコマンドで `decks/<名前>/` を作ります。`inbox/` の画像は `images/` に、メモなどは `notes/` に入ります。あとから `inbox/` に足された分は、同じコマンドをもう一度実行すれば取り込めます。
 
@@ -103,7 +103,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 
    サイトを組み立て直してエラーがなければ、`git add`、`commit`、`push` まで行います。`decks/` は `published: true` のデッキだけを add し、削除した公開デッキも削除としてコミットします。公開リポジトリでは、コミットした内容はすべて誰でも読めるので、`git add .` や `git add decks` を直接使いません。`npm run deploy -- --dry-run` で、コミットされるファイルを先に確認できます。
 
-PDF とサムネイルは `.github/workflows/pdf-export.yml` が WeasyPrint と Poppler で生成し、Actions artifact として14日間保存します。この処理は Pages 公開と独立しており、PDF 出力に失敗してもスライド公開は止まりません。Pages にはリポジトリに存在する PDF とサムネイルだけを含めます。ブラウザーは使いません。手元で PDF を作る場合は `npm run export-pdf` を使い、事前に `brew install weasyprint poppler` を実行します。
+PDF とサムネイルは `.github/workflows/pdf-export.yml` が Playwright / Chromium で生成し、Actions artifact として14日間保存します。この処理は Pages 公開と独立しており、PDF 出力に失敗してもスライド公開は止まりません。Pages にはリポジトリに存在する PDF とサムネイルだけを含めます。手元で PDF を作る場合は `npm run export-pdf` を使い、初回だけ `npm exec playwright install chromium` を実行します。Homebrew、WeasyPrint、Poppler は使いません。
 
 | URL | 内容 |
 | --- | --- |
@@ -135,7 +135,7 @@ swift scripts/mosaic-page.swift decks/<デッキ名> <ページ番号> 24 x,y,w,
 scripts/export-pdf.sh decks/<デッキ名>
 ```
 
-後方互換用のコマンドです。`npm run export-pdf` と同じく、WeasyPrint と Poppler を使って PDF とサムネイルを書き出します。ブラウザーは使いません。
+後方互換用のコマンドです。`npm run export-pdf` と同じく、Playwright / Chromium を使って PDF とサムネイルを書き出します。
 
 ```bash
 node scripts/build-tokens.mjs
@@ -161,7 +161,7 @@ node scripts/build-deck.mjs decks/<デッキ名>
 
 プレビュー左下の小さなタイマーで発表時間を計測できます。再生・一時停止・リセットができ、スライドを移動したりプレビューを再読み込みしたりしても計測状態を保ちます。画像を微調整するには、プレビュー右下の「画像を編集」を押します。画像をドラッグして移動し、右下の丸をドラッグして縦横比を保ったままサイズを変更できます。変更はデッキの `.lt-adjustments.json` に保存され、リセットできます。サイトを再生成するときも調整が反映されます。
 
-複数時間版の元データは親フォルダの `deck.md` です。スライドの先頭に `<!-- only: 15min,10min -->` のように書くと、その版だけに載ります。指定がないスライドは全版に載ります。版を限定する場合は front matter に `variantNames: 15min,10min` のように指定し、除外した版の生成フォルダは削除します。`npm run deck -- decks` と `npm run deploy` は、公開前に時間別の版を自動生成します。
+複数時間版の元データは親フォルダの `deck.md` です。親デッキがメインのページです。スライドの先頭に `<!-- only: 10min -->` のように書くと、そのスライドを子版だけに載せられます。指定がないスライドは全版に載ります。front matter の `variantNames: 10min` に含めた版だけを子フォルダに生成し、既存の除外版フォルダは手編集を守るため削除しません。`npm run deck -- decks` は親デッキをプレビューし、時間別の子デッキを一覧・再ビルドしません。`npm run deploy` は親デッキと設定済みの子版を公開します。
 
 ```bash
 npm run variants -- decks/<デッキ名>

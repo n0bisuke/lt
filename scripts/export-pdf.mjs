@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Node.js で Marp HTML を組み立て、Playwright/Chromium で PDF とサムネイルを作る。
 import { readFileSync, readdirSync, existsSync, writeFileSync, mkdtempSync, rmSync } from 'node:fs';
-import { dirname, join, relative, resolve, sep } from 'node:path';
+import { basename, dirname, join, relative, resolve, sep } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -17,7 +17,16 @@ const changedOnly = args.includes('--changed');
 const arg = args.find((value) => !value.startsWith('--'));
 function collectDeckDirs(dir) {
   const entries = readdirSync(dir, { withFileTypes: true });
-  const found = entries.some((entry) => entry.isFile() && entry.name === 'deck.md') ? [dir] : [];
+  const hasDeck = entries.some((entry) => entry.isFile() && entry.name === 'deck.md');
+  let found = [];
+  if (hasDeck) {
+    const parentMarkdown = join(dirname(dir), 'deck.md');
+    const parentMeta = existsSync(parentMarkdown) ? parseDeck(readFileSync(parentMarkdown, 'utf8')).meta : {};
+    if (!parentMeta.variants || (basename(dir) !== '15min'
+      && String(parentMeta.variantNames ?? '10min').split(',').map((name) => name.trim()).includes(basename(dir)))) {
+      found = [dir];
+    }
+  }
   for (const entry of entries) {
     if (!entry.isDirectory() || ['images', 'notes', 'unused'].includes(entry.name)) continue;
     found.push(...collectDeckDirs(join(dir, entry.name)));
@@ -96,7 +105,6 @@ async function exportDeck(dir, browser) {
   const sourcePath = join(dir, 'deck.md');
   const source = readFileSync(sourcePath, 'utf8');
   const { meta } = parseDeck(source);
-  if (meta.variants === true) throw new Error(`${sourcePath}: 15min/、10min/、5min/ の生成版を指定してください`);
   if (existsSync(join(dir, 'deck.json')) && JSON.parse(readFileSync(join(dir, 'deck.json'), 'utf8')).source === 'pdf') {
     console.log(`${relative(ROOT, dir)}: 取り込み済みPDFを保持します`);
     return;
@@ -149,14 +157,15 @@ async function exportDeck(dir, browser) {
   }
 }
 
-run(process.execPath, [join(ROOT, 'scripts/build-tokens.mjs')]);
+const tokenBuild = spawnSync(process.execPath, [join(ROOT, 'scripts/build-tokens.mjs')], { cwd: ROOT, encoding: 'utf8' });
+if (tokenBuild.status !== 0) throw new Error(tokenBuild.stderr || 'tokens.css の生成に失敗しました');
 for (const master of findVariantMasters()) buildVariants(master);
 
 let dirs;
 if (arg) dirs = [resolve(ROOT, arg)];
 else dirs = collectDeckDirs(DECKS).filter((dir) => {
   const { meta } = parseDeck(readFileSync(join(dir, 'deck.md'), 'utf8'));
-  return meta.published === true && meta.variants !== true;
+  return meta.published === true;
 });
 
 if (changedOnly && !arg) {

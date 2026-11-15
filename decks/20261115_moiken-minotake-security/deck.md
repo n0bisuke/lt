@@ -341,13 +341,13 @@ variantNames: 15min,10min
 ## 事例： 企業も、持つ情報を減らし始めている
 
 <div class="gl-cards gl-cards--2">
-<article class="gl-source"><strong class="t-body">ゆで太郎</strong><p class="t-sub">会員制度を終了。最後のクーポン後に、会員情報を削除へ。</p></article>
-<article class="gl-source"><strong class="t-body">焼肉きんぐ</strong><p class="t-sub">個人情報を入力せずに予約できる仕組みを導入へ。</p></article>
+<article class="gl-source"><strong class="t-body">ゆで太郎</strong><p class="t-sub">バースデークラブを終了。最後のクーポン発送後、会員情報を消去へ。</p><small class="t-note"><a href="https://yudetaro.jp/バースデークラブ終了のお知らせ/">ゆで太郎システム / 2026年10月28日</a></small></article>
+<article class="gl-source"><strong class="t-body">焼肉きんぐ</strong><p class="t-sub">漏えい後、公式アプリで保持する個人情報を削減し、新システムへ移行へ。</p><small class="t-note"><a href="https://www.yakiniku-king.jp/news/6877">物語コーポレーション / 2026年10月20日</a></small></article>
 </div>
 <p class="gl-foot t-body">守るだけでなく、そもそも集めない選択。</p>
 <small class="t-note">参考: <a href="https://morasaretter.suke.dev/articles/2026-11-companies-holding-less-data/">漏らされったー / 2026年11月9日</a></small>
 
-<!-- 企業も、集める情報を減らす動きを始めています。ゆで太郎は会員制度を終了し、最後のクーポン後に会員情報を削除する予定。焼肉きんぐは個人情報を入力せずに予約できる仕組みを導入すると報じられています。どちらも「守る」だけでなく、持つ情報を減らす考え方の例です。出典記事は公式発表や報道を元にAIも活用して作成され、誤りや古い情報の可能性があると注記されています。参考: 漏らされったー https://morasaretter.suke.dev/articles/2026-11-companies-holding-less-data/ -->
+<!-- 企業も、集める情報を減らす動きを始めています。ゆで太郎はバースデークラブを終了し、最後のクーポン発送後に会員情報を消去する予定。焼肉きんぐはアプリの会員管理システムで漏えいが発生したあと、公式アプリで保持する個人情報を削減し、新システムへ移行する方針を公表しました。どちらも、持つ情報を減らす考え方の例です。 -->
 
 ---
 <!-- _class: current-topic -->

@@ -6,8 +6,7 @@ import { createServer } from 'node:http';
 import { spawnSync } from 'node:child_process';
 import { basename, dirname, extname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildVariants, findVariantMasters } from './lecture/build-variants.mjs';
-import { parseDeck } from './lib/deck.mjs';
+import { applySlideAdjustments, parseDeck, renderSlides } from './lib/deck.mjs';
 
 const root = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const decksRoot = join(root, 'decks');
@@ -23,7 +22,8 @@ function collectDeckDirs(dir) {
   const entries = readdirSync(dir, { withFileTypes: true });
   if (entries.some((entry) => entry.isFile() && entry.name === 'deck.md')) {
     const markdown = join(dir, 'deck.md');
-    if (parseDeck(readFileSync(markdown, 'utf8')).meta.variants !== true) deckDirs.add(dir);
+    deckDirs.add(dir);
+    if (parseDeck(readFileSync(markdown, 'utf8')).meta.variants === true) return;
   }
   for (const entry of entries) {
     if (!entry.isDirectory() || ['images', 'notes', 'unused'].includes(entry.name)) continue;
@@ -32,6 +32,18 @@ function collectDeckDirs(dir) {
 }
 
 function buildDeck(dir) {
+  const sourcePath = join(dir, 'deck.md');
+  const source = readFileSync(sourcePath, 'utf8');
+  const { meta } = parseDeck(source);
+  if (meta.variants === true) {
+    const rendered = renderSlides(source, { title: meta.title ?? '' });
+    const adjustmentsPath = join(dir, '.lt-adjustments.json');
+    const adjustments = existsSync(adjustmentsPath) ? JSON.parse(readFileSync(adjustmentsPath, 'utf8')) : {};
+    const html = applySlideAdjustments(rendered.html, adjustments);
+    writeFileSync(join(dir, 'deck.html'), html);
+    console.log(`${sourcePath}（${rendered.count} 枚・親デッキ）`);
+    return;
+  }
   const result = spawnSync(process.execPath, ['scripts/build-deck.mjs', dir], {
     cwd: root,
     stdio: 'inherit',
@@ -40,7 +52,6 @@ function buildDeck(dir) {
 }
 
 function rebuildAll() {
-  for (const master of findVariantMasters()) buildVariants(master);
   deckDirs.clear();
   collectDeckDirs(decksRoot);
   const publishedTitles = new Set([...deckDirs]
@@ -52,7 +63,7 @@ function rebuildAll() {
     if (meta.published !== true && publishedTitles.has(meta.title)) deckDirs.delete(dir);
   }
   for (const dir of deckDirs) buildDeck(dir);
-  const site = spawnSync(process.execPath, ['scripts/build-site.mjs', '--preview'], {
+  const site = spawnSync(process.execPath, ['scripts/build-site.mjs', '--preview', '--skip-variants'], {
     cwd: root,
     stdio: 'inherit',
   });
@@ -60,6 +71,66 @@ function rebuildAll() {
 }
 
 rebuildAll();
+
+const markdownSnapshots = new Map();
+function snapshotDeckMarkdown(dir) {
+  const markdown = join(dir, 'deck.md');
+  if (existsSync(markdown)) markdownSnapshots.set(markdown, readFileSync(markdown, 'utf8'));
+  if (existsSync(markdown) && parseDeck(readFileSync(markdown, 'utf8')).meta.variants === true) return;
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (!entry.isDirectory() || ['images', 'notes', 'unused'].includes(entry.name)) continue;
+    snapshotDeckMarkdown(join(dir, entry.name));
+  }
+}
+snapshotDeckMarkdown(decksRoot);
+
+function rebuildChangedMarkdown(files) {
+  const changedFiles = [...files].filter((file) => deckDirs.has(dirname(file))
+    && (!existsSync(file) || readFileSync(file, 'utf8') !== markdownSnapshots.get(file)));
+  if (!changedFiles.length) return false;
+
+  const affected = new Set();
+  let needsFullRebuild = false;
+  for (const file of changedFiles) {
+    if (!existsSync(file)) {
+      markdownSnapshots.delete(file);
+      needsFullRebuild = true;
+      continue;
+    }
+    const previous = markdownSnapshots.get(file);
+    const current = readFileSync(file, 'utf8');
+    const beforeMeta = previous === undefined ? null : parseDeck(previous).meta;
+    const afterMeta = parseDeck(current).meta;
+    markdownSnapshots.set(file, current);
+
+    if (previous === undefined || JSON.stringify(beforeMeta) !== JSON.stringify(afterMeta)) {
+      needsFullRebuild = true;
+      continue;
+    }
+    if (afterMeta.variants === true) {
+      affected.add(dirname(file));
+    } else {
+      const dir = dirname(file);
+      if (!deckDirs.has(dir)) needsFullRebuild = true;
+      else affected.add(dir);
+    }
+  }
+
+  if (needsFullRebuild) {
+    rebuildAll();
+    markdownSnapshots.clear();
+    snapshotDeckMarkdown(decksRoot);
+    return true;
+  }
+
+  for (const dir of affected) buildDeck(dir);
+  const site = spawnSync(process.execPath, ['scripts/build-site.mjs', '--preview', '--skip-variants'], {
+    cwd: root,
+    stdio: 'inherit',
+  });
+  if (site.status !== 0) throw new Error('記事プレビューの生成に失敗しました');
+  return true;
+}
 
 const allDecks = [...deckDirs].map((dir) => {
   const md = readFileSync(join(dir, 'deck.md'), 'utf8');
@@ -71,19 +142,7 @@ const allDecks = [...deckDirs].map((dir) => {
     published: meta.published === true,
   };
 });
-const decks = [];
-const listedVariantGroups = new Set();
-for (const deck of allDecks) {
-  const parent = dirname(deck.dir);
-  const masterPath = join(parent, 'deck.md');
-  const isVariant = existsSync(masterPath) && parseDeck(readFileSync(masterPath, 'utf8')).meta.variants === true;
-  if (!isVariant) { decks.push(deck); continue; }
-  const group = relative(decksRoot, parent);
-  if (listedVariantGroups.has(group)) continue;
-  listedVariantGroups.add(group);
-  const main = allDecks.find((candidate) => dirname(candidate.dir) === parent && basename(candidate.dir) === '15min') ?? deck;
-  decks.push({ ...main, route: main.route.split('/')[0] });
-}
+const decks = allDecks;
 
 const escapeHtml = (text) => String(text).replace(/[&<>"']/g, (c) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -143,30 +202,29 @@ function readRequest(req, res) {
 }
 
 let rebuildTimer;
-let rebuilding = false;
-let rebuildAgain = false;
-function scheduleRebuild() {
+const pendingMarkdown = new Set();
+function scheduleRebuild(file) {
+  pendingMarkdown.add(file);
   clearTimeout(rebuildTimer);
   rebuildTimer = setTimeout(() => {
-    if (rebuilding) { rebuildAgain = true; return; }
-    rebuilding = true;
     try {
-      rebuildAll();
+      if (!rebuildChangedMarkdown(pendingMarkdown)) return;
       for (const response of reloadClients) response.write(clients);
-      console.log('Markdown を再ビルドしました。プレビューを更新します。');
+      console.log(`変更したデッキを再ビルドしました（${pendingMarkdown.size} ファイル）。プレビューを更新します。`);
     } catch (error) {
       console.error(error.message);
     } finally {
-      rebuilding = false;
-      if (rebuildAgain) { rebuildAgain = false; scheduleRebuild(); }
+      pendingMarkdown.clear();
     }
   }, 180);
 }
 
 watch(decksRoot, { recursive: true }, (_event, filename) => {
-  if (!filename || !String(filename).endsWith('.md')) return;
-  // 版別 deck.md の手編集もプレビューに反映する。buildVariants は差分のある既存ファイルを保持する。
-  scheduleRebuild();
+  if (!filename || basename(String(filename)) !== 'deck.md') return;
+  const file = resolve(decksRoot, String(filename));
+  if (!file.startsWith(`${decksRoot}${sep}`)) return;
+  // deck.md 以外は無視し、生成された版の同じ内容の通知も再ビルドしない。
+  scheduleRebuild(file);
 });
 
 const types = {
@@ -235,17 +293,6 @@ const server = createServer((req, res) => {
   }
 
   let file = resolve(root, `.${pathname}`);
-  if (!existsSync(file) && pathname.startsWith('/decks/') && pathname.endsWith('/deck.html')) {
-    const parent = dirname(file);
-    const masterPath = join(parent, 'deck.md');
-    if (existsSync(masterPath) && parseDeck(readFileSync(masterPath, 'utf8')).meta.variants === true) {
-      const target = `${pathname.slice(0, -'deck.html'.length)}15min/deck.html`;
-      if (existsSync(join(parent, '15min', 'deck.html'))) {
-        res.writeHead(302, { location: target }).end();
-        return;
-      }
-    }
-  }
   const inside = (directory) => file.startsWith(`${directory}${sep}`);
   const pathParts = file.slice(decksRoot.length + 1).split(sep);
   const isDeckPage = ['deck.html', 'index.html'].includes(pathParts.at(-1));
