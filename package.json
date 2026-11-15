@@ -4,13 +4,15 @@
   "type": "module",
   "dependencies": {
     "@marp-team/marp-core": "4.4.0",
-    "markdown-it": "15.0.3"
+    "markdown-it": "15.0.3",
+    "qrcode": "1.5.4"
   },
   "scripts": {
     "deploy": "node scripts/deploy.mjs",
     "deck": "node scripts/preview-deck.mjs",
     "export-pdf": "node scripts/export-pdf.mjs",
     "fetch-external": "node scripts/fetch-external.mjs",
+    "qr": "node scripts/generate-qr.mjs",
     "check": "node scripts/lecture/check.mjs",
     "cards": "node scripts/lecture/cards.mjs",
     "variants": "node scripts/lecture/build-variants.mjs"

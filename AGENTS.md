@@ -36,6 +36,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 | `design-system/tokens.css` | `tokens.json` から生成されるファイル。手で編集しない |
 | `scripts/build-tokens.mjs` | `tokens.css` を生成する |
 | `scripts/new-deck.mjs` | デッキを用意し、`inbox/` の中身を取り込む |
+| `scripts/generate-qr.mjs` | URLから読み取りやすいPNG形式のQRコードを作る（`npm run qr -- <URL> <出力先.png>`） |
 | `scripts/export-pdf.mjs` | WeasyPrint と Poppler でブラウザーを使わず PDF とサムネイルを作る |
 | `design-system/lecture/` | 講演テーマの色・寸法（`tokens.json`）、部品（`theme.src.css`）、文書、見本、フォント、画像 |
 | `design-system/marp/lecture.css` | 講演テーマ。`build-tokens.mjs` が生成するので手で編集しない |
@@ -140,6 +141,12 @@ node scripts/build-tokens.mjs
 
 `tokens.json` か `bundle.css` か `marp/theme.src.css`、または `lecture/` の `tokens.json` か `theme.src.css` を変えたあとに実行し、`tokens.css` と Marp のテーマ（`iotlt.css`、`lecture.css`）を更新します。テーマの CSS はコミットします。リポジトリを取得した直後は `npm ci` も実行します。
 
+URLからQRコード画像を作るときは、次を使います。URLの内容は書き換えず、PNGは指定した出力先に保存します。
+
+```bash
+npm run qr -- "https://example.com" decks/<デッキ名>/images/example-qr.png
+```
+
 ```bash
 node scripts/build-deck.mjs decks/<デッキ名>
 ```
@@ -192,6 +199,8 @@ Markdown で書けないときだけ使います。
 
 - **修正を記録する。** デザインシステムや生成処理の不具合を直したら `logs/YYYY-MM-DD.md` に原因、対応、確認結果を追記します。既存の記録を消したり置き換えたりしません。
 - **発表者の手作業を最優先する。** `deck.md` や画像などに発表者が直接加えた変更は重要な成果物として扱い、生成・同期スクリプトやエージェントの編集で上書きしません。編集前に `git diff` と現在のファイルを確認し、必要な箇所だけを小さく変更します。生成物と手編集が競合したら手編集を残し、勝手に `--force` や全面書き換えをしません。VS Code の「ファイルの内容が新しい」通知では Compare を使い、Overwrite は選ばず、差分を保全してから作業します。
+- **スライド消失時の確認:** 発表者が「消えた」「違う」と言ったスライドは、元デッキと対応する時間別デッキの該当部分を照合します。Markdown の `---` が本文の前にあり、`only` と `_class` がそのスライドに適用されているかを見て、生成 HTML のスライド境界・クラス・枚数まで確認します。本文がファイル内にあるだけで完了と判断しません。
+- **元デッキと時間別デッキの同期:** 編集前に対象ファイルと `git diff` を確認し、元デッキにない手編集を時間別デッキで見つけたら、まずその手編集を保全して元デッキへ取り込みます。同期や生成で発表者の内容を消さないよう、差分を確かめてから実行します。
 - **事実を作らない。** 発表者が試していない結果、数値、デモ、感想を書きません。分からなければ `lt-slot` か「【要確認】」にします。
 - **画像を作らない。** 製品ロゴや写真を描き起こしたり、それらしい画像で埋めたりしません。生成画像は発表者が頼んだときだけ使います。
 - **言葉を整えすぎない。** 発表者の短い話し言葉をそのまま使います。

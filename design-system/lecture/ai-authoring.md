@@ -26,6 +26,8 @@
 | 記事の要点を自分の言葉で | `source-cards` |
 | 投稿・記事など、画像内の文字を読ませる | `text-image` |
 | 左に要点、右に画像を置く | `media-split` |
+| 図解画像1枚を大きく見せる | `diagram` |
+| QRコードと案内文を配置 | `qr-prompt` |
 | 同じ分野のツール | `tool-gallery` |
 | 会場の声 | `poll-result` |
 | 分類の中の注目点 | `zone-compare` |

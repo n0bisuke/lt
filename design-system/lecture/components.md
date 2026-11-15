@@ -4,7 +4,7 @@
 
 部品は2つに分かれます。
 
-- **どの話題でも使う部品:** `title-slide`、`speaker-profile`、`brand`、`hero`、`key-message`、`summary`、`agenda`、`media-split`、`source-cards`、`link-cards`、`tool-gallery`、`poll-result`、`zone-compare`、`phase-chart`、`closing`
+- **どの話題でも使う部品:** `title-slide`、`speaker-profile`、`brand`、`hero`、`key-message`、`summary`、`agenda`、`media-split`、`diagram`、`qr-prompt`、`source-cards`、`link-cards`、`tool-gallery`、`poll-result`、`zone-compare`、`phase-chart`、`closing`
 - **生成AIの話で使う部品:** `era-slide`、`era-map`、`actor-flow`、`prompt-block`。時代の比喩や、人とAIの担当を示すときだけ使います。
 
 ## `title-slide`
@@ -91,6 +91,28 @@
 - 画像は右列の中央に置き、幅と高さを本文領域に収めます。
 - 出典は画像の下に置きます。
 - 見出しは通常どおりスライド上部に置きます。
+- 現在地ラベルがある場合は、見出しを上端から少し離して置きます。
+
+## `diagram`
+
+1枚の図解画像を広く見せるレイアウトです。図の中に見出しや注釈が含まれる、16:9のSVGや画像に使います。
+
+**用意するもの:** スライド内で読める大きさに作られた図解1枚。
+
+- 画像は元の比率を保ち、本文領域の高さ600pxまで拡大します。
+- 画像を小さく配置したり、スライド内に余分な白余白を作ったりしません。
+- 箇条書きと画像を一緒に置く場合は `media-split` を使います。
+
+## `qr-prompt`
+
+QRコードを読み取ってほしい場面で使います。QRコードを中央に置き、案内文をその下に並べます。
+
+**用意するもの:** QRコード画像、短い案内文。
+
+- QRコードの元URLは省略せず、発表ノートか周辺資料に残します。
+- QRコードの周りに余白を残し、文字やロゴを重ねません。
+- 画像は320px角で表示します。
+- 会場で画面に表示し、実際の端末で読み取りを確認します。
 
 ## 現在の話題ラベル
 

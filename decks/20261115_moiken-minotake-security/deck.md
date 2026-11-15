@@ -126,14 +126,6 @@ variants: true
 
 <!-- この先生は、既存サービスへの不正アクセスで院内システムが止まって、呼び出しシステムが使えなくなった。そこで自分で作ったんですよね。作ったものだけでは分からない現場の事情があります。 -->
 
-<!-- _class: key-message current-topic -->
-<!-- _footer: 1. 医療者が作れる時代と、現場で起きたこと -->
-
-## データは、漏れる前提で考える
-
-**渡さない。持たない。分けて守る。**
-
-<!-- どこかに渡したデータは漏れるものだと思っておく。漏れないことを前提にするのではなく、使う前から情報を減らして、必要なものだけ扱います。 -->
 ---
 
 <!-- _class: key-message current-topic -->
@@ -147,6 +139,20 @@ variants: true
 <!-- 作るのを止める話ではなくて、セキュリティを意識して作って試す。その上で、作ったものだけじゃなく、どういう設計にしたかも話していきたいです。 -->
 
 ---
+<!-- only: 15min,10min -->
+<!-- _class: qr-prompt current-topic -->
+<!-- _footer: 2. 使う人・作る人ができる情報の扱い -->
+
+## 脱線: まずは意識アンケート
+
+![アンケートフォームを開くQRコード](images/interim-survey-qr.png)
+
+※アンケートにご協力ください
+
+<!-- いったんこちらのアンケートにご協力ください。QRコードのリンク先: https://forms.gle/JNruY64qJqXuh2W58 -->
+
+
+---
 
 <!-- only: 15min,10min -->
 
@@ -154,14 +160,27 @@ variants: true
 
 ## 今日の流れ
 
-1. 医療者が作れる時代と、現場で起きたこと
+1. 医療者でも作れる時代、漏洩問題
 2. 使う人・作る人ができる情報の扱い
 3. 管理する人が整える、安全に試せる場
 4. 作って試し、設計の工夫を発信する
+5. 結局、教育説
 
 <!-- 今回は作る人向けが中心ですが、使う側と管理する側の話もします。使う人、作る人、管理する人の順で見ていきます。 -->
 
 ---
+<!-- only: 15min,10min -->
+<!-- _class: key-message current-topic stage -->
+<!-- _footer: 2. 使う人・作る人ができる情報の扱い -->
+
+## 前提
+
+**もう、データは漏れる前提で考えましょう**
+
+<!-- どこかに渡したデータは漏れるものだと思っておく。漏れないことを前提にするのではなく、使う前から情報を減らして、必要なものだけ扱います。 -->
+
+---
+
 <!-- _class: current-topic -->
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い -->
 
@@ -196,7 +215,7 @@ variants: true
 <!-- どこかのシステムに渡したデータは、漏れるものだと思っていた方がいい。メールや電話番号はエイリアスにできないか。住所や生年月日も「これ本当に必要？」と考えます。僕は必要ないと思ったものは、適当に書くこともあります。 -->
 
 ---
-<!-- _class: current-topic -->
+<!-- _class: diagram current-topic -->
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い > 使う側編 -->
 
 
@@ -207,7 +226,22 @@ variants: true
 <!-- メールエイリアスを使うと、登録先ごとに別のメールアドレスを使いながら、受信は自分のメールにまとめられます。 -->
 
 ---
-<!-- _class: current-topic -->
+<!-- only: 15min -->
+<!-- _class: source-cards current-topic -->
+<!-- _footer: 2. 使う人・作る人ができる情報の扱い > 使う側編 -->
+
+## メールアドレスを直接渡さない方法
+
+<div class="gl-cards gl-cards--3">
+<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/brave-email-alias.png" alt="Braveメールエイリアスの設定画面"><strong class="t-body">Brave メールエイリアス</strong><p class="t-sub">別アドレスを作り、Braveアカウントのメールに転送。</p><small class="t-note"><a href="https://support.brave.app/hc/ja/articles/45530506862349-メールエイリアスの使い方">Brave公式ヘルプ</a></small></article>
+<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/1password-fastmail-masked-email.png" alt="1PasswordからFastmailのMasked Emailを作る画面"><strong class="t-body">1Password + Fastmail</strong><p class="t-sub">登録先ごとのMasked Email。Fastmail連携が必要。</p><small class="t-note"><a href="https://support.1password.com/fastmail/">1Password公式ガイド</a></small></article>
+<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/apple-hide-my-email.png" alt="Appleでサインイン時にメールを非公開にする画面"><strong class="t-body">Appleでサインイン</strong><p class="t-sub">対応サービスで「メールを非公開」を選び、専用アドレスに転送。</p><small class="t-note"><a href="https://support.apple.com/ja-jp/102379">Apple公式サポート</a></small></article>
+</div>
+
+<!-- どれも登録先に個人のメールアドレスを直接渡さずに済む方法です。1PasswordはFastmailとの連携が必要で、Appleの「メールを非公開」は対応サービスでAppleでサインインする時に使えます。エイリアスで本人が完全に匿名になるわけではありません。 -->
+
+---
+<!-- _class: diagram current-topic -->
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い > 使う側編 -->
 
 
@@ -283,6 +317,22 @@ variants: true
 <!-- 勤怠システムなら、病院の中で誰か分かればいい。僕は「のびすけ」というビジネスネームを使っています。本名の漢字まで出さなくてもいいかもしれない。昔の「忌み名」のように、本当の名前を隠す考え方もありますよね。 -->
 
 ---
+<!-- only: 15min -->
+<!-- _class: source-cards current-topic -->
+<!-- _footer: 2. 使う人・作る人ができる情報の扱い > 作る側編 -->
+
+## 事例： 企業も、持つ情報を減らし始めている
+
+<div class="gl-cards gl-cards--2">
+<article class="gl-source"><strong class="t-body">ゆで太郎</strong><p class="t-sub">会員制度を終了。最後のクーポン後に、会員情報を削除へ。</p></article>
+<article class="gl-source"><strong class="t-body">焼肉きんぐ</strong><p class="t-sub">個人情報を入力せずに予約できる仕組みを導入へ。</p></article>
+</div>
+<p class="gl-foot t-body">守るだけでなく、そもそも集めない選択。</p>
+<small class="t-note">参考: <a href="https://morasaretter.suke.dev/articles/2026-11-companies-holding-less-data/">漏らされったー / 2026年11月9日</a></small>
+
+<!-- 企業も、集める情報を減らす動きを始めています。ゆで太郎は会員制度を終了し、最後のクーポン後に会員情報を削除する予定。焼肉きんぐは個人情報を入力せずに予約できる仕組みを導入すると報じられています。どちらも「守る」だけでなく、持つ情報を減らす考え方の例です。出典記事は公式発表や報道を元にAIも活用して作成され、誤りや古い情報の可能性があると注記されています。参考: 漏らされったー https://morasaretter.suke.dev/articles/2026-11-companies-holding-less-data/ -->
+
+---
 
 <!-- only: 15min -->
 <!-- _class: source-cards current-topic -->
@@ -322,37 +372,11 @@ variants: true
 <!-- _class: panel current-topic -->
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い > 作る側編 -->
 
-## パスキーは、秘密鍵を渡さずにログインする
+## パスキーをホテルのカードキーにたとえると
 
-<div class="gl-flow">
-<div class="gl-step"><div class="gl-box t-sub"><span>サービス<br>登録時に公開鍵を保存<br>ログイン時に課題を送る</span></div></div>
-<div class="gl-arrow t-sub">→</div>
-<div class="gl-step"><div class="gl-box t-sub"><span>端末 / パスキー<br>指紋・顔・PINで解除<br>秘密鍵で署名</span></div></div>
-<div class="gl-arrow t-sub">→</div>
-<div class="gl-step"><div class="gl-box t-sub"><span>サービス<br>公開鍵で検証<br>OKならログイン</span></div></div>
-</div>
+![スマホ認証を使うホテルカードキーのイメージ](images/passkey-hotel-card-key.png)
 
-**印鑑でたとえると、利用者側だけが使える「印」で一度きりの紙に押し、サービスは登録済みの「印影見本」で確認する。**
-
-公開鍵は確認用で、秘密鍵の代わりにはならない。パスキーは登録したサイトに結びつくため、別ドメインの偽サイトでは使えない。
-
-<!-- この印鑑のたとえはイメージです。実際には端末やパスキーマネージャーが新しいチャレンジに暗号署名し、サービスが公開鍵で検証します。秘密鍵はログイン先サービスへ送られません。パスキーは登録したサイトの識別情報に結びつき、フィッシングに強い設計です。ただし、端末やパスキーマネージャーの保護、同期、アカウント復旧は別途重要です。パスキーだけでサービス全体が安全になるわけではありません。参考: FIDO Alliance https://fidoalliance.org/passkeys/、W3C Web Authentication Level 3 https://www.w3.org/TR/webauthn-3/、Google for Developers https://developers.google.com/identity/passkeys。 -->
----
-<!-- only: 15min -->
-<!-- _class: source-cards current-topic -->
-<!-- _footer: 2. 使う人・作る人ができる情報の扱い > 作る側編 -->
-
-## 事例： 企業も、持つ情報を減らし始めている
-
-<div class="gl-cards gl-cards--2">
-<article class="gl-source"><strong class="t-body">ゆで太郎</strong><p class="t-sub">会員制度を終了。最後のクーポン後に、会員情報を削除へ。</p></article>
-<article class="gl-source"><strong class="t-body">焼肉きんぐ</strong><p class="t-sub">個人情報を入力せずに予約できる仕組みを導入へ。</p></article>
-</div>
-<p class="gl-foot t-body">守るだけでなく、そもそも集めない選択。</p>
-<small class="t-note">参考: <a href="https://morasaretter.suke.dev/articles/2026-11-companies-holding-less-data/">漏らされったー / 2026年11月9日</a></small>
-
-<!-- 企業も、集める情報を減らす動きを始めています。ゆで太郎は会員制度を終了し、最後のクーポン後に会員情報を削除する予定。焼肉きんぐは個人情報を入力せずに予約できる仕組みを導入すると報じられています。どちらも「守る」だけでなく、持つ情報を減らす考え方の例です。出典記事は公式発表や報道を元にAIも活用して作成され、誤りや古い情報の可能性があると注記されています。参考: 漏らされったー https://morasaretter.suke.dev/articles/2026-11-companies-holding-less-data/ -->
-
+<!-- ホテルのカードキーのように、サービスごとの鍵を持ち、スマホで本人確認して使うイメージです。たとえはイメージで、実際には端末やパスキーマネージャーが新しいチャレンジに暗号署名し、サービスが公開鍵で検証します。秘密鍵はログイン先サービスへ送られません。パスキーは登録したサイトの識別情報に結びつき、フィッシングに強い設計です。ただし、端末やパスキーマネージャーの保護、同期、アカウント復旧は別途重要です。パスキーだけでサービス全体が安全になるわけではありません。参考: FIDO Alliance https://fidoalliance.org/passkeys/、W3C Web Authentication Level 3 https://www.w3.org/TR/webauthn-3/、Google for Developers https://developers.google.com/identity/passkeys。 -->
 ---
 <!-- _class: media-split current-topic -->
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い > 作る側編 -->

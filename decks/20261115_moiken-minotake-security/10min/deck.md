@@ -120,12 +120,14 @@ path: 20261115_moiken-minotake-security/10min
 
 <!-- この先生は、既存サービスへの不正アクセスで院内システムが止まって、呼び出しシステムが使えなくなった。そこで自分で作ったんですよね。作ったものだけでは分からない現場の事情があります。 -->
 
-<!-- _class: key-message current-topic -->
-<!-- _footer: 1. 医療者が作れる時代と、現場で起きたこと -->
+---
+<!-- only: 15min,10min -->
+<!-- _class: key-message current-topic stage -->
+<!-- _footer: 2. 使う人・作る人ができる情報の扱い > 使う側編 -->
 
-## データは、漏れる前提で考える
+## 前提
 
-**渡さない。持たない。分けて守る。**
+**もう、データは漏れる前提で考えましょう**
 
 <!-- どこかに渡したデータは漏れるものだと思っておく。漏れないことを前提にするのではなく、使う前から情報を減らして、必要なものだけ扱います。 -->
 
@@ -140,6 +142,20 @@ path: 20261115_moiken-minotake-security/10min
 - 作ったものと、**設計の工夫を発信しよう。**
 
 <!-- 作るのを止める話ではなくて、セキュリティを意識して作って試す。その上で、作ったものだけじゃなく、どういう設計にしたかも話していきたいです。 -->
+
+---
+<!-- only: 15min,10min -->
+<!-- _class: qr-prompt current-topic -->
+<!-- _footer: 2. 使う人・作る人ができる情報の扱い -->
+
+## アンケートにご協力ください
+
+![アンケートフォームを開くQRコード](images/interim-survey-qr.png)
+
+※アンケートにご協力ください
+
+<!-- いったんこちらのアンケートにご協力ください。QRコードのリンク先: https://forms.gle/JNruY64qJqXuh2W58 -->
+
 
 ---
 
@@ -189,7 +205,7 @@ path: 20261115_moiken-minotake-security/10min
 
 ---
 
-<!-- _class: current-topic -->
+<!-- _class: diagram current-topic -->
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い > 使う側編 -->
 
 
@@ -201,7 +217,7 @@ path: 20261115_moiken-minotake-security/10min
 
 ---
 
-<!-- _class: current-topic -->
+<!-- _class: diagram current-topic -->
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い > 使う側編 -->
 
 
