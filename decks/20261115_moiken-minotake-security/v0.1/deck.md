@@ -115,8 +115,8 @@ title: "プロトタイピングでガンガン作って攻めるための、最
 
 # 予約の時点で、生年月日まで聞かれる
 
-<!-- card: images/reservation-form.png | ある医療機関のWeb予約フォーム（必須：氏名・フリガナ・生年月日・性別・電話番号・メール・郵便番号・住所） -->
-<article class="gl-linkcard is-image" data-card="images/reservation-form.png | ある医療機関のWeb予約フォーム（必須：氏名・フリガナ・生年月日・性別・電話番号・メール・郵便番号・住所）"><img src="images/reservation-form.png" alt=""><small class="t-note gl-muted">ある医療機関のWeb予約フォーム（必須：氏名・フリガナ・生年月日・性別・電話番号・メール・郵便番号・住所）</small></article>
+<!-- card: images/reservation-form.webp | ある医療機関のWeb予約フォーム（必須：氏名・フリガナ・生年月日・性別・電話番号・メール・郵便番号・住所） -->
+<article class="gl-linkcard is-image" data-card="images/reservation-form.webp | ある医療機関のWeb予約フォーム（必須：氏名・フリガナ・生年月日・性別・電話番号・メール・郵便番号・住所）"><img src="images/reservation-form.webp" alt=""><small class="t-note gl-muted">ある医療機関のWeb予約フォーム（必須：氏名・フリガナ・生年月日・性別・電話番号・メール・郵便番号・住所）</small></article>
 
 <p class="gl-foot t-note gl-muted">来院したら、問診票でもまた生年月日を書く</p>
 
@@ -170,7 +170,7 @@ title: "プロトタイピングでガンガン作って攻めるための、最
 # 修学旅行で名簿の入ったリュックを紛失
 
 <!-- card: https://news.yahoo.co.jp/articles/6517996581c146685dda087f9ee139a63fd6aff2 -->
-<article class="gl-linkcard" data-card="https://news.yahoo.co.jp/articles/6517996581c146685dda087f9ee139a63fd6aff2"><img src="images/cards/6301c2fcf206.jpg" alt=""><strong class="t-sub"><a href="https://news.yahoo.co.jp/articles/6517996581c146685dda087f9ee139a63fd6aff2">修学旅行中に教員がリュックサックを紛失　2年生226人全員の個人情報流出の可能性　広島県立の高校で（RCC中国放送） - Yahoo!ニュース</a></strong><small class="t-note gl-muted">Yahoo!ニュース</small></article>
+<article class="gl-linkcard" data-card="https://news.yahoo.co.jp/articles/6517996581c146685dda087f9ee139a63fd6aff2"><img src="images/cards/6301c2fcf206.webp" alt=""><strong class="t-sub"><a href="https://news.yahoo.co.jp/articles/6517996581c146685dda087f9ee139a63fd6aff2">修学旅行中に教員がリュックサックを紛失　2年生226人全員の個人情報流出の可能性　広島県立の高校で（RCC中国放送） - Yahoo!ニュース</a></strong><small class="t-note gl-muted">Yahoo!ニュース</small></article>
 
 <!-- 広島県立の高校で、修学旅行中に教員が生徒の名簿などが入ったリュックサックをなくし、2年生226人全員の個人情報が流出した可能性があると報じられました（RCC中国放送、2026年10月）。紙でも、持ち歩けばなくします。出典: https://news.yahoo.co.jp/articles/6517996581c146685dda087f9ee139a63fd6aff2 -->
 
@@ -241,9 +241,9 @@ title: "プロトタイピングでガンガン作って攻めるための、最
 # 病院の個人PCでサポート詐欺
 
 <!-- card: https://internet.watch.impress.co.jp/docs/news/2114633.html -->
-<article class="gl-linkcard" data-card="https://internet.watch.impress.co.jp/docs/news/2114633.html"><img src="images/cards/daa017915ad1.png" alt=""><strong class="t-sub"><a href="https://internet.watch.impress.co.jp/docs/news/2114633.html">愛知県の藤田医科大学病院で個人情報漏えいの可能性、規定に反して情報を持ち出した個人PCがサポート詐欺に</a></strong><small class="t-note gl-muted">INTERNET Watch / 2026-06-05</small></article>
+<article class="gl-linkcard" data-card="https://internet.watch.impress.co.jp/docs/news/2114633.html"><img src="images/cards/daa017915ad1.webp" alt=""><strong class="t-sub"><a href="https://internet.watch.impress.co.jp/docs/news/2114633.html">愛知県の藤田医科大学病院で個人情報漏えいの可能性、規定に反して情報を持ち出した個人PCがサポート詐欺に</a></strong><small class="t-note gl-muted">INTERNET Watch / 2026-06-05</small></article>
 <!-- card: https://scan.netsecurity.ne.jp/article/2024/05/22/51035.html -->
-<article class="gl-linkcard" data-card="https://scan.netsecurity.ne.jp/article/2024/05/22/51035.html"><img src="images/cards/559d182e9c97.jpg" alt=""><strong class="t-sub"><a href="https://scan.netsecurity.ne.jp/article/2024/05/22/51035.html">サポート詐欺で発覚 ～ 産婦人科医師が不適切な状態で患者データ保管 | ScanNetSecurity</a></strong><small class="t-note gl-muted">ScanNetSecurity</small></article>
+<article class="gl-linkcard" data-card="https://scan.netsecurity.ne.jp/article/2024/05/22/51035.html"><img src="images/cards/559d182e9c97.webp" alt=""><strong class="t-sub"><a href="https://scan.netsecurity.ne.jp/article/2024/05/22/51035.html">サポート詐欺で発覚 ～ 産婦人科医師が不適切な状態で患者データ保管 | ScanNetSecurity</a></strong><small class="t-note gl-muted">ScanNetSecurity</small></article>
 
 <!-- 2026年6月、藤田医科大学病院で、看護師の個人PCがサポート詐欺の被害に遭い、院内の規定に反して保存していた患者の個人情報が漏えいした可能性があると発表されました。2024年5月には近畿大学病院でも、産婦人科の医師が研究目的で個人所有のPCに保存していた患者の情報が、サポート詐欺をきっかけに漏えいした可能性があると発表されています。出典: https://internet.watch.impress.co.jp/docs/news/2114633.html 、https://scan.netsecurity.ne.jp/article/2024/05/22/51035.html -->
 
@@ -433,9 +433,9 @@ title: "プロトタイピングでガンガン作って攻めるための、最
 <!-- card: https://www.pref.fukuoka.lg.jp/press-release/nkojinjyouhou.html -->
 <article class="gl-linkcard" data-card="https://www.pref.fukuoka.lg.jp/press-release/nkojinjyouhou.html"><strong class="t-sub"><a href="https://www.pref.fukuoka.lg.jp/press-release/nkojinjyouhou.html">福岡県働きやすい介護職場認証制度事業における個人情報の漏えい事案について - 福岡県庁ホームページ</a></strong><small class="t-note gl-muted">福岡県庁ホームページ</small></article>
 <!-- card: https://scan.netsecurity.ne.jp/article/2024/12/16/52044.html -->
-<article class="gl-linkcard" data-card="https://scan.netsecurity.ne.jp/article/2024/12/16/52044.html"><img src="images/cards/3f54f9dea923.jpg" alt=""><strong class="t-sub"><a href="https://scan.netsecurity.ne.jp/article/2024/12/16/52044.html">表示されるべきでない患者一覧が閲覧可能に ～ 大阪公立大学医学部附属病院 | ScanNetSecurity</a></strong><small class="t-note gl-muted">ScanNetSecurity</small></article>
+<article class="gl-linkcard" data-card="https://scan.netsecurity.ne.jp/article/2024/12/16/52044.html"><img src="images/cards/3f54f9dea923.webp" alt=""><strong class="t-sub"><a href="https://scan.netsecurity.ne.jp/article/2024/12/16/52044.html">表示されるべきでない患者一覧が閲覧可能に ～ 大阪公立大学医学部附属病院 | ScanNetSecurity</a></strong><small class="t-note gl-muted">ScanNetSecurity</small></article>
 <!-- card: https://rocket-boys.co.jp/security-measures-lab/nichii-kaigo-personal-data-exposure-20261002/ -->
-<article class="gl-linkcard" data-card="https://rocket-boys.co.jp/security-measures-lab/nichii-kaigo-personal-data-exposure-20261002/"><img src="images/cards/3e84cdf551a2.png" alt=""><strong class="t-sub"><a href="https://rocket-boys.co.jp/security-measures-lab/nichii-kaigo-personal-data-exposure-20261002/">ニチイ学館、介護サイトで個人情報漏洩のおそれ―583名分、99名は健康状態・障がい情報を含む|セキュリティニュースのセキュリティ対策Lab</a></strong><small class="t-note gl-muted">合同会社ロケットボーイズ - セキュリティ 情報漏洩のニュースサイト セキュリティ対策Labの運営とBtoB マーケティング コンサル 支援 / 2026-10-06</small></article>
+<article class="gl-linkcard" data-card="https://rocket-boys.co.jp/security-measures-lab/nichii-kaigo-personal-data-exposure-20261002/"><img src="images/cards/3e84cdf551a2.webp" alt=""><strong class="t-sub"><a href="https://rocket-boys.co.jp/security-measures-lab/nichii-kaigo-personal-data-exposure-20261002/">ニチイ学館、介護サイトで個人情報漏洩のおそれ―583名分、99名は健康状態・障がい情報を含む|セキュリティニュースのセキュリティ対策Lab</a></strong><small class="t-note gl-muted">合同会社ロケットボーイズ - セキュリティ 情報漏洩のニュースサイト セキュリティ対策Labの運営とBtoB マーケティング コンサル 支援 / 2026-10-06</small></article>
 
 <!-- 福岡県では、介護職場認証制度の申請用ファイルの設定を委託先が誤り、介護事業者の役員183人分の氏名や生年月日が閲覧できる状態でした（2026年9月）。大阪公立大学医学部附属病院では、地域医療連携ネットワークの設定不備で、本来表示されないはずの患者一覧が見られる状態でした（2024年12月）。ニチイ学館では、介護サイトのお問い合わせデータを含むバックアップファイルが、認証なしで外部から取得できる状態だったと報じられています（2026年10月、583名分、セキュリティ対策Labの記事による）。出典: https://www.pref.fukuoka.lg.jp/press-release/nkojinjyouhou.html 、https://scan.netsecurity.ne.jp/article/2024/12/16/52044.html 、https://rocket-boys.co.jp/security-measures-lab/nichii-kaigo-personal-data-exposure-20261002/ -->
 
@@ -471,7 +471,7 @@ title: "プロトタイピングでガンガン作って攻めるための、最
 # GitHubはパスキーでログインできる
 
 <!-- card: https://docs.github.com/ja/authentication/authenticating-with-a-passkey/about-passkeys -->
-<article class="gl-linkcard" data-card="https://docs.github.com/ja/authentication/authenticating-with-a-passkey/about-passkeys"><img src="images/cards/c868a7ac5ef9.png" alt=""><strong class="t-sub"><a href="https://docs.github.com/ja/authentication/authenticating-with-a-passkey/about-passkeys">パスキーの概要 - GitHubドキュメント</a></strong><small class="t-note gl-muted">GitHub Docs</small></article>
+<article class="gl-linkcard" data-card="https://docs.github.com/ja/authentication/authenticating-with-a-passkey/about-passkeys"><img src="images/cards/c868a7ac5ef9.webp" alt=""><strong class="t-sub"><a href="https://docs.github.com/ja/authentication/authenticating-with-a-passkey/about-passkeys">パスキーの概要 - GitHubドキュメント</a></strong><small class="t-note gl-muted">GitHub Docs</small></article>
 
 <!-- コードを置く GitHub も、パスキーでログインできます。Privateリポジトリでも、アカウントを乗っ取られれば中身は見られてしまうので、ログインの方法から固めておきます。出典: https://docs.github.com/ja/authentication/authenticating-with-a-passkey/about-passkeys -->
 
@@ -495,11 +495,11 @@ WHERE number = '' OR '1'='1'
 # 予約サイト、患者アプリ、問診データ
 
 <!-- card: https://www.itmedia.co.jp/news/article/2610/05/2000002016/ -->
-<article class="gl-linkcard" data-card="https://www.itmedia.co.jp/news/article/2610/05/2000002016/"><img src="images/cards/fb1419ca9c0e.jpg" alt=""><strong class="t-sub"><a href="https://www.itmedia.co.jp/news/article/2610/05/2000002016/">ホワイトエッセンス、約105万アカウントの個人情報流出　8月発表の不正アクセス調査で判明</a></strong><small class="t-note gl-muted">ITmedia NEWS</small></article>
+<article class="gl-linkcard" data-card="https://www.itmedia.co.jp/news/article/2610/05/2000002016/"><img src="images/cards/fb1419ca9c0e.webp" alt=""><strong class="t-sub"><a href="https://www.itmedia.co.jp/news/article/2610/05/2000002016/">ホワイトエッセンス、約105万アカウントの個人情報流出　8月発表の不正アクセス調査で判明</a></strong><small class="t-note gl-muted">ITmedia NEWS</small></article>
 <!-- card: https://www.itmedia.co.jp/news/article/2610/15/2000002293/ -->
-<article class="gl-linkcard" data-card="https://www.itmedia.co.jp/news/article/2610/15/2000002293/"><img src="images/cards/b3b1b58d5ad8.png" alt=""><strong class="t-sub"><a href="https://www.itmedia.co.jp/news/article/2610/15/2000002293/">メドレーの産婦人科向けシステムに不正アクセス、患者の個人情報漏えいか　最大787の医療機関が対象</a></strong><small class="t-note gl-muted">ITmedia NEWS</small></article>
+<article class="gl-linkcard" data-card="https://www.itmedia.co.jp/news/article/2610/15/2000002293/"><img src="images/cards/b3b1b58d5ad8.webp" alt=""><strong class="t-sub"><a href="https://www.itmedia.co.jp/news/article/2610/15/2000002293/">メドレーの産婦人科向けシステムに不正アクセス、患者の個人情報漏えいか　最大787の医療機関が対象</a></strong><small class="t-note gl-muted">ITmedia NEWS</small></article>
 <!-- card: https://www.nikkei.com/article/DGXZQOUC069010W6A101C2000000/ -->
-<article class="gl-linkcard" data-card="https://www.nikkei.com/article/DGXZQOUC069010W6A101C2000000/"><img src="images/cards/c39bcc9d10c4.jpg" alt=""><strong class="t-sub"><a href="https://www.nikkei.com/article/DGXZQOUC069010W6A101C2000000/">資生堂、利用者情報が2515件流出　肌の測定結果など - 日本経済新聞</a></strong><small class="t-note gl-muted">日本経済新聞 / 2026-11-06</small></article>
+<article class="gl-linkcard" data-card="https://www.nikkei.com/article/DGXZQOUC069010W6A101C2000000/"><img src="images/cards/c39bcc9d10c4.webp" alt=""><strong class="t-sub"><a href="https://www.nikkei.com/article/DGXZQOUC069010W6A101C2000000/">資生堂、利用者情報が2515件流出　肌の測定結果など - 日本経済新聞</a></strong><small class="t-note gl-muted">日本経済新聞 / 2026-11-06</small></article>
 
 <!-- ホワイトエッセンスでは、予約サイトの脆弱性を足がかりに基幹システムへ侵入され、約105万アカウント分の個人情報が持ち出されたと発表されました（2026年10月の続報）。メドレーの産婦人科向けサービス @link と患者向けアプリも不正アクセスを受け、最大787の医療機関の患者の個人情報が漏えいした可能性があります（2026年10月、調査中）。資生堂の肌測定システムでは、利用者2,515件の問診データや肌の測定結果が漏えいしました（2026年11月）。出典: https://www.itmedia.co.jp/news/article/2610/05/2000002016/ 、https://www.itmedia.co.jp/news/article/2610/15/2000002293/ 、https://www.nikkei.com/article/DGXZQOUC069010W6A101C2000000/ -->
 
@@ -550,7 +550,7 @@ AIも一律に危ないわけじゃない
 # 各社のデータの扱いは公式で確認する
 
 <!-- card: https://ai.google.dev/gemini-api/terms?hl=ja -->
-<article class="gl-linkcard" data-card="https://ai.google.dev/gemini-api/terms?hl=ja"><img src="images/cards/8a53673ce13a.png" alt=""><strong class="t-sub"><a href="https://ai.google.dev/gemini-api/terms?hl=ja">Google AI Studio</a></strong><small class="t-note gl-muted">aistudio.google.com</small></article>
+<article class="gl-linkcard" data-card="https://ai.google.dev/gemini-api/terms?hl=ja"><img src="images/cards/8a53673ce13a.webp" alt=""><strong class="t-sub"><a href="https://ai.google.dev/gemini-api/terms?hl=ja">Google AI Studio</a></strong><small class="t-note gl-muted">aistudio.google.com</small></article>
 
 <!-- 入力したデータが学習に使われるか、どれくらい保存されるかは、サービスや契約の種類によって違います。思い込みで判断せず、各社の公式のページで確認します。出典: https://openai.com/ja-JP/enterprise-privacy/ 、https://ai.google.dev/gemini-api/terms?hl=ja -->
 
@@ -573,9 +573,9 @@ AIも一律に危ないわけじゃない
 # 医療機器の保守用VPNからランサムウェア
 
 <!-- card: https://scan.netsecurity.ne.jp/article/2026/03/09/54788.html -->
-<article class="gl-linkcard" data-card="https://scan.netsecurity.ne.jp/article/2026/03/09/54788.html"><img src="images/cards/2f3f20a1c558.jpg" alt=""><strong class="t-sub"><a href="https://scan.netsecurity.ne.jp/article/2026/03/09/54788.html">約13万人の患者情報が漏えい ～ 日本医科大学武蔵小杉病院へのランサムウェア攻撃 | ScanNetSecurity</a></strong><small class="t-note gl-muted">ScanNetSecurity</small></article>
+<article class="gl-linkcard" data-card="https://scan.netsecurity.ne.jp/article/2026/03/09/54788.html"><img src="images/cards/2f3f20a1c558.webp" alt=""><strong class="t-sub"><a href="https://scan.netsecurity.ne.jp/article/2026/03/09/54788.html">約13万人の患者情報が漏えい ～ 日本医科大学武蔵小杉病院へのランサムウェア攻撃 | ScanNetSecurity</a></strong><small class="t-note gl-muted">ScanNetSecurity</small></article>
 <!-- card: https://internet.watch.impress.co.jp/docs/news/2090217.html -->
-<article class="gl-linkcard" data-card="https://internet.watch.impress.co.jp/docs/news/2090217.html"><img src="images/cards/001b247e23e5.png" alt=""><strong class="t-sub"><a href="https://internet.watch.impress.co.jp/docs/news/2090217.html">日本医科大学武蔵小杉病院、ランサムウェア被害の詳細および対策を発表、患者・職員約13万人の個人情報が漏えい</a></strong><small class="t-note gl-muted">INTERNET Watch / 2026-03-04</small></article>
+<article class="gl-linkcard" data-card="https://internet.watch.impress.co.jp/docs/news/2090217.html"><img src="images/cards/001b247e23e5.webp" alt=""><strong class="t-sub"><a href="https://internet.watch.impress.co.jp/docs/news/2090217.html">日本医科大学武蔵小杉病院、ランサムウェア被害の詳細および対策を発表、患者・職員約13万人の個人情報が漏えい</a></strong><small class="t-note gl-muted">INTERNET Watch / 2026-03-04</small></article>
 
 <!-- 日本医科大学武蔵小杉病院では、医療機器の保守用のVPN装置から侵入され、ナースコール管理サーバーがランサムウェアに感染し、患者・職員約13万人の個人情報が漏えいしました（2026年2月〜3月の発表）。作ったあとの保守の入口も、攻撃の入口になります。出典: https://scan.netsecurity.ne.jp/article/2026/03/09/54788.html 、https://internet.watch.impress.co.jp/docs/news/2090217.html -->
 
@@ -612,7 +612,7 @@ AIも一律に危ないわけじゃない
 <!-- card: https://www.mixonline.jp/tabid55.html?artid=81069 -->
 <article class="gl-linkcard" data-card="https://www.mixonline.jp/tabid55.html?artid=81069"><strong class="t-sub"><a href="https://www.mixonline.jp/tabid55.html?artid=81069">東邦HD子会社 医師氏名など約8000件が漏洩した可能性 外部メール配信サービスで不正アクセス被害 | ニュース | ミクスOnline</a></strong><small class="t-note gl-muted">mixonline.jp</small></article>
 <!-- card: https://www.nikkei.com/article/DGXZQOUC237PD0T21C26A0000000/ -->
-<article class="gl-linkcard" data-card="https://www.nikkei.com/article/DGXZQOUC237PD0T21C26A0000000/"><img src="images/cards/17cda56c75ef.jpg" alt=""><strong class="t-sub"><a href="https://www.nikkei.com/article/DGXZQOUC237PD0T21C26A0000000/">東邦HD子会社・eヘルスケア、個人情報8000件漏洩か　医師の氏名やアドレス - 日本経済新聞</a></strong><small class="t-note gl-muted">日本経済新聞 / 2026-10-23</small></article>
+<article class="gl-linkcard" data-card="https://www.nikkei.com/article/DGXZQOUC237PD0T21C26A0000000/"><img src="images/cards/17cda56c75ef.webp" alt=""><strong class="t-sub"><a href="https://www.nikkei.com/article/DGXZQOUC237PD0T21C26A0000000/">東邦HD子会社・eヘルスケア、個人情報8000件漏洩か　医師の氏名やアドレス - 日本経済新聞</a></strong><small class="t-note gl-muted">日本経済新聞 / 2026-10-23</small></article>
 
 <!-- 東邦HDの子会社のeヘルスケアでは、メール配信に使っていた外部サービスが不正アクセスを受け、医師の氏名やメールアドレスなど約8000件が漏えいした可能性があると発表されました（2026年10月）。自分で作った部分だけでなく、使っている外部サービスからも漏れます。出典: https://www.mixonline.jp/tabid55.html?artid=81069 、https://www.nikkei.com/article/DGXZQOUC237PD0T21C26A0000000/ -->
 

@@ -70,7 +70,7 @@ path: 20261115_moiken-minotake-security
 
 <div class="gl-cards gl-cards--2">
 <article class="gl-source"><img class="gl-source__screenshot" src="images/cards/d6a77accf72b.webp" alt="投稿で紹介された受付・呼出し画面"><strong class="t-body">院内LANで使う呼び出しシステム</strong><p class="t-sub">産院の院長がChatGPTに相談しながら作成。投稿では実際の呼出し画面を紹介しています。</p><small class="t-note"><a href="https://x.com/A_Mochizuki/status/2111079943400808872">産院のいんちょ / X / 2026年10月16日</a></small></article>
-<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/moicen-graduate-outpatient-tools-note.png" alt="もいせん受講生による外来効率化ツールのnote記事"><strong class="t-body">外来の前・中・後を助ける3つのツール</strong><p class="t-sub">もいせん受講生の整形外科医が、LINE問診・カルテ音声入力・LINEセルフケア案内を制作。</p><small class="t-note"><a href="https://note.com/dr_grid/n/nb44daadafdbf">Drグリッド / note / 2026年7月8日</a></small></article>
+<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/moicen-graduate-outpatient-tools-note.webp" alt="もいせん受講生による外来効率化ツールのnote記事"><strong class="t-body">外来の前・中・後を助ける3つのツール</strong><p class="t-sub">もいせん受講生の整形外科医が、LINE問診・カルテ音声入力・LINEセルフケア案内を制作。</p><small class="t-note"><a href="https://note.com/dr_grid/n/nb44daadafdbf">Drグリッド / note / 2026年7月8日</a></small></article>
 </div>
 
 <!-- 医セン界隈でも、自分で作る人が出てきています。産院の先生が受付・順番待ちのシステムを作った例や、もいせん受講生が外来で使うツールを作った例があります。 -->
@@ -83,9 +83,8 @@ path: 20261115_moiken-minotake-security
 ## サイバー攻撃や情報漏えいが続き、世の中も敏感に
 
 <!-- card: https://www.watch.impress.co.jp/docs/news/2144279.html -->
-<article class="gl-linkcard" data-card="https://www.watch.impress.co.jp/docs/news/2144279.html"><img src="images/cards/17db2682d23f.jpg" alt=""><strong class="t-sub"><a href="https://www.watch.impress.co.jp/docs/news/2144279.html">タイムズカーの情報漏洩、免許証など本人確認書類流出は160万件</a></strong><small class="t-note gl-muted">Impress Watch / 2026-09-29</small></article>
-<!-- card: https://newsdig.tbs.co.jp/articles/-/3086013 -->
-<article class="gl-linkcard" data-card="https://newsdig.tbs.co.jp/articles/-/3086013"><strong class="t-sub"><a href="https://newsdig.tbs.co.jp/articles/-/3086013">マネックス証券で不正アクセス被害　本人確認の画像データ1592件漏えいの可能性</a></strong><small class="t-note gl-muted">TBS NEWS DIG / 2026-11-14</small></article>
+<article class="gl-linkcard" data-card="https://www.watch.impress.co.jp/docs/news/2144279.html"><img src="images/cards/17db2682d23f.webp" alt=""><strong class="t-sub"><a href="https://www.watch.impress.co.jp/docs/news/2144279.html">タイムズカーの情報漏洩、免許証など本人確認書類流出は160万件</a></strong><small class="t-note gl-muted">Impress Watch / 2026-09-29</small></article>
+<article class="gl-linkcard"><img src="images/monex-security-site.webp" alt="マネックス証券公式サイトの画面"><strong class="t-sub"><a href="https://newsdig.tbs.co.jp/articles/-/3086013">マネックス証券で不正アクセス被害　本人確認の画像データ1592件漏えいの可能性</a></strong><small class="t-note gl-muted">TBS NEWS DIG / 2026-11-14</small></article>
 
 <!-- タイムズカーやマネックス証券でも情報漏えいが話題になりました。こうした事例が続き、世の中もかなり敏感になっています。現場で作ったシステムにも「セキュリティ大丈夫？」という声が来る。次に、その作られた背景を見ます。出典: Impress Watch https://www.watch.impress.co.jp/docs/news/2144279.html、TBS NEWS DIG https://newsdig.tbs.co.jp/articles/-/3086013 -->
 
@@ -96,7 +95,7 @@ path: 20261115_moiken-minotake-security
 <!-- _class: text-image current-topic -->
 <!-- _footer: 1. 医療者が作れる時代と、現場で起きたこと -->
 
-![Xで寄せられた懸念（投稿者情報はモザイク）](images/x-replies-mosaicked.png)
+![Xで寄せられた懸念（投稿者情報はモザイク）](images/x-replies-mosaicked.webp)
 
 <!-- 患者さんの情報が漏れたら怖い、という心配はあります。実際に作っている人に「大丈夫なの？」という声が向けられることもあります。 -->
 
@@ -107,7 +106,7 @@ path: 20261115_moiken-minotake-security
 <!-- _class: text-image current-topic -->
 <!-- _footer: 1. 医療者が作れる時代と、現場で起きたこと -->
 
-![投稿者情報をモザイクしたXの返信](images/x-heckle-mosaicked.png)
+![投稿者情報をモザイクしたXの返信](images/x-heckle-mosaicked.webp)
 
 <!-- 作った背景を知らないまま、やいやい言われることもある。ちょっと悲しいですよね。セキュリティへの心配は大事です。でも、作るのをやめるのではなく、気をつけながら作っていきたいです。 -->
 
@@ -118,7 +117,7 @@ path: 20261115_moiken-minotake-security
 <!-- _class: text-image current-topic -->
 <!-- _footer: 1. 医療者が作れる時代と、現場で起きたこと -->
 
-![院内システム停止を受けて作った経緯を説明する投稿](images/x-clinic-context.png)
+![院内システム停止を受けて作った経緯を説明する投稿](images/x-clinic-context.webp)
 
 <!-- この先生は、既存サービスへの不正アクセスで院内システムが止まって、呼び出しシステムが使えなくなった。そこで自分で作ったんですよね。作ったものだけでは分からない現場の事情があります。 -->
 
@@ -152,7 +151,7 @@ path: 20261115_moiken-minotake-security
 
 ## アンケートにご協力ください
 
-![アンケートフォームを開くQRコード](images/interim-survey-qr.png)
+![アンケートフォームを開くQRコード](images/interim-survey-qr.webp)
 
 ※アンケートにご協力ください
 
@@ -201,7 +200,7 @@ path: 20261115_moiken-minotake-security
 - 住所とかも正直に書く必要はあるか？
 
 
-![入力前に立ち止まり、渡す情報を考えるイラスト](images/personal-info-hesitate-illustration.png)
+![入力前に立ち止まり、渡す情報を考えるイラスト](images/personal-info-hesitate-illustration.webp)
 
 <!-- どこかのシステムに渡したデータは、漏れるものだと思っていた方がいい。メールや電話番号はエイリアスにできないか。住所や生年月日も「これ本当に必要？」と考えます。僕は必要ないと思ったものは、適当に書くこともあります。 -->
 
@@ -224,9 +223,9 @@ path: 20261115_moiken-minotake-security
 ## メールアドレスを直接渡さない方法
 
 <div class="gl-cards gl-cards--3">
-<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/brave-email-alias.png" alt="Braveメールエイリアスの設定画面"><strong class="t-body">Brave メールエイリアス</strong><p class="t-sub">別アドレスを作り、Braveアカウントのメールに転送。</p><small class="t-note"><a href="https://support.brave.app/hc/ja/articles/45530506862349-メールエイリアスの使い方">Brave公式ヘルプ</a></small></article>
-<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/1password-fastmail-masked-email.png" alt="1PasswordからFastmailのMasked Emailを作る画面"><strong class="t-body">1Password + Fastmail</strong><p class="t-sub">登録先ごとのMasked Email。Fastmail連携が必要。</p><small class="t-note"><a href="https://support.1password.com/fastmail/">1Password公式ガイド</a></small></article>
-<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/apple-hide-my-email.png" alt="Appleでサインイン時にメールを非公開にする画面"><strong class="t-body">Appleでサインイン</strong><p class="t-sub">対応サービスで「メールを非公開」を選び、専用アドレスに転送。</p><small class="t-note"><a href="https://support.apple.com/ja-jp/102379">Apple公式サポート</a></small></article>
+<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/brave-email-alias.webp" alt="Braveメールエイリアスの設定画面"><strong class="t-body">Brave メールエイリアス</strong><p class="t-sub">別アドレスを作り、Braveアカウントのメールに転送。</p><small class="t-note"><a href="https://support.brave.app/hc/ja/articles/45530506862349-メールエイリアスの使い方">Brave公式ヘルプ</a></small></article>
+<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/1password-fastmail-masked-email.webp" alt="1PasswordからFastmailのMasked Emailを作る画面"><strong class="t-body">1Password + Fastmail</strong><p class="t-sub">登録先ごとのMasked Email。Fastmail連携が必要。</p><small class="t-note"><a href="https://support.1password.com/fastmail/">1Password公式ガイド</a></small></article>
+<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/apple-hide-my-email.webp" alt="Appleでサインイン時にメールを非公開にする画面"><strong class="t-body">Appleでサインイン</strong><p class="t-sub">対応サービスで「メールを非公開」を選び、専用アドレスに転送。</p><small class="t-note"><a href="https://support.apple.com/ja-jp/102379">Apple公式サポート</a></small></article>
 </div>
 
 <!-- どれも登録先に個人のメールアドレスを直接渡さずに済む方法です。1PasswordはFastmailとの連携が必要で、Appleの「メールを非公開」は対応サービスでAppleでサインインする時に使えます。エイリアスで本人が完全に匿名になるわけではありません。 -->
@@ -255,7 +254,7 @@ path: 20261115_moiken-minotake-security
 - ホテル受付：予約済みなのに、住所を再記入
 - 「本当に必要？」と立ち止まる
 
-![問診票を手書きする待合室と、ホテルのチェックイン風景](images/hospital-hotel-questionnaire-illustration.png)
+![問診票を手書きする待合室と、ホテルのチェックイン風景](images/hospital-hotel-questionnaire-illustration.webp)
 
 <!-- 病院で問診票を書いた時、マイナンバーカードで連携しているのに紙にも住所や生年月日を書く。ホテルも予約の時に情報を入れているのに、チェックインで住所を書く。落とし物があれば電話で連絡してもらえばいいんじゃないか、と思うんですよね。 -->
 
@@ -264,7 +263,7 @@ path: 20261115_moiken-minotake-security
 <!-- _class: media-split current-topic -->
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い > 作る側編 -->
 
-![病院の問診フォーム（施設名は画像内に表示なし）](images/hospital-form-required-fields.png)
+![病院の問診フォーム（施設名は画像内に表示なし）](images/hospital-form-required-fields.webp)
 
 <!-- フォームで必要のない情報まで必須にするのはタチが悪いと思います。任意にできるなら使う人に判断を委ねる。そもそも集めなくていい情報はないか、考えたいです。 -->
 
@@ -287,7 +286,7 @@ path: 20261115_moiken-minotake-security
 - 持つ情報が減る => 守る情報も減る
 
 
-![不要な項目を減らしたフォームのイラスト](images/minimal-form-illustration.png)
+![不要な項目を減らしたフォームのイラスト](images/minimal-form-illustration.webp)
 
 <!-- マーケティングで何十代が多いか知りたいなら、生年月日ではなく年代だけでいい。どの地域の人が使っているか知りたいなら、都道府県や市区町村まででいい。生年月日や住所を全部もらう必要はないですよね。 -->
 
@@ -352,7 +351,7 @@ path: 20261115_moiken-minotake-security
 - Apple認証：エイリアスメールを渡す
 - 作る側も、そもそも情報を持たない
 
-![setlogの登録画面。パスキーで登録する選択肢がある](images/setlog-passkey-screen.png)
+![setlogの登録画面。パスキーで登録する選択肢がある](images/setlog-passkey-screen.webp)
 
 <p class="t-note"><a href="https://ichioshi.allabout.co.jp/articles/common/40155">イチオシ / 2026年8月12日</a></p>
 
@@ -365,7 +364,7 @@ path: 20261115_moiken-minotake-security
 
 ## パスキーをホテルのカードキーにたとえると
 
-![スマホ認証を使うホテルカードキーのイメージ](images/passkey-hotel-card-key.png)
+![スマホ認証を使うホテルカードキーのイメージ](images/passkey-hotel-card-key.webp)
 
 <!-- ホテルのカードキーのように、サービスごとの鍵を持ち、スマホで本人確認して使うイメージです。たとえはイメージで、実際には端末やパスキーマネージャーが新しいチャレンジに暗号署名し、サービスが公開鍵で検証します。秘密鍵はログイン先サービスへ送られません。パスキーは登録したサイトの識別情報に結びつき、フィッシングに強い設計です。ただし、端末やパスキーマネージャーの保護、同期、アカウント復旧は別途重要です。パスキーだけでサービス全体が安全になるわけではありません。参考: FIDO Alliance https://fidoalliance.org/passkeys/、W3C Web Authentication Level 3 https://www.w3.org/TR/webauthn-3/、Google for Developers https://developers.google.com/identity/passkeys。 -->
 
@@ -381,7 +380,7 @@ path: 20261115_moiken-minotake-security
 - 便利だから、で残し続けない
 
 
-![保存期限を決めて不要な情報を整理するイラスト](images/data-retention-period-illustration.png)
+![保存期限を決めて不要な情報を整理するイラスト](images/data-retention-period-illustration.webp)
 
 <!-- 集めないのが一番ですが、必要な情報を集めるなら、規約で説明して、いつ消すか決めておく。たとえば病院で1年以上利用がなければ消す、というやり方もありそうです。実際のルールは確認が必要ですが、ずっと残しておくと攻撃された時に漏れる情報も増えます。 -->
 
@@ -402,7 +401,7 @@ path: 20261115_moiken-minotake-security
 - データベースB：住所・生年月日（限られた管理者が見る）
 - 誰にどの情報が必要？
 
-![日々の記録と限られた人だけが見る情報を分けて保管するイラスト](images/db-access-separation-illustration.png)
+![日々の記録と限られた人だけが見る情報を分けて保管するイラスト](images/db-access-separation-illustration.webp)
 
 <!-- 通院記録や、何月何日に来て何をしたか、支払いの情報は受付の人も見られる。一方で、住所や生年月日は限られた管理者しか見られないようにする。医師も全員が住所や生年月日まで見る必要があるのか。年齢は診療に必要かもしれないけれど、本人確認のやり方も含めて考えたいです。 -->
 
@@ -433,15 +432,15 @@ path: 20261115_moiken-minotake-security
 ## 情報管理は、システムの外にも続く
 
 <div class="gl-cards gl-cards--2">
-<article class="gl-source"><img class="gl-source__screenshot" src="images/missing-paper-records-illustration.png" alt="紙の記録が所在不明になった事案のイメージ"><strong class="t-body">紙の記録が621人分、所在不明に</strong><p class="t-sub">静岡県立学校6校で生徒指導要録を紛失。外部流出は確認されていません。</p><small class="t-note"><a href="https://look.satv.co.jp/content_news/incident/99223">静岡朝日テレビ / 2026年9月29日</a></small></article>
-<article class="gl-source"><img class="gl-source__screenshot" src="images/support-scam-illustration.png" alt="サポート詐欺で個人PCが遠隔操作された事案のイメージ"><strong class="t-body">個人PCがサポート詐欺被害に</strong><p class="t-sub">看護師の個人PCが遠隔操作され、保存されていた患者情報1,365件が漏えいした可能性。</p><small class="t-note"><a href="https://internet.watch.impress.co.jp/docs/news/2114633.html">INTERNET Watch / 2026年6月5日</a></small></article>
+<article class="gl-source"><img class="gl-source__screenshot" src="images/missing-paper-records-illustration.webp" alt="紙の記録が所在不明になった事案のイメージ"><strong class="t-body">紙の記録が621人分、所在不明に</strong><p class="t-sub">静岡県立学校6校で生徒指導要録を紛失。外部流出は確認されていません。</p><small class="t-note"><a href="https://look.satv.co.jp/content_news/incident/99223">静岡朝日テレビ / 2026年9月29日</a></small></article>
+<article class="gl-source"><img class="gl-source__screenshot" src="images/support-scam-illustration.webp" alt="サポート詐欺で個人PCが遠隔操作された事案のイメージ"><strong class="t-body">個人PCがサポート詐欺被害に</strong><p class="t-sub">看護師の個人PCが遠隔操作され、保存されていた患者情報1,365件が漏えいした可能性。</p><small class="t-note"><a href="https://internet.watch.impress.co.jp/docs/news/2114633.html">INTERNET Watch / 2026年6月5日</a></small></article>
 </div>
 
 <!-- 漏えいと一言でいっても、静岡県の事案では紙の記録が所在不明になり、外部流出は確認されていません。藤田医科大学病院の事案では、院内規程に反して患者情報を保存していた看護師の個人PCがサポート詐欺で遠隔操作され、情報が漏えいした可能性があります。情報を守る範囲は、病院のシステム内だけではありません。イラストは事案を説明するための生成画像で、実際の現場写真ではありません。出典: 静岡朝日テレビ https://look.satv.co.jp/content_news/incident/99223、INTERNET Watch https://internet.watch.impress.co.jp/docs/news/2114633.html -->
 
 ---
 
-<!-- _class: current-topic -->
+<!-- _class: media-split current-topic -->
 <!-- _footer: 3. 管理する人が整える、安全に試せる場 > 管理者編 -->
 
 
@@ -454,7 +453,9 @@ path: 20261115_moiken-minotake-security
 - 新しい脆弱性や事故事例
   - 2週間前は対応が重なって疲弊していた...
 
-<!-- 新しい脆弱性やインシデントの話を追いかけないといけない。毎日のように出てきて、僕も2週間前は対応が重なってかなり疲弊しました。管理する側は情報を追う必要があります。 -->
+![PHPに深刻な脆弱性2件を伝える記事のビジュアル](images/php2shell-vulnerability-card.webp)
+
+<!-- 新しい脆弱性やインシデントの話を追いかけないといけない。毎日のように出てきて、僕も2週間前は対応が重なってかなり疲弊しました。管理する側は情報を追う必要があります。PHP2Shellの緊急脆弱性では、パッチ適用の準備が呼びかけられ、難しい場合はサイトの一時停止もリスク低減策として示されました。出典: ITmedia NEWS https://www.itmedia.co.jp/news/article/2610/22/2000002483/ -->
 
 ---
 
@@ -482,7 +483,7 @@ path: 20261115_moiken-minotake-security
 - 失敗や工夫を共有する
 
 
-![使わせないのではなく砂場で試すことを見守る親子の対比](images/sandbox-learning-illustration.png)
+![使わせないのではなく砂場で試すことを見守る親子の対比](images/sandbox-learning-illustration.webp)
 
 <!-- これは僕の感覚ですけど、ある程度サンドボックスで実際に作ってみるのが大事だと思っています。紙でも漏れるし、システムを固めるだけでは終わらない。作りながら学んでいくんですよね。 -->
 
@@ -516,7 +517,7 @@ path: 20261115_moiken-minotake-security
 - データや権限を分ける
 
 
-![登壇して作ったものと設計の工夫を発信するイラスト](images/share-design-illustration.png)
+![登壇して作ったものと設計の工夫を発信するイラスト](images/share-design-illustration.webp)
 
 <!-- 作ったものを公開する時は、設計意図も一緒に話したいです。何を集めないか、いつ消すか、データや権限をどう分けたか。そういうところを発信すると、使う人も安心できるし、現場で作ることも応援してもらえると思います。 -->
 
@@ -545,8 +546,8 @@ path: 20261115_moiken-minotake-security
 ## 番宣: もいせん・プロトアウトに来ましょう
 
 <div class="gl-cards gl-cards--2">
-<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/moicen-site-screenshot.png" alt="ものづくり医療センター もいせん公式サイト"><strong class="t-body">ものづくり医療センター「もいせん」</strong><p class="t-sub">医療者が現場の課題を自分で解決するための学びの場。</p><small class="t-note"><a href="https://moicen-forest.studio.site/">公式サイト</a></small></article>
-<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/protoout-site-screenshot.png" alt="プロトアウトスタジオ公式サイト"><strong class="t-body">プロトアウトスタジオ</strong><p class="t-sub">作って、外に出して、反応を得ながら学ぶ。</p><small class="t-note"><a href="https://protoout.studio/">公式サイト</a></small></article>
+<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/moicen-site-screenshot.webp" alt="ものづくり医療センター もいせん公式サイト"><strong class="t-body">ものづくり医療センター「もいせん」</strong><p class="t-sub">医療者が現場の課題を自分で解決するための学びの場。</p><small class="t-note"><a href="https://moicen-forest.studio.site/">公式サイト</a></small></article>
+<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/protoout-site-screenshot.webp" alt="プロトアウトスタジオ公式サイト"><strong class="t-body">プロトアウトスタジオ</strong><p class="t-sub">作って、外に出して、反応を得ながら学ぶ。</p><small class="t-note"><a href="https://protoout.studio/">公式サイト</a></small></article>
 </div>
 <p class="gl-foot t-body">学びながら、最新事例にも触れましょう。</p>
 
@@ -559,8 +560,8 @@ path: 20261115_moiken-minotake-security
 
 ## 最新事例は「漏らされったー」で
 
-<!-- card: images/morasaretter-og.png | 出典: morasaretter.suke.dev -->
-<article class="gl-linkcard is-image" data-card="images/morasaretter-og.png | 出典: morasaretter.suke.dev"><img src="images/morasaretter-og.png" alt=""><small class="t-note gl-muted">出典: morasaretter.suke.dev</small></article>
+<!-- card: images/morasaretter-og.webp | 出典: morasaretter.suke.dev -->
+<article class="gl-linkcard is-image" data-card="images/morasaretter-og.webp | 出典: morasaretter.suke.dev"><img src="images/morasaretter-og.webp" alt=""><small class="t-note gl-muted">出典: morasaretter.suke.dev</small></article>
 
 ---
 <!-- only: 15min,10min -->
@@ -569,6 +570,6 @@ path: 20261115_moiken-minotake-security
 
 ## 興味ある人はこちら！
 
-![アンケートフォームを開くQRコード](images/final-survey-qr.png)
+![アンケートフォームを開くQRコード](images/final-survey-qr.webp)
 
 <!-- アンケートフォーム: https://forms.gle/sWkm89bvMTUSXED37 -->
