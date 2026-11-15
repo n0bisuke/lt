@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-// Node.js で Marp HTML を組み立て、WeasyPrint と Poppler で PDF/サムネイルを作る。
-// ブラウザーやブラウザー自動化は使わない。
+// Node.js で Marp HTML を組み立て、Playwright/Chromium で PDF とサムネイルを作る。
 import { readFileSync, readdirSync, existsSync, writeFileSync, mkdtempSync, rmSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { chromium } from 'playwright';
+import { PDFDocument } from 'pdf-lib';
 import { parseDeck, renderSlides } from './lib/deck.mjs';
 import { buildVariants, findVariantMasters } from './lecture/build-variants.mjs';
 
@@ -14,16 +15,6 @@ const DECKS = join(ROOT, 'decks');
 const args = process.argv.slice(2);
 const changedOnly = args.includes('--changed');
 const arg = args.find((value) => !value.startsWith('--'));
-const weasyprint = process.env.WEASYPRINT_BIN || 'weasyprint';
-const pdftoppm = process.env.PDFTOPPM_BIN || 'pdftoppm';
-
-function run(file, args, options = {}) {
-  const result = spawnSync(file, args, { cwd: ROOT, encoding: 'utf8', ...options });
-  if (result.error) throw new Error(`${file} を起動できません。WeasyPrint と Poppler をインストールしてください。`);
-  if (result.status !== 0) throw new Error(`${file} に失敗しました:\n${result.stderr || result.stdout}`);
-  return result;
-}
-
 function collectDeckDirs(dir) {
   const entries = readdirSync(dir, { withFileTypes: true });
   const found = entries.some((entry) => entry.isFile() && entry.name === 'deck.md') ? [dir] : [];
@@ -101,7 +92,7 @@ function cssForAdjustments(adjustments) {
   return rules.join('\n');
 }
 
-async function exportDeck(dir) {
+async function exportDeck(dir, browser) {
   const sourcePath = join(dir, 'deck.md');
   const source = readFileSync(sourcePath, 'utf8');
   const { meta } = parseDeck(source);
@@ -124,19 +115,36 @@ async function exportDeck(dir) {
   const content = pages.map((page) => `<div class="lt-pdf-slide">${rewriteAssets(pageContent(page), dir)}</div>`).join('\n');
   const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8"><style>${css}</style></head><body><main>${content}</main></body></html>`;
   const scratch = mkdtempSync(join(tmpdir(), 'lt-pdf-'));
+  let page;
   try {
     const htmlPath = join(scratch, 'deck.html');
     const outputPath = join(dir, `${meta.id ?? dir.split(sep).at(-1)}.pdf`);
+    const thumbnailPath = join(dir, 'thumbnail.png');
     writeFileSync(htmlPath, html);
-    run(weasyprint, [htmlPath, outputPath]);
-    const info = run('pdfinfo', [outputPath]).stdout;
-    const pdfPages = Number(/^Pages:\s+(\d+)/m.exec(info)?.[1]);
+    page = await browser.newPage({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
+    await page.goto(fileUrl(htmlPath), { waitUntil: 'networkidle' });
+    await page.evaluate(async () => {
+      await document.fonts.ready;
+      await Promise.all([...document.images].map((image) => image.decode().catch(() => {})));
+    });
+    const slideCount = await page.locator('.lt-pdf-slide').count();
+    if (slideCount !== rendered.count) {
+      throw new Error(`${sourcePath}: HTML内のスライドは${slideCount}枚、元データは${rendered.count}枚です`);
+    }
+    await page.emulateMedia({ media: 'screen' });
+    await page.locator('.lt-pdf-slide').first().screenshot({ path: thumbnailPath, animations: 'disabled' });
+    await page.emulateMedia({ media: 'print' });
+    const pdf = await page.pdf({
+      path: outputPath,
+      preferCSSPageSize: true,
+      printBackground: true,
+      displayHeaderFooter: false,
+    });
+    const pdfPages = await PDFDocument.load(pdf).then((document) => document.getPageCount());
     if (pdfPages !== rendered.count) throw new Error(`${sourcePath}: PDFは${pdfPages}ページ、スライドは${rendered.count}枚です`);
-    const thumbnailBase = join(scratch, 'thumbnail');
-    run(pdftoppm, ['-f', '1', '-singlefile', '-png', '-r', '96', outputPath, thumbnailBase]);
-    writeFileSync(join(dir, 'thumbnail.png'), readFileSync(`${thumbnailBase}.png`));
-    console.log(`${relative(ROOT, dir)}: ${pdfPages}ページを出力しました（Node.js / WeasyPrint、ブラウザーなし）`);
+    console.log(`${relative(ROOT, dir)}: ${pdfPages}ページとサムネイルを出力しました（Node.js / Playwright / Chromium）`);
   } finally {
+    await page?.close();
     rmSync(scratch, { recursive: true, force: true });
   }
 }
@@ -178,7 +186,19 @@ if (changedOnly && !arg) {
   }
 }
 
-for (const dir of dirs) {
-  if (!existsSync(join(dir, 'deck.md'))) throw new Error(`${dir}/deck.md がありません`);
-  await exportDeck(dir);
+if (dirs.length) {
+  let browser;
+  try {
+    browser = await chromium.launch({ headless: true });
+  } catch (error) {
+    throw new Error(`Playwright の Chromium を起動できません。npm exec playwright install chromium を実行してください。\n${error.message}`);
+  }
+  try {
+    for (const dir of dirs) {
+      if (!existsSync(join(dir, 'deck.md'))) throw new Error(`${dir}/deck.md がありません`);
+      await exportDeck(dir, browser);
+    }
+  } finally {
+    await browser.close();
+  }
 }
