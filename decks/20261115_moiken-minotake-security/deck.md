@@ -564,7 +564,7 @@ variants: true
 <!-- _class: diagram current-topic -->
 <!-- _footer: 4. 作って試し、設計の工夫を発信する -->
 
-## 興味ある人はこちら！
+## 感想などはこちら
 
 ![アンケートフォームを開くQRコード](images/final-survey-qr.png)
 

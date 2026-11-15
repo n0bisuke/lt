@@ -50,7 +50,7 @@ VS Code で Marp for VS Code 拡張（`marp-team.marp-vscode`）を入れ、`dec
 
 ## 発表と書き出し
 
-Actions は変更されたデッキのPDFとサムネイルだけを生成します。前回の生成物がない場合は全件を作ります。PDFはGitに追加しません。手元でPDFが必要な場合だけ、次のコマンドで作れます。
+スライドのPages公開とPDF生成は別のActionsです。`Export slide PDFs` は変更されたデッキのPDFとサムネイルを生成し、Actions artifact に14日間保存します。PDF生成が失敗してもスライドの公開は止まりません。PagesにはリポジトリにあるPDFだけが含まれます。手元でPDFを作る場合は次のコマンドを使います。
 
 ```bash
 npm run export-pdf -- decks/sample_bbq
