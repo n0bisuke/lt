@@ -101,7 +101,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
    npm run deploy -- "コミットメッセージ"
    ```
 
-   サイトを組み立て直してエラーがなければ、`git add`、`commit`、`push` まで行います。`decks/` は `published: true` のデッキだけを add します。公開リポジトリでは、コミットした内容はすべて誰でも読めるので、`git add .` や `git add decks` を直接使いません。`npm run deploy -- --dry-run` で、コミットされるファイルを先に確認できます。
+   サイトを組み立て直してエラーがなければ、`git add`、`commit`、`push` まで行います。`decks/` は `published: true` のデッキだけを add し、削除した公開デッキも削除としてコミットします。公開リポジトリでは、コミットした内容はすべて誰でも読めるので、`git add .` や `git add decks` を直接使いません。`npm run deploy -- --dry-run` で、コミットされるファイルを先に確認できます。
 
 PDF とサムネイルは `.github/workflows/pdf-export.yml` が WeasyPrint と Poppler で生成し、Actions artifact として14日間保存します。この処理は Pages 公開と独立しており、PDF 出力に失敗してもスライド公開は止まりません。Pages にはリポジトリに存在する PDF とサムネイルだけを含めます。ブラウザーは使いません。手元で PDF を作る場合は `npm run export-pdf` を使い、事前に `brew install weasyprint poppler` を実行します。
 
@@ -161,7 +161,7 @@ node scripts/build-deck.mjs decks/<デッキ名>
 
 プレビュー左下の小さなタイマーで発表時間を計測できます。再生・一時停止・リセットができ、スライドを移動したりプレビューを再読み込みしたりしても計測状態を保ちます。画像を微調整するには、プレビュー右下の「画像を編集」を押します。画像をドラッグして移動し、右下の丸をドラッグして縦横比を保ったままサイズを変更できます。変更はデッキの `.lt-adjustments.json` に保存され、リセットできます。サイトを再生成するときも調整が反映されます。
 
-複数時間版の元データは親フォルダの `deck.md` です。スライドの先頭に `<!-- only: 15min,10min -->` のように書くと、その版だけに載ります。指定がないスライドは全版に載ります。5分版だけ文面を変える場合は、同じ位置に `<!-- only: 5min -->` を付けた別スライドを続けて置きます。`npm run deck -- decks` と `npm run deploy` は、公開前に時間別の版を自動生成します。
+複数時間版の元データは親フォルダの `deck.md` です。スライドの先頭に `<!-- only: 15min,10min -->` のように書くと、その版だけに載ります。指定がないスライドは全版に載ります。版を限定する場合は front matter に `variantNames: 15min,10min` のように指定し、除外した版の生成フォルダは削除します。`npm run deck -- decks` と `npm run deploy` は、公開前に時間別の版を自動生成します。
 
 ```bash
 npm run variants -- decks/<デッキ名>

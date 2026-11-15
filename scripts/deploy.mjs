@@ -45,6 +45,21 @@ const published = decks.filter((e) => isPublished(join(ROOT, 'decks', e.name))).
 const drafts = decks.map((e) => e.name).filter((n) => !published.includes(n));
 const paths = [['.', ':(exclude)decks'], ...published.map((n) => [`decks/${n}`])];
 
+// 取り除かれた公開デッキも削除としてコミットする。未公開デッキの削除は含めない。
+const deleted = spawnSync('git', ['ls-files', '--deleted', '-z', '--', 'decks'], { cwd: ROOT, encoding: 'utf8' }).stdout;
+const deletedDecks = [...new Set(deleted.split('\0').filter(Boolean).map((file) => file.split('/')[1]))];
+for (const name of deletedDecks) {
+  if (!name || existsSync(join(ROOT, 'decks', name))) continue;
+  const headDeck = spawnSync('git', ['show', `HEAD:decks/${name}/deck.md`], { cwd: ROOT, encoding: 'utf8' });
+  const headJson = headDeck.status === 0
+    ? null
+    : spawnSync('git', ['show', `HEAD:decks/${name}/deck.json`], { cwd: ROOT, encoding: 'utf8' });
+  const wasPublished = headDeck.status === 0
+    ? parseDeck(headDeck.stdout).meta.published === true
+    : headJson.status === 0 && JSON.parse(headJson.stdout).published === true;
+  if (wasPublished) paths.push([`decks/${name}`]);
+}
+
 // 複数版を親フォルダへ移したとき、以前の `-10min` / `-5min` フォルダの削除も公開する。
 // 公開済み variants デッキに対応し、Git 管理下にあり、作業ツリーから消えたものだけを追加する。
 for (const name of published) {

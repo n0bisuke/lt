@@ -3,6 +3,18 @@ name: Deploy slides to GitHub Pages
 on:
   push:
     branches: [main]
+    paths:
+      - 'decks/**'
+      - 'design-system/**'
+      - 'scripts/build-site.mjs'
+      - 'scripts/build-tokens.mjs'
+      - 'scripts/lib/deck.mjs'
+      - 'scripts/lecture/build-variants.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'site.json'
+      - 'external.json'
+      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -28,6 +40,8 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
       - run: npm ci
       - run: node scripts/build-tokens.mjs
       - run: node scripts/build-site.mjs

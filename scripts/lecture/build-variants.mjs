@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // usage: node scripts/lecture/build-variants.mjs [decks/<master>]
 // variants: true の deck.md を元に、variant subfolders の deck.md を生成する。
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseDeck } from '../lib/deck.mjs';
@@ -36,7 +36,7 @@ function splitSlides(body) {
 function replaceFrontmatter(markdown, meta) {
   const match = /^---\n([\s\S]*?)\n---\n?/.exec(markdown);
   if (!match) throw new Error('variants master に YAML frontmatter がありません');
-  const lines = match[1].split('\n').filter((line) => !/^(?:id|title|variants|path):\s*/.test(line));
+  const lines = match[1].split('\n').filter((line) => !/^(?:id|title|variants|variantNames|path):\s*/.test(line));
   const title = JSON.stringify(`${meta.title ?? ''}${meta.titleSuffix}`);
   lines.push(`id: ${meta.id}`);
   lines.push(`title: ${title}`);
@@ -61,8 +61,16 @@ export function buildVariants(sourceDir, { force = false } = {}) {
   if (meta.variants !== true) throw new Error(`${sourcePath}: variants: true がありません`);
   const slides = splitSlides(body);
   const outputDirs = [];
+  const variantNames = meta.variantNames
+    ? String(meta.variantNames).split(',').map((name) => name.trim()).filter(Boolean)
+    : VARIANTS.map(({ name }) => name);
+  const unknownVariants = variantNames.filter((name) => !VARIANTS.some((variant) => variant.name === name));
+  if (unknownVariants.length) throw new Error(`${sourcePath}: 未対応の版です: ${unknownVariants.join(', ')}`);
+  for (const variant of VARIANTS.filter(({ name }) => !variantNames.includes(name))) {
+    rmSync(join(sourceDir, variant.name), { recursive: true, force: true });
+  }
 
-  for (const variant of VARIANTS) {
+  for (const variant of VARIANTS.filter(({ name }) => variantNames.includes(name))) {
     const selected = slides.map((slide) => selectedSlide(slide, variant.name)).filter(Boolean);
     const baseRoute = meta.path ?? meta.id ?? relative(DECKS, sourceDir).split(sep).at(-1);
     const frontmatter = replaceFrontmatter(source, {

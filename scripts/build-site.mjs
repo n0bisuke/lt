@@ -90,7 +90,12 @@ for (const dir of collectDeckDirs(DECKS)) {
   const rendered = isMd ? renderSlides(renderSource, { title: meta.title ?? '', assetPrefix }) : null;
   const adjustmentPath = join(dir, '.lt-adjustments.json');
   const adjustments = existsSync(adjustmentPath) ? JSON.parse(readFileSync(adjustmentPath, 'utf8')) : {};
-  const html = isMd ? applySlideAdjustments(rendered.html, adjustments) : readFileSync(htmlPath, 'utf8');
+  const html = isMd
+    ? applySlideAdjustments(
+      rendered.html.replace(/(?:\.\.\/)+design-system\//g, `${assetPrefix}/`),
+      adjustments,
+    )
+    : readFileSync(htmlPath, 'utf8');
   const article = isMd ? renderArticle(renderSource, { assetPrefix: '../'.repeat(routeParts.length) }) : '';
   const pdfPath = join(dir, `${id}.pdf`);
   const thumbPath = join(dir, 'thumbnail.png');

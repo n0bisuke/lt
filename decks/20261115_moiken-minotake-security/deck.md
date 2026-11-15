@@ -8,6 +8,7 @@ event: "第2回 ものづくり医療研究会"
 eventUrl: "https://moiken02.vercel.app/"
 published: true
 variants: true
+variantNames: 15min,10min
 
 ---
 
@@ -84,8 +85,10 @@ variants: true
 
 <!-- card: https://www.watch.impress.co.jp/docs/news/2144279.html -->
 <article class="gl-linkcard" data-card="https://www.watch.impress.co.jp/docs/news/2144279.html"><img src="images/cards/17db2682d23f.jpg" alt=""><strong class="t-sub"><a href="https://www.watch.impress.co.jp/docs/news/2144279.html">タイムズカーの情報漏洩、免許証など本人確認書類流出は160万件</a></strong><small class="t-note gl-muted">Impress Watch / 2026-09-29</small></article>
+<!-- card: https://newsdig.tbs.co.jp/articles/-/3086013 -->
+<article class="gl-linkcard" data-card="https://newsdig.tbs.co.jp/articles/-/3086013"><strong class="t-sub"><a href="https://newsdig.tbs.co.jp/articles/-/3086013">マネックス証券で不正アクセス被害　本人確認の画像データ1592件漏えいの可能性</a></strong><small class="t-note gl-muted">TBS NEWS DIG / 2026-11-14</small></article>
 
-<!-- 最近、情報漏えいやサイバー攻撃の話が出ていて、世の中もかなり敏感になっています。こういう状況で、現場で作ったシステムにも「セキュリティ大丈夫？」という声が来る。次に、その作られた背景を見ます。 -->
+<!-- タイムズカーやマネックス証券でも情報漏えいが話題になりました。こうした事例が続き、世の中もかなり敏感になっています。現場で作ったシステムにも「セキュリティ大丈夫？」という声が来る。次に、その作られた背景を見ます。出典: Impress Watch https://www.watch.impress.co.jp/docs/news/2144279.html、TBS NEWS DIG https://newsdig.tbs.co.jp/articles/-/3086013 -->
 
 ---
 
@@ -497,8 +500,9 @@ variants: true
 ## 公開する前提で、置く情報を選ぶ
 
 - ビルの入口の鍵が開いていたら？
-- 大事なものは部屋に置きっぱなしにしない
-- 自分のWebサイト：ソースコード公開中
+  - 大事なものは部屋に置きっぱなしにしない
+- 最近の自分の実装Webサイト
+  - ソースコードをフル公開しながら作るように切り替えてみた
 - 公開するコードに秘密や実データを置かない
 
 <!-- 僕も今、自分のウェブサイトのソースコードを公開してみています。隠そうとすると、ソースコードを置く場所に要らないものを残してしまうことがある。貸会議室のビルの鍵が開いていたら、貴重品を置きっぱなしにしないですよね。必要なものだけ金庫に入れる、持ち帰る。公開前提で作るのも同じです。 -->

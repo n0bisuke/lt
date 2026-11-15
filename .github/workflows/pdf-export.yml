@@ -3,6 +3,16 @@ name: Export slide PDFs
 on:
   push:
     branches: [main]
+    paths:
+      - 'decks/**'
+      - 'design-system/**'
+      - 'scripts/export-pdf.mjs'
+      - 'scripts/lib/deck.mjs'
+      - 'scripts/build-tokens.mjs'
+      - 'scripts/lecture/build-variants.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/pdf-export.yml'
   workflow_dispatch:
 
 permissions:
@@ -23,6 +33,8 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
       - run: npm ci
       - run: sudo apt-get update && sudo apt-get install -y weasyprint poppler-utils
       - name: Select PDF diff base

@@ -84,8 +84,10 @@ path: 20261115_moiken-minotake-security
 
 <!-- card: https://www.watch.impress.co.jp/docs/news/2144279.html -->
 <article class="gl-linkcard" data-card="https://www.watch.impress.co.jp/docs/news/2144279.html"><img src="images/cards/17db2682d23f.jpg" alt=""><strong class="t-sub"><a href="https://www.watch.impress.co.jp/docs/news/2144279.html">タイムズカーの情報漏洩、免許証など本人確認書類流出は160万件</a></strong><small class="t-note gl-muted">Impress Watch / 2026-09-29</small></article>
+<!-- card: https://newsdig.tbs.co.jp/articles/-/3086013 -->
+<article class="gl-linkcard" data-card="https://newsdig.tbs.co.jp/articles/-/3086013"><strong class="t-sub"><a href="https://newsdig.tbs.co.jp/articles/-/3086013">マネックス証券で不正アクセス被害　本人確認の画像データ1592件漏えいの可能性</a></strong><small class="t-note gl-muted">TBS NEWS DIG / 2026-11-14</small></article>
 
-<!-- 最近、情報漏えいやサイバー攻撃の話が出ていて、世の中もかなり敏感になっています。こういう状況で、現場で作ったシステムにも「セキュリティ大丈夫？」という声が来る。次に、その作られた背景を見ます。 -->
+<!-- タイムズカーやマネックス証券でも情報漏えいが話題になりました。こうした事例が続き、世の中もかなり敏感になっています。現場で作ったシステムにも「セキュリティ大丈夫？」という声が来る。次に、その作られた背景を見ます。出典: Impress Watch https://www.watch.impress.co.jp/docs/news/2144279.html、TBS NEWS DIG https://newsdig.tbs.co.jp/articles/-/3086013 -->
 
 ---
 
