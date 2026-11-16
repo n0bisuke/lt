@@ -562,7 +562,7 @@ variantNames: 10min
 <!-- _class: closing-promo current-topic -->
 <!-- _footer: 4. 作って試し、設計の工夫を発信する -->
 
-## ありがとうございました
+## ご清聴、ありがとうございました
 
 <div class="gl-closing-promo">
 <div class="gl-promo-feature">
