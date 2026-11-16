@@ -8,7 +8,7 @@ event: "第2回 ものづくり医療研究会"
 eventUrl: "https://moiken02.vercel.app/"
 published: true
 variants: true
-variantNames: 10min
+variantNames: 15min
 
 ---
 
@@ -46,7 +46,7 @@ variantNames: 10min
 <!-- _footer: 1. 医療者が作れる時代と、現場で起きたこと -->
 
 
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 
 ## 医療者がAIでアプリを作れる時代です
 
@@ -76,7 +76,7 @@ variantNames: 10min
 
 ---
 
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 
 <!-- _class: link-cards current-topic -->
 <!-- _footer: 1. 医療者が作れる時代と、現場で起きたこと -->
@@ -91,7 +91,7 @@ variantNames: 10min
 
 ---
 
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 
 ## 作る人へのヤジも、情報漏えいへの不安もある
 
@@ -104,7 +104,7 @@ variantNames: 10min
 
 ---
 
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 
 ## 背景を知らないまま、ヤジが飛んでくることもある
 
@@ -117,7 +117,7 @@ variantNames: 10min
 
 ---
 
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 
 ## 作った背景には、現場の事情がある
 
@@ -141,7 +141,7 @@ variantNames: 10min
 <!-- 作るのを止める話ではなくて、セキュリティを意識して作って試す。その上で、作ったものだけじゃなく、どういう設計にしたかも話していきたいです。 -->
 
 ---
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 <!-- _class: qr-prompt current-topic -->
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い -->
 
@@ -156,7 +156,7 @@ variantNames: 10min
 
 ---
 
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 
 <!-- _class: agenda overview -->
 
@@ -171,7 +171,7 @@ variantNames: 10min
 <!-- 今回は作る人向けが中心ですが、使う側と管理する側の話もします。使う人、作る人、管理する人の順で見ていきます。 -->
 
 ---
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 <!-- _class: key-message current-topic stage -->
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い -->
 
@@ -187,7 +187,7 @@ variantNames: 10min
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い -->
 
 
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 
 ## 作る人を中心に、3つの立場で考える
 
@@ -200,7 +200,7 @@ variantNames: 10min
 ---
 
 
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 <!-- _class: media-split current-topic -->
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い > 使う側編 -->
 
@@ -221,7 +221,7 @@ variantNames: 10min
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い > 使う側編 -->
 
 
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 
 ![登録先ごとにメールアドレスを分ける](images/alias-email-flow.svg)
 
@@ -232,7 +232,7 @@ variantNames: 10min
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い > 使う側編 -->
 
 
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 
 ![登録先Aで漏えいした場合](images/alias-email-flow-leaked.svg)
 
@@ -269,7 +269,7 @@ variantNames: 10min
 <!-- 電話番号を登録するときは、IP電話サービスを持っておく。名前も本名でなくてよい場合は、イニシャルで登録する。JRE MALLの画面では、表示名と氏名をイニシャルにしています。こういう工夫も使う側でできることです。 -->
 
 ---
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 
 <!-- _class: media-split current-topic -->
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い > 使う側編 -->
@@ -423,7 +423,7 @@ variantNames: 10min
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い > 作る側編 -->
 
 
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 
 ## 蛇足: 本人確認の情報は、伝え方も考えたい
 
@@ -454,7 +454,7 @@ variantNames: 10min
 <!-- _footer: 3. 管理する人が整える、安全に試せる場 > 管理者編 -->
 
 
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 
 ## 情報もサービスも日々、変わっていく
 
@@ -500,7 +500,7 @@ variantNames: 10min
 <!-- _footer: 4. 作って試し、設計の工夫を発信する -->
 
 
-<!-- only: 15min,10min -->
+<!-- only: 15min -->
 
 ## 公開する前提で、置く情報を選ぶ
 
