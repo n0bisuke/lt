@@ -367,6 +367,7 @@ html.lt-deck-overview, html.lt-deck-overview body { overflow: auto; height: auto
 
 /* Client side access gate for slides marked with the `locked` class. */
 .lt-deck svg[data-lt-locked]:not(.lt-lock-open) { visibility: hidden !important; }
+.lt-deck[data-lt-gated]:not(.lt-access-open) svg[data-marpit-svg] { visibility: hidden !important; }
 .lt-lock-gate[hidden], .lt-lock-noscript[hidden] { display: none !important; }
 .lt-lock-gate, .lt-lock-noscript { position: fixed; inset: 0; z-index: 2147483000; display: grid; place-items: center; padding: 24px; background: rgb(0 0 0 / 0.72); color: #171717; font: 500 18px/1.5 system-ui, sans-serif; }
 .lt-lock-card { width: min(440px, 100%); padding: 28px; border: 1px solid #bdbdbd; background: #fff; box-shadow: 0 12px 40px rgb(0 0 0 / 0.3); }

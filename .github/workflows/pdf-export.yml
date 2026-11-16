@@ -62,7 +62,7 @@ jobs:
           node --input-type=module <<'NODE' >> "$GITHUB_OUTPUT"
           import { readdirSync, readFileSync } from 'node:fs';
           import { basename, join, relative } from 'node:path';
-          import { parseDeck } from './scripts/lib/deck.mjs';
+          import { lockedSlideIndices, parseDeck } from './scripts/lib/deck.mjs';
           const eventName = process.env.EVENT_NAME;
           if (eventName === 'issues' && !process.env.ISSUE_TITLE?.startsWith('[PDF request]')) {
             throw new Error('PDF request issue title is missing');
@@ -77,7 +77,8 @@ jobs:
               const child = join(dir, entry.name);
               const source = join(child, 'deck.md');
               try {
-                const meta = parseDeck(readFileSync(source, 'utf8')).meta;
+                const markdown = readFileSync(source, 'utf8');
+                const meta = parseDeck(markdown).meta;
                 let isConfiguredDeck = true;
                 const parentSource = join(dir, 'deck.md');
                 try {
@@ -95,6 +96,9 @@ jobs:
           visit('decks');
           if (found.length !== 1) throw new Error(`Expected one deck for ${id}; found ${found.length}`);
           const item = found[0];
+          if (item.meta.unlisted === true || lockedSlideIndices(readFileSync(join(item.dir, 'deck.md'), 'utf8')).length > 0) {
+            throw new Error(`PDF export is disabled for decks with limited content: ${id}`);
+          }
           const outputId = item.meta.id ?? basename(item.dir);
           console.log(`deck_path=${relative('.', item.dir)}`);
           console.log(`pdf_path=${relative('.', join(item.dir, `${outputId}.pdf`))}`);
@@ -117,6 +121,10 @@ jobs:
         run: node scripts/export-pdf.mjs --changed
         env:
           PDF_BASE_SHA: ${{ steps.pdf-base.outputs.sha }}
+      - name: Collect public PDF artifacts
+        id: public-pdfs
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deck_id == '')
+        run: node scripts/list-public-pdf-artifacts.mjs
       - name: Export requested PDF
         if: steps.target.outputs.deck_path != ''
         env:
@@ -139,9 +147,7 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: slide-pdfs-${{ github.sha }}
-          path: |
-            decks/**/*.pdf
-            decks/**/thumbnail.png
+          path: ${{ steps.public-pdfs.outputs.paths }}
           if-no-files-found: warn
           retention-days: 14
       - name: Add artifact link to the request issue

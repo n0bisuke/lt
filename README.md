@@ -32,9 +32,13 @@ Claude Code では `/lt-slides`、Codex では `.agents/skills/lt-slides/` の�
 
 ### 限定公開スライド
 
-スライドごとに `<!-- _class: locked -->` を付けると、そのスライドは合言葉入力後に表示されます。デッキの front matter に `unlisted: true` を設定すると一覧と `all.json` から除外されます。合言葉の検証値は `npm run lock-key -- "8文字以上の合言葉"` で作り、出力された `lockKeySalt` と `lockKeyHash` を front matter に追加します。プレーンな合言葉はリポジトリに保存しません。
+**デッキ全体に鍵をかける場合**は、front matter に `published: true`、`unlisted: true`、`lockKeySalt`、`lockKeyHash` を設定します。`unlisted` のデッキは一覧と `all.json` から除外され、`https://n0bisuke.github.io/lt/<デッキ名>/` を直接開くと合言葉を求めます。記事を含むページとスライド本体の両方をゲートし、検索エンジン向けの noindex を付け、PDF・サムネイルを公開しません。
 
-この仕組みは閲覧の手間を増やす簡易ロックです。公開リポジトリの `deck.md`、生成HTML、画像は引き続き閲覧できるため、機密情報や受講者認証には使わないでください。JavaScriptを無効にした場合は、スライドの代わりに有効化の案内を表示します。
+**一部のスライドだけに鍵をかける場合**は、`published: true` と鍵の検証値を設定し、対象スライドに `<!-- _class: locked -->` を付けます。ほかのスライドは通常どおり表示されます。ロックしたスライドの本文は記事に出さず、デッキ全体に noindex を付け、PDF・サムネイルを公開しません。
+
+検証値は `npm run lock-key -- "8文字以上の合言葉"` で生成します。出力された `lockKeySalt` と `lockKeyHash` を front matter に貼り、合言葉そのものはリポジトリに保存しません。ローカルの試作デッキをPagesで見られるようにするには、内容を仕上げて `published: true` にし、`【要確認】` や不足画像を解消してから公開します。未公開デッキのURLは404になります。
+
+これは公開リポジトリ上の簡易閲覧ゲートです。GitHubの `deck.md` や画像から内容を隠す暗号化ではありません。JavaScriptを無効にした場合は有効化の案内を表示します。機密情報や本人確認を伴う受講者認証には使わないでください。
 
 自分で公開するときは、次のコマンドで `git add`、`commit`、`push` までまとめて行えます。下書きのデッキは入りません。
 

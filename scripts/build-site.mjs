@@ -103,16 +103,20 @@ for (const dir of collectDeckDirs(DECKS)) {
   const renderSource = isMd ? source : null;
   const rendered = isMd ? renderSlides(renderSource, { title: meta.title ?? '', assetPrefix }) : null;
   const lockedIndices = isMd ? lockedSlideIndices(renderSource) : [];
-  const hasLockVerifier = Boolean(meta.lockKeySalt && meta.lockKeyHash);
-  if (lockedIndices.length && (!hasLockVerifier || meta.unlisted !== true)) {
-    errors.push(`${id}: locked スライドには unlisted: true と lockKeySalt / lockKeyHash が必要です`);
+  const hasLockVerifier = /^[\da-f]{32}$/i.test(meta.lockKeySalt ?? '') && /^[\da-f]{64}$/i.test(meta.lockKeyHash ?? '');
+  const hasSensitiveContent = meta.unlisted === true || lockedIndices.length > 0;
+  if (hasSensitiveContent && !hasLockVerifier) {
+    errors.push(`${id}: unlisted または locked スライドには lockKeySalt / lockKeyHash が必要です`);
   }
   const adjustmentPath = join(dir, '.lt-adjustments.json');
   const adjustments = existsSync(adjustmentPath) ? JSON.parse(readFileSync(adjustmentPath, 'utf8')) : {};
   let svgIndex = 0;
+  const lockAttrs = meta.unlisted === true && hasLockVerifier
+    ? ` data-lt-gated="" data-lt-lock-id="${esc(id)}" data-lt-lock-salt="${esc(meta.lockKeySalt)}" data-lt-lock-hash="${esc(meta.lockKeyHash)}"`
+    : '';
   const html = isMd
     ? applySlideAdjustments(
-      rendered.html.replace(/(?:\.\.\/)+design-system\//g, `${assetPrefix}/`).replace(/<svg(?=[^>]*data-marpit-svg)[^>]*>/g, (tag) => {
+      rendered.html.replace(/(?:\.\.\/)+design-system\//g, `${assetPrefix}/`).replace('<main class="lt-deck">', `<main class="lt-deck"${lockAttrs}>`).replace(/<svg(?=[^>]*data-marpit-svg)[^>]*>/g, (tag) => {
         const index = svgIndex++;
         if (!lockedIndices.includes(index)) return tag;
         return `${tag.slice(0, -1)} data-lt-locked="" data-lt-lock-salt="${esc(meta.lockKeySalt)}" data-lt-lock-hash="${esc(meta.lockKeyHash)}">`;
@@ -120,10 +124,10 @@ for (const dir of collectDeckDirs(DECKS)) {
       adjustments,
     )
     : readFileSync(htmlPath, 'utf8');
-  let finalHtml = lockedIndices.length
+  let finalHtml = hasSensitiveContent
     ? html.replace('</body>', '<noscript><div class="lt-lock-noscript"><div class="lt-lock-card"><h2>限定スライド</h2><p>このスライドを表示するにはJavaScriptを有効にしてください。</p></div></div></noscript>\n</body>')
     : html;
-  if (meta.unlisted === true) finalHtml = finalHtml.replace('</head>', '<meta name="robots" content="noindex, nofollow, noarchive">\n</head>');
+  if (hasSensitiveContent) finalHtml = finalHtml.replace('</head>', '<meta name="robots" content="noindex, nofollow, noarchive">\n</head>');
   if (GA_ENABLED) finalHtml = finalHtml.replace('</head>', `${gaSnippet()}\n</head>`);
   const article = isMd ? renderArticle(renderSource, { assetPrefix: '../'.repeat(routeParts.length) }) : '';
   const pdfPath = join(dir, `${id}.pdf`);
@@ -140,9 +144,9 @@ for (const dir of collectDeckDirs(DECKS)) {
     if (!meta.title || !/^\d{4}-\d{2}-\d{2}$/.test(meta.date ?? '')) errors.push(`${id}: deck.json の title か date（YYYY-MM-DD）が正しくありません`);
     if (meta.eventUrl && !/^https?:\/\//.test(meta.eventUrl)) errors.push(`${id}: deck.json の eventUrl は http(s) の URL にしてください`);
   }
-  if (meta.unlisted !== true && !thumbPath && REQUIRE_ARTIFACTS) errors.push(`${id}: thumbnail.png がありません（ActionsでPDF出力してください）`);
-  if (meta.unlisted === true) {
-    // 限定ページにはPDFやサムネイルの公開コピーを作らない。
+  if (!hasSensitiveContent && !thumbPath && REQUIRE_ARTIFACTS) errors.push(`${id}: thumbnail.png がありません（ActionsでPDF出力してください）`);
+  if (hasSensitiveContent) {
+    // 限定デッキやロック付きデッキにはPDFやサムネイルの公開コピーを作らない。
   } else if (!existsSync(pdfPath)) {
     if (REQUIRE_ARTIFACTS) errors.push(`${id}: PDF がありません（ActionsでPDF出力してください）`);
   } else {
@@ -175,8 +179,8 @@ for (const dir of collectDeckDirs(DECKS)) {
   mkdirSync(slides, { recursive: true });
   // slides/ は decks/<id>/ と同じ深さなので、../../design-system のパスはそのまま使える
   writeFileSync(join(slides, 'index.html'), finalHtml);
-  if (meta.unlisted !== true && existsSync(pdfPath)) cpSync(pdfPath, join(out, `${id}.pdf`));
-  if (meta.unlisted !== true && thumbPath) cpSync(thumbPath, join(out, 'thumbnail.png'));
+  if (!hasSensitiveContent && existsSync(pdfPath)) cpSync(pdfPath, join(out, `${id}.pdf`));
+  if (!hasSensitiveContent && thumbPath) cpSync(thumbPath, join(out, 'thumbnail.png'));
   for (const r of refs) {
     const from = join(dir, r);
     if (r.startsWith('..') || !existsSync(from)) { errors.push(`${id}: ${r} が見つかりません`); continue; }
@@ -204,9 +208,10 @@ for (const dir of collectDeckDirs(DECKS)) {
       .sort((a, b) => new Date(b) - new Date(a))[0],
     variantGroup,
     variantName: variantGroup ? variantName : null,
-    hasPdf: existsSync(pdfPath),
+    hasPdf: !hasSensitiveContent && existsSync(pdfPath),
+    hasSensitiveContent,
     isMarkdown: isMd,
-    hasThumbnail: Boolean(thumbPath),
+    hasThumbnail: !hasSensitiveContent && Boolean(thumbPath),
   });
 }
 
@@ -327,6 +332,12 @@ main { padding-bottom: 120px; }
 .btn[hidden] { display: none; }
 .comment-dialog { width: min(560px, calc(100vw - 32px)); max-width: none; max-height: calc(100vh - 32px); margin: auto; padding: 24px; border: var(--stroke-rule) solid var(--ink-strong); background: var(--paper); color: var(--ink); }
 .comment-dialog::backdrop { background: rgb(0 0 0 / 0.48); }
+.access-dialog::backdrop { background: rgb(0 0 0 / 0.72); }
+.access-dialog .access-error { min-height: 1.5em; margin: 8px 0 0; color: var(--accent-red); font-size: 14px; }
+.access-dialog .comment-actions { margin-top: 12px; }
+main[data-lt-gated]:not(.lt-access-open) { visibility: hidden; }
+.lt-lock-noscript { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 24px; background: #171717; color: #fff; }
+.lt-lock-noscript-card { max-width: 480px; padding: 28px; background: #fff; color: #171717; }
 .comment-dialog h2 { margin: 0 0 20px; font-size: 22px; }
 .comment-dialog form { display: grid; gap: 16px; }
 .comment-dialog label { display: grid; gap: 6px; font-weight: 700; }
@@ -391,6 +402,7 @@ const external = existsSync(externalPath) ? JSON.parse(readFileSync(externalPath
 // 画面に出す種類の名前。all.json の kind（LT / 講演）は取得側のために変えない
 const KIND_LABELS = { 講演: '講演・セミナー' };
 const kindLabel = (k) => KIND_LABELS[k] ?? k;
+const listedVersions = (d) => d.versions?.filter((version) => version.unlisted !== true) ?? [];
 const SOURCE_NAMES = { speakerdeck: 'Speaker Deck', qiita: 'Qiita', slideshare: 'SlideShare' };
 // IoTLT の発表はタイトル・イベント名・イベントページから見分ける
 const isIotlt = (d) => /iotlt/i.test([d.title, d.event, d.eventUrl].filter(Boolean).join(' '));
@@ -402,7 +414,7 @@ const localCard = (d) => `    <a class="card" href="${encodeRoute(d.route ?? d.i
 ${d.hasThumbnail ? `      <img src="${encodeRoute(d.route ?? d.id)}/thumbnail.png" width="1280" height="720" loading="lazy" alt="">` : ''}
 ${tags(d)}
       <h2>${esc(d.title)}</h2>
-      <p>${esc(kindLabel(d.kind))}・${esc(dateJa(d.date))}・${d.versions ? `${d.versions.length}つの${d.versions.some((version) => version.variantName === 'v0.1') ? 'バージョン' : '発表時間版'}` : `${d.slideCount}枚`}${d.event ? `<br>${esc(d.event)}` : ''}</p>
+      <p>${esc(kindLabel(d.kind))}・${esc(dateJa(d.date))}・${d.versions ? `${listedVersions(d).length}つの${listedVersions(d).some((version) => version.variantName === 'v0.1') ? 'バージョン' : '発表時間版'}` : `${d.slideCount}枚`}${d.event ? `<br>${esc(d.event)}` : ''}</p>
     </a>`;
 const externalCard = (d) => `    <a class="card" href="${esc(d.url)}" ${cardAttrs(d, 'external')}>
       <img src="${esc(d.thumbnail)}" width="1280" height="720" loading="lazy" alt="">
@@ -488,8 +500,9 @@ for (const d of published) {
   const routeParts = (d.route ?? d.id).split('/');
   const routePath = join(DIST, ...routeParts);
   const rootPrefix = '../'.repeat(routeParts.length);
-  const versionSelector = !PREVIEW && d.versions?.length > 1
-    ? `<nav class="versions" aria-label="デッキのバージョンを選択"><span class="versions-label">バージョン</span>${d.versions.map((version) => {
+  const visibleVersions = listedVersions(d);
+  const versionSelector = !PREVIEW && visibleVersions.length > 1
+    ? `<nav class="versions" aria-label="デッキのバージョンを選択"><span class="versions-label">バージョン</span>${visibleVersions.map((version) => {
       const current = version.id === d.id;
       const label = { parent: '親デッキ', '10min': '10分版', '15min': '15分版', '5min': '5分版', 'v0.1': '旧版（v0.1）' }[version.variantName] ?? version.variantName;
       return `<a class="btn" href="${rootPrefix}${encodeRoute(version.route)}/"${current ? ' aria-current="page"' : ''}>${label}</a>`;
@@ -500,18 +513,18 @@ for (const d of published) {
 <html lang="ja">
 <head>
 ${headCommon(rootPrefix)}
-<title>${esc(d.title)} - 菅原のびすけ</title>
-<meta name="description" content="${esc(description)}">
-${d.unlisted === true ? '<meta name="robots" content="noindex, nofollow, noarchive">' : ''}
-<meta property="og:title" content="${esc(d.title)}">
-<meta property="og:description" content="${esc(description)}">
+<title>${esc(d.hasSensitiveContent ? '限定公開のLTスライド' : `${d.title} - 菅原のびすけ`)}</title>
+<meta name="description" content="${esc(d.hasSensitiveContent ? '合言葉が必要な限定公開のデッキです。' : description)}">
+${d.hasSensitiveContent ? '<meta name="robots" content="noindex, nofollow, noarchive">' : ''}
+<meta property="og:title" content="${esc(d.hasSensitiveContent ? '限定公開のLTスライド' : d.title)}">
+${d.hasSensitiveContent ? '' : `<meta property="og:description" content="${esc(description)}">`}
 <meta property="og:type" content="article">
 <meta property="og:url" content="${esc(urlOf(d))}">
-<meta property="og:image" content="${esc(urlOf(d))}thumbnail.png">
-<meta name="twitter:card" content="summary_large_image">
+${d.hasSensitiveContent ? '' : `<meta property="og:image" content="${esc(urlOf(d))}thumbnail.png">`}
+<meta name="twitter:card" content="${d.hasSensitiveContent ? 'summary' : 'summary_large_image'}">
 </head>
 <body>
-<main>
+<main${d.unlisted === true ? ` data-lt-gated="" data-lt-lock-id="${esc(d.id)}"` : ''}>
   <div class="site-top">
     ${avatarBlock(rootPrefix, '<p class="site-name">LT スライド</p>')}
     <a class="btn" href="https://github.com/n0bisuke/lt" target="_blank" rel="noopener">GitHub リポジトリ</a>
@@ -535,7 +548,7 @@ ${versionSelector ? `    ${versionSelector}\n` : ''}
 ${d.article ? `    <div class="article">\n${d.article}\n    </div>\n` : ''}  </article>
 ${siteFoot()}
 </main>
-${contactWidget}
+${d.unlisted === true ? '' : contactWidget}
 ${commentForm ? `<dialog class="comment-dialog" id="comment-dialog" aria-labelledby="comment-dialog-title">
   <form id="comment-form" action="${esc(commentForm.url)}" method="get" target="_blank">
     <input type="hidden" name="usp" value="pp_url">
@@ -551,9 +564,54 @@ ${commentForm ? `<dialog class="comment-dialog" id="comment-dialog" aria-labelle
     </div>
   </form>
 </dialog>` : ''}
+${d.unlisted === true ? `<dialog class="comment-dialog access-dialog" id="access-dialog" aria-labelledby="access-dialog-title" data-lock-id="${esc(d.id)}" data-lock-salt="${esc(d.lockKeySalt)}" data-lock-hash="${esc(d.lockKeyHash)}">
+  <form id="access-form">
+    <h2 id="access-dialog-title">限定公開のデッキ</h2>
+    <p>閲覧用の合言葉を入力してください。</p>
+    <label>合言葉<input id="access-key" type="password" autocomplete="current-password" required></label>
+    <p class="access-error" id="access-error" role="alert" aria-live="polite"></p>
+    <div class="comment-actions"><button class="btn" type="submit">開く</button></div>
+  </form>
+</dialog><noscript><div class="lt-lock-noscript"><div class="lt-lock-noscript-card"><h2>限定公開のデッキ</h2><p>表示するにはJavaScriptを有効にしてください。</p></div></div></noscript>` : ''}
 <script>
 (function () {
   var frame = document.querySelector('iframe');
+  var gatedMain = document.querySelector('main[data-lt-gated]');
+  var accessDialog = document.getElementById('access-dialog');
+  var accessForm = document.getElementById('access-form');
+  var accessKey = document.getElementById('access-key');
+  var accessError = document.getElementById('access-error');
+  var pendingPhrase = null;
+  var frameReady = false;
+  var accessStorageKey = gatedMain ? 'lt-access:' + gatedMain.getAttribute('data-lt-lock-id') : '';
+  function sendLockPhrase(phrase) {
+    if (!frameReady) { pendingPhrase = phrase; return; }
+    frame.contentWindow.postMessage({ type: 'lt-lock-check', id: gatedMain.getAttribute('data-lt-lock-id'), phrase: phrase }, window.location.origin);
+  }
+  if (gatedMain && accessDialog && accessForm) {
+    try {
+      if (sessionStorage.getItem(accessStorageKey) === '1') gatedMain.classList.add('lt-access-open');
+    } catch (e) {}
+    if (!gatedMain.classList.contains('lt-access-open')) accessDialog.showModal();
+    accessForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      accessError.textContent = '合言葉を確認しています…';
+      sendLockPhrase(accessKey.value);
+    });
+    window.addEventListener('message', function (event) {
+      if (event.origin !== window.location.origin || !event.data || event.data.id !== gatedMain.getAttribute('data-lt-lock-id')) return;
+      if (event.data.type === 'lt-lock-unlocked') {
+        gatedMain.classList.add('lt-access-open');
+        try { sessionStorage.setItem(accessStorageKey, '1'); } catch (e) {}
+        accessDialog.close();
+        accessKey.value = '';
+        accessError.textContent = '';
+      } else if (event.data.type === 'lt-lock-denied') {
+        accessError.textContent = '合言葉が違います。もう一度入力してください。';
+        accessKey.select();
+      }
+    });
+  }
   var count = document.getElementById('count');
   var prev = document.getElementById('prev');
   var next = document.getElementById('next');
@@ -625,12 +683,21 @@ ${commentForm ? `<dialog class="comment-dialog" id="comment-dialog" aria-labelle
     update();
   }
   frame.addEventListener('load', function () {
+    frameReady = true;
     update();
+    if (pendingPhrase !== null) { sendLockPhrase(pendingPhrase); pendingPhrase = null; }
     var w = frame.contentWindow;
     w.addEventListener('keydown', function () { setTimeout(update); });
     w.addEventListener('click', function () { setTimeout(update); });
     w.addEventListener('hashchange', updateCommentLink);
   });
+  try {
+    if (/\/slides\/?$/.test(frame.contentWindow.location.pathname)) {
+      frameReady = true;
+      update();
+      if (pendingPhrase !== null) { sendLockPhrase(pendingPhrase); pendingPhrase = null; }
+    }
+  } catch (e) {}
   prev.addEventListener('click', function () { go('ArrowLeft'); });
   next.addEventListener('click', function () { go('ArrowRight'); });
   document.addEventListener('keydown', function (e) {

@@ -6,6 +6,12 @@ window.IoTLT = (function () {
     // 手書き HTML のスライドと、Marp が出力するスライド（svg）の両方を扱う
     var slides = Array.prototype.slice.call(deck.querySelectorAll('.lt-slide, svg[data-marpit-svg]'));
     var html = document.documentElement;
+    var wholeLock = deck.hasAttribute('data-lt-gated');
+    var wholeLockId = deck.getAttribute('data-lt-lock-id') || '';
+    var wholeStorageKey = 'lt-access:' + wholeLockId;
+    if (wholeLock) {
+      try { if (sessionStorage.getItem(wholeStorageKey) === '1') deck.classList.add('lt-access-open'); } catch (e) {}
+    }
     var gate = null;
     var gateInput = null;
     var gateError = null;
@@ -36,8 +42,9 @@ window.IoTLT = (function () {
         var index = pendingLockedIndex;
         var slide = slides[index];
         if (!slide) return;
-        var saltHex = slide.getAttribute('data-lt-lock-salt') || '';
-        var expected = (slide.getAttribute('data-lt-lock-hash') || '').toLowerCase();
+        var verifier = wholeLock ? deck : slide;
+        var saltHex = verifier.getAttribute('data-lt-lock-salt') || '';
+        var expected = (verifier.getAttribute('data-lt-lock-hash') || '').toLowerCase();
         var salt = new Uint8Array(saltHex.match(/.{2}/g).map(function (part) { return parseInt(part, 16); }));
         var encoded = new TextEncoder().encode(gateInput.value);
         gateError.textContent = '';
@@ -46,19 +53,35 @@ window.IoTLT = (function () {
         }).then(function (bits) {
           var actual = Array.prototype.map.call(new Uint8Array(bits), function (byte) { return byte.toString(16).padStart(2, '0'); }).join('');
           if (actual !== expected) throw new Error('wrong-key');
-          slide.classList.add('lt-lock-open');
-          unlocked[index] = true;
-          try { sessionStorage.setItem(lockStorageKey, JSON.stringify(unlocked)); } catch (e) {}
+          if (wholeLock) {
+            deck.classList.add('lt-access-open');
+            try { sessionStorage.setItem(wholeStorageKey, '1'); } catch (e) {}
+          } else {
+            slide.classList.add('lt-lock-open');
+            unlocked[index] = true;
+            try { sessionStorage.setItem(lockStorageKey, JSON.stringify(unlocked)); } catch (e) {}
+          }
           gate.hidden = true;
           gateInput.value = '';
           show(index);
+          if (wholeLock && window.parent !== window) window.parent.postMessage({ type: 'lt-lock-unlocked', id: wholeLockId }, location.origin);
         }).catch(function () {
           gateError.textContent = '合言葉が違います。もう一度入力してください。';
           gateInput.select();
+          if (wholeLock && window.parent !== window) window.parent.postMessage({ type: 'lt-lock-denied', id: wholeLockId }, location.origin);
         });
       });
       return gate;
     }
+    window.addEventListener('message', function (event) {
+      if (event.origin !== location.origin || !event.data || event.data.type !== 'lt-lock-check'
+        || !wholeLock || event.data.id !== wholeLockId || typeof event.data.phrase !== 'string') return;
+      pendingLockedIndex = parseInt(location.hash.slice(1), 10) - 1 || 0;
+      var modal = lockGate();
+      modal.hidden = false;
+      gateInput.value = event.data.phrase;
+      gate.querySelector('form').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    });
     function mountTimer(mode) {
       if (window.LT_PREVIEW_DECK || document.getElementById('lt-presentation-timer')) return;
       var duration = mode === 'timer5' ? 5 * 60 * 1000 : mode === 'timer10' ? 10 * 60 * 1000 : null;
@@ -145,6 +168,14 @@ window.IoTLT = (function () {
     }
     function show(i) {
       index = Math.max(0, Math.min(slides.length - 1, i));
+      if (wholeLock && !deck.classList.contains('lt-access-open')) {
+        pendingLockedIndex = index;
+        var pageGate = lockGate();
+        pageGate.hidden = false;
+        gateError.textContent = '';
+        if (window.parent === window) window.setTimeout(function () { gateInput.focus(); }, 0);
+        return;
+      }
       if (slides[index].hasAttribute('data-lt-locked') && !slides[index].classList.contains('lt-lock-open')) {
         pendingLockedIndex = index;
         var modal = lockGate();

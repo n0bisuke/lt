@@ -7,7 +7,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import { PDFDocument } from 'pdf-lib';
-import { parseDeck, renderSlides } from './lib/deck.mjs';
+import { lockedSlideIndices, parseDeck, renderSlides } from './lib/deck.mjs';
 import { buildVariants, findVariantMasters } from './lecture/build-variants.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -105,6 +105,10 @@ async function exportDeck(dir, browser) {
   const sourcePath = join(dir, 'deck.md');
   const source = readFileSync(sourcePath, 'utf8');
   const { meta } = parseDeck(source);
+  if (meta.unlisted === true || lockedSlideIndices(source).length) {
+    console.log(`${relative(ROOT, dir)}: 限定内容があるためPDFとサムネイルを出力しません`);
+    return;
+  }
   if (existsSync(join(dir, 'deck.json')) && JSON.parse(readFileSync(join(dir, 'deck.json'), 'utf8')).source === 'pdf') {
     console.log(`${relative(ROOT, dir)}: 取り込み済みPDFを保持します`);
     return;

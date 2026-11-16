@@ -113,7 +113,12 @@ PDF とサムネイルは `.github/workflows/pdf-export.yml` が Playwright / Ch
 | `https://n0bisuke.github.io/lt/<デッキ名>/<デッキ名>.pdf` | PDF |
 | `https://n0bisuke.github.io/lt/all.json` | 一覧の API |
 
-**限定公開スライド:** 特定スライドには `<!-- _class: locked -->` を付け、front matter に `unlisted: true` と `lockKeySalt` / `lockKeyHash` を設定します。値は `npm run lock-key -- "8文字以上の合言葉"` で生成します。限定デッキは一覧と `all.json` から除外され、詳細ページには noindex を付け、ロック対象の内容は記事に出しません。JavaScript無効時は案内を表示します。これは公開GitHubの `deck.md`・生成HTML・画像を隠さない簡易ゲートなので、機密情報の保護には使いません。
+**限定公開スライド:** 合言葉の検証値は `npm run lock-key -- "8文字以上の合言葉"` で作り、front matter の `lockKeySalt` / `lockKeyHash` に保存します。合言葉そのものはGitに置きません。
+
+- デッキ全体を限定する場合は `published: true` と `unlisted: true` を設定します。直接URL `https://n0bisuke.github.io/lt/<デッキ名>/` を開くと鍵を求めます。記事ページとスライド本体をゲートし、一覧と `all.json` から外し、noindex にして、PDF・サムネイルを公開しません。
+- 一部のスライドだけを限定する場合は、対象に `<!-- _class: locked -->` を付けます。鍵のないビルドはエラーにします。記事からも対象スライドを外し、デッキ全体を noindex にし、PDF・サムネイルを公開しません。
+- どちらもGitHubの `deck.md`、生成HTML、参照画像を暗号化するものではありません。cloneやソース閲覧で内容を読める簡易ゲートです。JavaScript無効時は案内を表示します。機密情報保護や受講者認証には使いません。
+- PagesのURLが404の場合は、デッキが公開対象（`published: true`）か、正常なビルドとデプロイを終えているかを確認します。`published: false` のデッキはURLを知っていても表示されません。
 
 デッキ名がそのまま URL になるので、公開したあとは変えません。
 
