@@ -13,6 +13,7 @@
     "export-pdf": "node scripts/export-pdf.mjs",
     "fetch-external": "node scripts/fetch-external.mjs",
     "qr": "node scripts/generate-qr.mjs",
+    "lock-key": "node scripts/generate-lock-key.mjs",
     "check": "node scripts/lecture/check.mjs",
     "cards": "node scripts/lecture/cards.mjs",
     "variants": "node scripts/lecture/build-variants.mjs"

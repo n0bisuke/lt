@@ -16,6 +16,8 @@ published: false
 ---
 ```
 
+合言葉で限定するスライドがある場合は、front matter に `unlisted: true` と `lock-key` コマンドが出す `lockKeySalt` / `lockKeyHash` を追加します。対象スライドには `<!-- _class: locked -->`（既存クラスがあれば `<!-- _class: text-image locked -->`）を付けます。使い方と制限はリポジトリの README を参照してください。
+
 ## 書き方
 
 | 使う場面 | 書き方 |

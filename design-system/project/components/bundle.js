@@ -6,6 +6,59 @@ window.IoTLT = (function () {
     // 手書き HTML のスライドと、Marp が出力するスライド（svg）の両方を扱う
     var slides = Array.prototype.slice.call(deck.querySelectorAll('.lt-slide, svg[data-marpit-svg]'));
     var html = document.documentElement;
+    var gate = null;
+    var gateInput = null;
+    var gateError = null;
+    var pendingLockedIndex = null;
+    var lockStorageKey = 'lt-unlocked-slides:' + location.pathname;
+    var unlocked = {};
+    try {
+      unlocked = JSON.parse(sessionStorage.getItem(lockStorageKey) || '{}') || {};
+      slides.forEach(function (slide, index) {
+        if (slide.hasAttribute('data-lt-locked') && unlocked[index]) slide.classList.add('lt-lock-open');
+      });
+    } catch (e) {}
+    function lockGate() {
+      if (gate) return gate;
+      gate = document.createElement('div');
+      gate.className = 'lt-lock-gate';
+      gate.hidden = true;
+      gate.innerHTML = '<form class="lt-lock-card"><h2>限定スライド</h2><p>閲覧用の合言葉を入力してください。</p><label>合言葉<input type="password" autocomplete="current-password" required></label><p class="lt-lock-error" role="alert" aria-live="polite"></p><div class="lt-lock-actions"><button type="button" data-action="back">戻る</button><button type="submit">開く</button></div></form>';
+      document.body.appendChild(gate);
+      gateInput = gate.querySelector('input');
+      gateError = gate.querySelector('.lt-lock-error');
+      gate.querySelector('[data-action="back"]').addEventListener('click', function () {
+        gate.hidden = true;
+        pendingLockedIndex = null;
+      });
+      gate.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var index = pendingLockedIndex;
+        var slide = slides[index];
+        if (!slide) return;
+        var saltHex = slide.getAttribute('data-lt-lock-salt') || '';
+        var expected = (slide.getAttribute('data-lt-lock-hash') || '').toLowerCase();
+        var salt = new Uint8Array(saltHex.match(/.{2}/g).map(function (part) { return parseInt(part, 16); }));
+        var encoded = new TextEncoder().encode(gateInput.value);
+        gateError.textContent = '';
+        crypto.subtle.importKey('raw', encoded, 'PBKDF2', false, ['deriveBits']).then(function (key) {
+          return crypto.subtle.deriveBits({ name: 'PBKDF2', salt: salt, iterations: 210000, hash: 'SHA-256' }, key, 256);
+        }).then(function (bits) {
+          var actual = Array.prototype.map.call(new Uint8Array(bits), function (byte) { return byte.toString(16).padStart(2, '0'); }).join('');
+          if (actual !== expected) throw new Error('wrong-key');
+          slide.classList.add('lt-lock-open');
+          unlocked[index] = true;
+          try { sessionStorage.setItem(lockStorageKey, JSON.stringify(unlocked)); } catch (e) {}
+          gate.hidden = true;
+          gateInput.value = '';
+          show(index);
+        }).catch(function () {
+          gateError.textContent = '合言葉が違います。もう一度入力してください。';
+          gateInput.select();
+        });
+      });
+      return gate;
+    }
     function mountTimer(mode) {
       if (window.LT_PREVIEW_DECK || document.getElementById('lt-presentation-timer')) return;
       var duration = mode === 'timer5' ? 5 * 60 * 1000 : mode === 'timer10' ? 10 * 60 * 1000 : null;
@@ -92,11 +145,24 @@ window.IoTLT = (function () {
     }
     function show(i) {
       index = Math.max(0, Math.min(slides.length - 1, i));
+      if (slides[index].hasAttribute('data-lt-locked') && !slides[index].classList.contains('lt-lock-open')) {
+        pendingLockedIndex = index;
+        var modal = lockGate();
+        modal.hidden = false;
+        gateError.textContent = '';
+        window.setTimeout(function () { gateInput.focus(); }, 0);
+        return;
+      }
       slides.forEach(function (s, n) { s.classList.toggle('is-active', n === index); });
       history.replaceState(null, '', '#' + (index + 1));
     }
     addEventListener('resize', fit);
     addEventListener('keydown', function (e) {
+      if (gate && !gate.hidden) {
+        if (e.key === 'Escape') { gate.hidden = true; pendingLockedIndex = null; }
+        e.preventDefault();
+        return;
+      }
       if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].indexOf(e.key) >= 0) { e.preventDefault(); show(index + 1); }
       if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].indexOf(e.key) >= 0) { e.preventDefault(); show(index - 1); }
       if (e.key === 'Home') show(0);

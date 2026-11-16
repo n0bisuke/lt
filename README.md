@@ -26,6 +26,16 @@ Claude Code では `/lt-slides`、Codex では `.agents/skills/lt-slides/` の�
 - 個別ページ：`https://n0bisuke.github.io/lt/<デッキ名>/`
 - API：`https://n0bisuke.github.io/lt/all.json`
 
+### Google Analytics 4
+
+`site.json` の `analytics.measurementId` に設定した測定IDを、一覧・詳細ページ・スライドページへ出力します。データストリームの測定ID（`G-` で始まる値）を変更するときは `site.json` を更新します。
+
+### 限定公開スライド
+
+スライドごとに `<!-- _class: locked -->` を付けると、そのスライドは合言葉入力後に表示されます。デッキの front matter に `unlisted: true` を設定すると一覧と `all.json` から除外されます。合言葉の検証値は `npm run lock-key -- "8文字以上の合言葉"` で作り、出力された `lockKeySalt` と `lockKeyHash` を front matter に追加します。プレーンな合言葉はリポジトリに保存しません。
+
+この仕組みは閲覧の手間を増やす簡易ロックです。公開リポジトリの `deck.md`、生成HTML、画像は引き続き閲覧できるため、機密情報や受講者認証には使わないでください。JavaScriptを無効にした場合は、スライドの代わりに有効化の案内を表示します。
+
 自分で公開するときは、次のコマンドで `git add`、`commit`、`push` までまとめて行えます。下書きのデッキは入りません。
 
 ```bash

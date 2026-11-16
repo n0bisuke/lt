@@ -113,6 +113,8 @@ PDF とサムネイルは `.github/workflows/pdf-export.yml` が Playwright / Ch
 | `https://n0bisuke.github.io/lt/<デッキ名>/<デッキ名>.pdf` | PDF |
 | `https://n0bisuke.github.io/lt/all.json` | 一覧の API |
 
+**限定公開スライド:** 特定スライドには `<!-- _class: locked -->` を付け、front matter に `unlisted: true` と `lockKeySalt` / `lockKeyHash` を設定します。値は `npm run lock-key -- "8文字以上の合言葉"` で生成します。限定デッキは一覧と `all.json` から除外され、詳細ページには noindex を付け、ロック対象の内容は記事に出しません。JavaScript無効時は案内を表示します。これは公開GitHubの `deck.md`・生成HTML・画像を隠さない簡易ゲートなので、機密情報の保護には使いません。
+
 デッキ名がそのまま URL になるので、公開したあとは変えません。
 
 **発表済みの PDF を載せるとき：** Keynote などで作った PDF は次のコマンドで取り込みます。各ページが画像のスライドになり、PDF はそのまま公開されます。`deck.json` に `"source": "pdf"` が入り、`export-pdf.sh` では上書きされません。手順は上の1、2、3（`build-site.mjs` のみ）、4と同じです。macOS でのみ動きます。

@@ -1,5 +1,8 @@
 {
   "baseUrl": "https://n0bisuke.github.io/lt",
+  "analytics": {
+    "measurementId": "G-2W0N0K94ZV"
+  },
   "commentForm": {
     "url": "https://docs.google.com/forms/d/e/1FAIpQLSdUUgdIuOdjfN0zz3UNeDohXBXVQ4DXgsKQYPe6NIgKT1XMqA/viewform",
     "entries": {

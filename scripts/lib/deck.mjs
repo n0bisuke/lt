@@ -28,6 +28,13 @@ function splitLines(text) {
   return slides.map((s) => s.join('\n'));
 }
 
+export function lockedSlideIndices(md) {
+  return splitLines(parseDeck(md).body).flatMap((slide, index) => {
+    const classes = [...slide.matchAll(/<!--\s*_class\s*:\s*([\s\S]*?)-->/g)].map((match) => match[1]);
+    return classes.some((value) => value.trim().split(/\s+/).includes('locked')) ? [index] : [];
+  });
+}
+
 export function parseDeck(md) {
   const src = md.replace(/\r\n/g, '\n');
   const fm = /^---\n([\s\S]*?)\n---\n?/.exec(src);
@@ -93,6 +100,7 @@ export function renderArticle(md, { assetPrefix = '../' } = {}) {
       }
       return '';
     }).replace(/!\[bg[^\]]*\]/g, '![]').trim();
+    if (cls.split(/\s+/).includes('locked')) continue;
     // 1枚目と自己紹介はページの見出しと重なるので記事には入れない
     if (/\b(title|profile)\b/.test(cls)) continue;
     const heading = (/^#{1,6}\s+(.+)$/m.exec(text) ?? [])[1] ?? '';

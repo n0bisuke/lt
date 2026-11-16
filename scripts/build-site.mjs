@@ -9,7 +9,7 @@ import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, r
 import { basename, dirname, join, normalize, relative, sep } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { applySlideAdjustments, kindOf, parseDeck, renderArticle, renderSlides } from './lib/deck.mjs';
+import { applySlideAdjustments, kindOf, lockedSlideIndices, parseDeck, renderArticle, renderSlides } from './lib/deck.mjs';
 import { buildVariants, findVariantMasters } from './lecture/build-variants.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -22,13 +22,16 @@ const REQUIRE_ARTIFACTS = process.argv.includes('--require-artifacts');
 const SKIP_VARIANTS = process.argv.includes('--skip-variants');
 const SITE_TITLE = 'LT スライド - 菅原のびすけ';
 const SITE_CONFIG = JSON.parse(readFileSync(join(ROOT, 'site.json'), 'utf8'));
+const GA_ID = SITE_CONFIG.analytics?.measurementId;
+const errors = [];
+if (GA_ID && !/^G-[A-Z0-9]+$/.test(GA_ID)) errors.push('site.json: analytics.measurementId は GA4 の G- 形式で指定してください');
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const errors = [];
 const warnings = [];
 const moves = [];
 const baseUrl = SITE_CONFIG.baseUrl.replace(/\/$/, '');
 const commentForm = SITE_CONFIG.commentForm;
+const gaSnippet = () => `<script async src="https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_ID)}"></script>\n<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');</script>`;
 
 function updatedAtFor(sourcePath) {
   const repoPath = relative(ROOT, sourcePath);
@@ -98,14 +101,29 @@ for (const dir of collectDeckDirs(DECKS)) {
   const assetPrefix = `${'../'.repeat(routeParts.length + 1)}design-system`;
   const renderSource = isMd ? source : null;
   const rendered = isMd ? renderSlides(renderSource, { title: meta.title ?? '', assetPrefix }) : null;
+  const lockedIndices = isMd ? lockedSlideIndices(renderSource) : [];
+  const hasLockVerifier = Boolean(meta.lockKeySalt && meta.lockKeyHash);
+  if (lockedIndices.length && (!hasLockVerifier || meta.unlisted !== true)) {
+    errors.push(`${id}: locked スライドには unlisted: true と lockKeySalt / lockKeyHash が必要です`);
+  }
   const adjustmentPath = join(dir, '.lt-adjustments.json');
   const adjustments = existsSync(adjustmentPath) ? JSON.parse(readFileSync(adjustmentPath, 'utf8')) : {};
+  let svgIndex = 0;
   const html = isMd
     ? applySlideAdjustments(
-      rendered.html.replace(/(?:\.\.\/)+design-system\//g, `${assetPrefix}/`),
+      rendered.html.replace(/(?:\.\.\/)+design-system\//g, `${assetPrefix}/`).replace(/<svg(?=[^>]*data-marpit-svg)[^>]*>/g, (tag) => {
+        const index = svgIndex++;
+        if (!lockedIndices.includes(index)) return tag;
+        return `${tag.slice(0, -1)} data-lt-locked="" data-lt-lock-salt="${esc(meta.lockKeySalt)}" data-lt-lock-hash="${esc(meta.lockKeyHash)}">`;
+      }),
       adjustments,
     )
     : readFileSync(htmlPath, 'utf8');
+  let finalHtml = lockedIndices.length
+    ? html.replace('</body>', '<noscript><div class="lt-lock-noscript"><div class="lt-lock-card"><h2>限定スライド</h2><p>このスライドを表示するにはJavaScriptを有効にしてください。</p></div></div></noscript>\n</body>')
+    : html;
+  if (meta.unlisted === true) finalHtml = finalHtml.replace('</head>', '<meta name="robots" content="noindex, nofollow, noarchive">\n</head>');
+  if (GA_ID) finalHtml = finalHtml.replace('</head>', `${gaSnippet()}\n</head>`);
   const article = isMd ? renderArticle(renderSource, { assetPrefix: '../'.repeat(routeParts.length) }) : '';
   const pdfPath = join(dir, `${id}.pdf`);
   const thumbnailCandidates = [join(dir, 'thumbnail.png')];
@@ -119,8 +137,10 @@ for (const dir of collectDeckDirs(DECKS)) {
   if ((source ?? html).includes('【要確認】')) errors.push(`${id}: 【要確認】が残っています`);
   if (!meta.title || !/^\d{4}-\d{2}-\d{2}$/.test(meta.date ?? '')) errors.push(`${id}: deck.json の title か date（YYYY-MM-DD）が正しくありません`);
   if (meta.eventUrl && !/^https?:\/\//.test(meta.eventUrl)) errors.push(`${id}: deck.json の eventUrl は http(s) の URL にしてください`);
-  if (!thumbPath && REQUIRE_ARTIFACTS) errors.push(`${id}: thumbnail.png がありません（ActionsでPDF出力してください）`);
-  if (!existsSync(pdfPath)) {
+  if (meta.unlisted !== true && !thumbPath && REQUIRE_ARTIFACTS) errors.push(`${id}: thumbnail.png がありません（ActionsでPDF出力してください）`);
+  if (meta.unlisted === true) {
+    // 限定ページにはPDFやサムネイルの公開コピーを作らない。
+  } else if (!existsSync(pdfPath)) {
     if (REQUIRE_ARTIFACTS) errors.push(`${id}: PDF がありません（ActionsでPDF出力してください）`);
   } else {
     const mb = statSync(pdfPath).size / 1024 / 1024;
@@ -151,9 +171,9 @@ for (const dir of collectDeckDirs(DECKS)) {
   const slides = join(out, 'slides');
   mkdirSync(slides, { recursive: true });
   // slides/ は decks/<id>/ と同じ深さなので、../../design-system のパスはそのまま使える
-  writeFileSync(join(slides, 'index.html'), html);
-  if (existsSync(pdfPath)) cpSync(pdfPath, join(out, `${id}.pdf`));
-  if (thumbPath) cpSync(thumbPath, join(out, 'thumbnail.png'));
+  writeFileSync(join(slides, 'index.html'), finalHtml);
+  if (meta.unlisted !== true && existsSync(pdfPath)) cpSync(pdfPath, join(out, `${id}.pdf`));
+  if (meta.unlisted !== true && thumbPath) cpSync(thumbPath, join(out, 'thumbnail.png'));
   for (const r of refs) {
     const from = join(dir, r);
     if (r.startsWith('..') || !existsSync(from)) { errors.push(`${id}: ${r} が見つかりません`); continue; }
@@ -233,11 +253,12 @@ for (const deck of published) {
   if (!groupedVersions.has(deck.variantGroup)) groupedVersions.set(deck.variantGroup, []);
   groupedVersions.get(deck.variantGroup).push(deck);
 }
-const listablePublished = published.filter((deck) => !deck.variantGroup);
+const listablePublished = published.filter((deck) => !deck.variantGroup && deck.unlisted !== true);
 for (const versions of groupedVersions.values()) {
   versions.sort((a, b) => variantOrder[a.variantName] - variantOrder[b.variantName]);
   for (const version of versions) version.versions = versions;
-  listablePublished.push(versions.find((version) => version.variantName === 'parent') ?? versions[0]);
+  const mainVersion = versions.find((version) => version.variantName === 'parent') ?? versions[0];
+  if (mainVersion.unlisted !== true) listablePublished.push(mainVersion);
 }
 
 writeFileSync(join(DIST, 'site.css'), `@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700&display=swap");
@@ -338,7 +359,8 @@ main { padding-bottom: 120px; }
 const headCommon = (css) => `<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${css}design-system/tokens.css">
-<link rel="stylesheet" href="${css}site.css">`;
+<link rel="stylesheet" href="${css}site.css">
+${GA_ID ? gaSnippet() : ''}`;
 
 const avatarBlock = (root, heading) => `<a class="site-head" href="${root}">
     <img src="${root}${AVATAR}" alt="">
@@ -477,6 +499,7 @@ for (const d of published) {
 ${headCommon(rootPrefix)}
 <title>${esc(d.title)} - 菅原のびすけ</title>
 <meta name="description" content="${esc(description)}">
+${d.unlisted === true ? '<meta name="robots" content="noindex, nofollow, noarchive">' : ''}
 <meta property="og:title" content="${esc(d.title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:type" content="article">
@@ -499,7 +522,7 @@ ${headCommon(rootPrefix)}
       <div class="end">
         <button class="btn" id="full" type="button">全画面</button>
       ${commentForm ? `<button class="btn" id="comment-open" type="button">このスライドにコメントを送る</button>` : ''}
-      ${d.hasPdf ? `<a class="btn" href="${encodeURIComponent(d.id)}.pdf" download>PDF</a>` : d.isMarkdown ? `<a class="btn" id="pdf-link" href="${pdfRequestUrl(d)}" target="_blank" rel="noopener">PDFを生成</a>` : ''}
+      ${d.unlisted === true ? '' : d.hasPdf ? `<a class="btn" href="${encodeURIComponent(d.id)}.pdf" download>PDF</a>` : d.isMarkdown ? `<a class="btn" id="pdf-link" href="${pdfRequestUrl(d)}" target="_blank" rel="noopener">PDFを生成</a>` : ''}
       </div>
     </div>
     <h1>${esc(d.title)}</h1>
@@ -635,7 +658,7 @@ writeFileSync(join(DIST, '.nojekyll'), '');
 // ---------- API。項目の削除や意味の変更をするときは version を上げる ----------
 writeFileSync(join(DIST, 'all.json'), JSON.stringify({
   version: 1,
-  decks: published.map((d) => {
+  decks: published.filter((d) => d.unlisted !== true).map((d) => {
     const url = urlOf(d);
     return {
       id: d.id,
