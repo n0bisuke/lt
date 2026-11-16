@@ -103,7 +103,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 
    サイトを組み立て直してエラーがなければ、`git add`、`commit`、`push` まで行います。`decks/` は `published: true` のデッキだけを add し、削除した公開デッキも削除としてコミットします。公開リポジトリでは、コミットした内容はすべて誰でも読めるので、`git add .` や `git add decks` を直接使いません。`npm run deploy -- --dry-run` で、コミットされるファイルを先に確認できます。
 
-PDF とサムネイルは `.github/workflows/pdf-export.yml` が Playwright / Chromium で生成し、Actions artifact として14日間保存します。この処理は Pages 公開と独立しており、PDF 出力に失敗してもスライド公開は止まりません。公開ページの「PDF成果物」から Actions 実行一覧を開けます。期限切れ後はデッキ詳細ページの「PDFを生成」から issue を作ると、そのデッキだけを再生成し、issue コメントに14日間有効なダウンロードリンクを返します。push 時は変更されたデッキだけを生成します。手元で PDF を作る場合は `npm run export-pdf` を使い、初回だけ `npm exec playwright install chromium` を実行します。Homebrew、WeasyPrint、Poppler は使いません。
+PDF とサムネイルは `.github/workflows/pdf-export.yml` が Playwright / Chromium で生成し、Actions artifact として14日間保存します。この処理は Pages 公開と独立しており、PDF 出力に失敗してもスライド公開は止まりません。デッキ詳細ページのPDFボタンは、GitHub APIで有効な該当デッキのartifactを探し、見つかればartifactのダウンロード画面を開きます。見つからない場合はそのデッキのPDF生成issueを作成します。期限切れ後も同じボタンから再生成を依頼でき、issueコメントにも14日間有効なダウンロードリンクを返します。push 時は変更されたデッキだけを生成します。手元で PDF を作る場合は `npm run export-pdf` を使い、初回だけ `npm exec playwright install chromium` を実行します。Homebrew、WeasyPrint、Poppler は使いません。
 
 | URL | 内容 |
 | --- | --- |

@@ -2,6 +2,12 @@
   "baseUrl": "https://n0bisuke.github.io/lt",
   "commentForm": {
     "url": "https://docs.google.com/forms/d/e/1FAIpQLSdUUgdIuOdjfN0zz3UNeDohXBXVQ4DXgsKQYPe6NIgKT1XMqA/viewform",
-    "entry": "entry.1037145553"
+    "entries": {
+      "name": "entry.1490338404",
+      "target": "entry.1037145553",
+      "comment": "entry.805431306",
+      "contact": "entry.160754338",
+      "publishConsent": "entry.1247304198"
+    }
   }
 }

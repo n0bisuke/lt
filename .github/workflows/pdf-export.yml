@@ -78,7 +78,16 @@ jobs:
               const source = join(child, 'deck.md');
               try {
                 const meta = parseDeck(readFileSync(source, 'utf8')).meta;
-                if (meta.published === true && (meta.id ?? basename(child)) === id) found.push({ dir: child, meta });
+                let isConfiguredDeck = true;
+                const parentSource = join(dir, 'deck.md');
+                try {
+                  const parentMeta = parseDeck(readFileSync(parentSource, 'utf8')).meta;
+                  if (parentMeta.variants === true) {
+                    const configured = String(parentMeta.variantNames ?? '15min,10min,5min').split(',').map((name) => name.trim());
+                    isConfiguredDeck = entry.name !== '15min' && configured.includes(entry.name);
+                  }
+                } catch {}
+                if (isConfiguredDeck && meta.published === true && (meta.id ?? basename(child)) === id) found.push({ dir: child, meta });
               } catch {}
               visit(child);
             }

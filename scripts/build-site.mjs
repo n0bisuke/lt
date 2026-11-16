@@ -214,7 +214,6 @@ for (const f of ['design-system/tokens.css', `${P}/components/bundle.css`, `${P}
 
 const encodeRoute = (route) => route.split('/').map(encodeURIComponent).join('/');
 const urlOf = (d) => `${baseUrl}/${encodeRoute(d.route ?? d.id)}/`;
-const pdfWorkflowUrl = 'https://github.com/n0bisuke/lt/actions/workflows/pdf-export.yml';
 const pdfRequestUrl = (d) => {
   const params = new URLSearchParams({
     title: `[PDF request] ${d.id}`,
@@ -302,6 +301,15 @@ main { padding-bottom: 120px; }
 .btn { display: inline-block; min-height: 44px; padding: 8px 16px; border: var(--stroke-rule) solid var(--ink-strong); border-radius: var(--radius-none); background: var(--paper); color: var(--ink-strong); font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
 .btn:disabled { border-color: var(--ink-soft); color: var(--ink-soft); cursor: default; }
 .btn[hidden] { display: none; }
+.comment-dialog { width: min(560px, calc(100vw - 32px)); max-width: none; max-height: calc(100vh - 32px); margin: auto; padding: 24px; border: var(--stroke-rule) solid var(--ink-strong); background: var(--paper); color: var(--ink); }
+.comment-dialog::backdrop { background: rgb(0 0 0 / 0.48); }
+.comment-dialog h2 { margin: 0 0 20px; font-size: 22px; }
+.comment-dialog form { display: grid; gap: 16px; }
+.comment-dialog label { display: grid; gap: 6px; font-weight: 700; }
+.comment-dialog input, .comment-dialog textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--rule-soft); background: var(--paper); color: var(--ink); font: inherit; font-weight: 500; }
+.comment-dialog textarea { min-height: 132px; resize: vertical; }
+.comment-dialog input:focus-visible, .comment-dialog textarea:focus-visible { outline: var(--stroke-rule) solid var(--ink-strong); outline-offset: 2px; }
+.comment-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 4px; }
 .detail h1 { margin: 32px 0 8px; font-size: 32px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; }
 .detail .meta { margin: 0; }
 .last-updated { margin: 10px 0 0; text-align: right; color: var(--ink-muted); font-size: 13px; }
@@ -313,6 +321,7 @@ main { padding-bottom: 120px; }
 .article h2 { margin: 0 0 12px; font-size: 22px; font-weight: 700; line-height: 1.4; letter-spacing: -0.02em; }
 .article p, .article ul, .article ol, .article pre, .article table, .article blockquote { margin: 0 0 12px; }
 .article img, .article video { display: block; max-width: 100%; height: auto; margin: 0 0 12px; }
+.article img { max-width: min(100%, 420px); margin-right: auto; margin-left: auto; }
 .article em { font-style: normal; font-weight: 700; color: var(--accent-red); }
 .article blockquote { padding-left: 12px; border-left: 2px solid var(--rule-soft); font-size: 15px; }
 .article pre { padding: 12px 14px; background: var(--code-bg); color: var(--code-fg); font-family: var(--font-mono); font-size: 14px; line-height: 1.5; overflow-x: auto; }
@@ -488,8 +497,8 @@ ${headCommon(rootPrefix)}
       <button class="btn" id="next" type="button" aria-label="次のスライド">→</button>
       <div class="end">
         <button class="btn" id="full" type="button">全画面</button>
-      ${commentForm ? `<a class="btn" id="comment" href="${esc(commentForm.url)}" target="_blank" rel="noopener">このスライドにコメント</a>` : ''}
-      ${d.hasPdf ? `<a class="btn" href="${encodeURIComponent(d.id)}.pdf" download>PDF</a>` : `<a class="btn" href="${pdfWorkflowUrl}" target="_blank" rel="noopener">PDF成果物</a>${d.isMarkdown ? `<a class="btn" href="${pdfRequestUrl(d)}" target="_blank" rel="noopener">PDFを生成</a>` : ''}`}
+      ${commentForm ? `<button class="btn" id="comment-open" type="button">コメントする</button>` : ''}
+      ${d.hasPdf ? `<a class="btn" href="${encodeURIComponent(d.id)}.pdf" download>PDF</a>` : d.isMarkdown ? `<a class="btn" id="pdf-link" href="${pdfRequestUrl(d)}" target="_blank" rel="noopener">PDFを生成</a>` : ''}
       </div>
     </div>
     <h1>${esc(d.title)}</h1>
@@ -500,6 +509,21 @@ ${d.article ? `    <div class="article">\n${d.article}\n    </div>\n` : ''}  </a
 ${siteFoot()}
 </main>
 ${contactWidget}
+${commentForm ? `<dialog class="comment-dialog" id="comment-dialog" aria-labelledby="comment-dialog-title">
+  <form id="comment-form" action="${esc(commentForm.url)}" method="get" target="_blank">
+    <input type="hidden" name="usp" value="pp_url">
+    <input type="hidden" id="comment-target" name="${esc(commentForm.entries.target)}">
+    <input type="hidden" name="${esc(commentForm.entries.publishConsent)}" value="いいえ">
+    <h2 id="comment-dialog-title">スライドへのコメント</h2>
+    <label>お名前（空欄なら匿名名を設定）<input id="comment-name" name="${esc(commentForm.entries.name)}" autocomplete="name"></label>
+    <label>コメント<textarea name="${esc(commentForm.entries.comment)}" required></textarea></label>
+    <label>連絡先（任意）<input name="${esc(commentForm.entries.contact)}" autocomplete="email"></label>
+    <div class="comment-actions">
+      <button class="btn" id="comment-cancel" type="button">キャンセル</button>
+      <button class="btn" type="submit">入力内容を確認</button>
+    </div>
+  </form>
+</dialog>` : ''}
 <script>
 (function () {
   var frame = document.querySelector('iframe');
@@ -507,18 +531,51 @@ ${contactWidget}
   var prev = document.getElementById('prev');
   var next = document.getElementById('next');
   var full = document.getElementById('full');
-  var comment = document.getElementById('comment');
-  var commentFormUrl = ${JSON.stringify(commentForm?.url ?? '')};
-  var commentFormEntry = ${JSON.stringify(commentForm?.entry ?? '')};
-  function updateCommentLink() {
-    if (!comment || !commentFormUrl || !commentFormEntry || !frame.contentWindow) return;
-    var form = new URL(commentFormUrl);
-    var page = new URL(window.location.pathname, window.location.origin);
-    var slideHash = frame.contentWindow.location.hash.slice(1);
-    if (/^\\d+$/.test(slideHash)) page.hash = slideHash;
-    form.searchParams.set('usp', 'pp_url');
-    form.searchParams.set(commentFormEntry, page.href);
-    comment.href = form.href;
+  var pdfLink = document.getElementById('pdf-link');
+  var pdfArtifactPrefix = ${JSON.stringify(`slide-pdf-${d.id}-`)};
+  if (pdfLink) {
+    fetch('https://api.github.com/repos/n0bisuke/lt/actions/artifacts?per_page=100', {
+      headers: { Accept: 'application/vnd.github+json' }
+    }).then(function (response) {
+      if (!response.ok) throw new Error('Could not list PDF artifacts');
+      return response.json();
+    }).then(function (data) {
+      var artifact = (data.artifacts || []).filter(function (item) {
+        return !item.expired && item.name.startsWith(pdfArtifactPrefix) && item.workflow_run && item.workflow_run.id;
+      }).sort(function (a, b) {
+        return new Date(b.created_at) - new Date(a.created_at);
+      })[0];
+      if (!artifact) return;
+      pdfLink.href = 'https://github.com/n0bisuke/lt/actions/runs/' + artifact.workflow_run.id + '/artifacts/' + artifact.id;
+      pdfLink.textContent = 'PDFをダウンロード（ZIP）';
+    }).catch(function () {});
+  }
+  var commentDialog = document.getElementById('comment-dialog');
+  var commentOpen = document.getElementById('comment-open');
+  var commentCancel = document.getElementById('comment-cancel');
+  var commentTarget = document.getElementById('comment-target');
+  var commentName = document.getElementById('comment-name');
+  var commentForm = document.getElementById('comment-form');
+  if (commentDialog && commentOpen && commentTarget) {
+    commentOpen.addEventListener('click', function () {
+      commentTarget.value = window.location.pathname;
+      commentDialog.showModal();
+    });
+    commentCancel.addEventListener('click', function () { commentDialog.close(); });
+    commentDialog.addEventListener('click', function (event) {
+      if (event.target === commentDialog) commentDialog.close();
+    });
+    commentForm.addEventListener('submit', function () {
+      if (!commentName.value.trim()) {
+        var anonymousNames = [
+          '匿名アライグマさん', '匿名レッサーパンダくん', '匿名コアラ様', '匿名カワウソさん',
+          '匿名ハリネズミくん', '匿名パンダさん', '匿名シマリス様', '匿名フクロウさん',
+          '匿名カピバラくん', '匿名ペンギン様', '匿名ナマケモノさん', '匿名キツネくん'
+        ];
+        commentName.value = anonymousNames[Math.floor(Math.random() * anonymousNames.length)];
+      }
+      setTimeout(function () { commentDialog.close(); }, 0);
+    });
   }
   function applySlideFragment() {
     var fragment = window.location.hash.slice(1);
@@ -535,7 +592,6 @@ ${contactWidget}
     count.textContent = at + ' / ' + total;
     prev.disabled = at <= 1;
     next.disabled = at >= total;
-    updateCommentLink();
   }
   function go(key) {
     frame.contentWindow.dispatchEvent(new KeyboardEvent('keydown', { key: key }));
