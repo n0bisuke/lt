@@ -159,7 +159,8 @@ window.IoTLT = (function () {
     addEventListener('resize', fit);
     addEventListener('keydown', function (e) {
       if (gate && !gate.hidden) {
-        if (e.key === 'Escape') { gate.hidden = true; pendingLockedIndex = null; }
+        if (e.key === 'Escape') { gate.hidden = true; pendingLockedIndex = null; e.preventDefault(); return; }
+        if (e.target.closest && e.target.closest('.lt-lock-card')) return;
         e.preventDefault();
         return;
       }

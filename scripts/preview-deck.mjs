@@ -142,15 +142,14 @@ const allDecks = [...deckDirs].map((dir) => {
     published: meta.published === true,
   };
 });
-const decks = allDecks;
+const decks = allDecks.filter(({ route }) => existsSync(join(distRoot, ...String(route).split('/'), 'index.html')));
 
 const escapeHtml = (text) => String(text).replace(/[&<>"']/g, (c) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 }[c]));
-const listPage = `<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LTデッキ一覧</title><style>body{font:18px/1.7 system-ui,sans-serif;max-width:900px;margin:48px auto;padding:0 24px;color:#171717}h1{font-size:30px}li{margin:8px 0}a{color:inherit;margin-right:16px}</style><h1>ローカルのLTデッキ</h1><ul>${decks.map(({ dir, title, route, published }) => {
-  const path = dir.slice(root.length + 1).split(sep).map(encodeURIComponent).join('/');
+const listPage = `<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ローカルのLTデッキ</title><style>*{box-sizing:border-box}body{font:17px/1.6 system-ui,sans-serif;max-width:1040px;margin:40px auto;padding:0 24px;color:#171717}h1{font-size:30px;margin:0 0 28px}.deck-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;list-style:none;padding:0}.deck-list a{display:block;min-height:72px;padding:18px 20px;border:1px solid #d0d0d0;color:inherit;text-decoration:none;font-weight:700}.deck-list a:hover{text-decoration:underline;background:#fafafa}</style><h1>ローカルのLTデッキ</h1><ul class="deck-list">${decks.map(({ title, route }) => {
   const routePath = String(route).split('/').map(encodeURIComponent).join('/');
-  return `<li><a href="/${path}/deck.html">スライド：${escapeHtml(title)}</a>${published ? `<a href="/${routePath}/">詳細・版を選ぶ</a>` : ''}</li>`;
+  return `<li><a href="/${routePath}/">${escapeHtml(title)}<br><small>スライドと記事を見る</small></a></li>`;
 }).join('')}</ul></html>`;
 
 const reloadClients = new Set();

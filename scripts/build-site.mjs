@@ -23,6 +23,7 @@ const SKIP_VARIANTS = process.argv.includes('--skip-variants');
 const SITE_TITLE = 'LT スライド - 菅原のびすけ';
 const SITE_CONFIG = JSON.parse(readFileSync(join(ROOT, 'site.json'), 'utf8'));
 const GA_ID = SITE_CONFIG.analytics?.measurementId;
+const GA_ENABLED = Boolean(GA_ID && !PREVIEW);
 const errors = [];
 if (GA_ID && !/^G-[A-Z0-9]+$/.test(GA_ID)) errors.push('site.json: analytics.measurementId は GA4 の G- 形式で指定してください');
 
@@ -71,7 +72,7 @@ for (const dir of collectDeckDirs(DECKS)) {
   if (!isMd && !existsSync(metaPath)) continue;
   const source = isMd ? readFileSync(mdPath, 'utf8') : null;
   const meta = isMd ? parseDeck(source).meta : JSON.parse(readFileSync(metaPath, 'utf8'));
-  if (meta.published !== true) continue;
+  if (meta.published !== true && !PREVIEW) continue;
   const isVariantMaster = isMd && meta.variants === true;
   const id = meta.id ?? folderName;
   // path lets a versioned deck keep a nested public route without changing its API id.
@@ -123,7 +124,7 @@ for (const dir of collectDeckDirs(DECKS)) {
     ? html.replace('</body>', '<noscript><div class="lt-lock-noscript"><div class="lt-lock-card"><h2>限定スライド</h2><p>このスライドを表示するにはJavaScriptを有効にしてください。</p></div></div></noscript>\n</body>')
     : html;
   if (meta.unlisted === true) finalHtml = finalHtml.replace('</head>', '<meta name="robots" content="noindex, nofollow, noarchive">\n</head>');
-  if (GA_ID) finalHtml = finalHtml.replace('</head>', `${gaSnippet()}\n</head>`);
+  if (GA_ENABLED) finalHtml = finalHtml.replace('</head>', `${gaSnippet()}\n</head>`);
   const article = isMd ? renderArticle(renderSource, { assetPrefix: '../'.repeat(routeParts.length) }) : '';
   const pdfPath = join(dir, `${id}.pdf`);
   const thumbnailCandidates = [join(dir, 'thumbnail.png')];
@@ -133,10 +134,12 @@ for (const dir of collectDeckDirs(DECKS)) {
   }
   const thumbPath = thumbnailCandidates.find((candidate) => existsSync(candidate)) ?? null;
 
-  if (/class="[^"]*\blt-slot\b/.test(source ?? html)) errors.push(`${id}: 差し替えていない lt-slot が残っています`);
-  if ((source ?? html).includes('【要確認】')) errors.push(`${id}: 【要確認】が残っています`);
-  if (!meta.title || !/^\d{4}-\d{2}-\d{2}$/.test(meta.date ?? '')) errors.push(`${id}: deck.json の title か date（YYYY-MM-DD）が正しくありません`);
-  if (meta.eventUrl && !/^https?:\/\//.test(meta.eventUrl)) errors.push(`${id}: deck.json の eventUrl は http(s) の URL にしてください`);
+  if (meta.published === true || !PREVIEW) {
+    if (/class="[^"]*\blt-slot\b/.test(source ?? html)) errors.push(`${id}: 差し替えていない lt-slot が残っています`);
+    if ((source ?? html).includes('【要確認】')) errors.push(`${id}: 【要確認】が残っています`);
+    if (!meta.title || !/^\d{4}-\d{2}-\d{2}$/.test(meta.date ?? '')) errors.push(`${id}: deck.json の title か date（YYYY-MM-DD）が正しくありません`);
+    if (meta.eventUrl && !/^https?:\/\//.test(meta.eventUrl)) errors.push(`${id}: deck.json の eventUrl は http(s) の URL にしてください`);
+  }
   if (meta.unlisted !== true && !thumbPath && REQUIRE_ARTIFACTS) errors.push(`${id}: thumbnail.png がありません（ActionsでPDF出力してください）`);
   if (meta.unlisted === true) {
     // 限定ページにはPDFやサムネイルの公開コピーを作らない。
@@ -360,7 +363,7 @@ const headCommon = (css) => `<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${css}design-system/tokens.css">
 <link rel="stylesheet" href="${css}site.css">
-${GA_ID ? gaSnippet() : ''}`;
+${GA_ENABLED ? gaSnippet() : ''}`;
 
 const avatarBlock = (root, heading) => `<a class="site-head" href="${root}">
     <img src="${root}${AVATAR}" alt="">
@@ -485,7 +488,7 @@ for (const d of published) {
   const routeParts = (d.route ?? d.id).split('/');
   const routePath = join(DIST, ...routeParts);
   const rootPrefix = '../'.repeat(routeParts.length);
-  const versionSelector = d.versions?.length > 1
+  const versionSelector = !PREVIEW && d.versions?.length > 1
     ? `<nav class="versions" aria-label="デッキのバージョンを選択"><span class="versions-label">バージョン</span>${d.versions.map((version) => {
       const current = version.id === d.id;
       const label = { parent: '親デッキ', '10min': '10分版', '15min': '15分版', '5min': '5分版', 'v0.1': '旧版（v0.1）' }[version.variantName] ?? version.variantName;
