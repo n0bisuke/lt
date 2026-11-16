@@ -689,10 +689,11 @@ ${d.unlisted === true ? `<dialog class="comment-dialog access-dialog" id="access
     var w = frame.contentWindow;
     w.addEventListener('keydown', function () { setTimeout(update); });
     w.addEventListener('click', function () { setTimeout(update); });
-    w.addEventListener('hashchange', updateCommentLink);
   });
   try {
-    if (/\/slides\/?$/.test(frame.contentWindow.location.pathname)) {
+    var framePath = frame.contentWindow.location.pathname;
+    if (framePath.slice(-1) === '/') framePath = framePath.slice(0, -1);
+    if (framePath.endsWith('slides')) {
       frameReady = true;
       update();
       if (pendingPhrase !== null) { sendLockPhrase(pendingPhrase); pendingPhrase = null; }
@@ -701,7 +702,14 @@ ${d.unlisted === true ? `<dialog class="comment-dialog access-dialog" id="access
   prev.addEventListener('click', function () { go('ArrowLeft'); });
   next.addEventListener('click', function () { go('ArrowRight'); });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); go(e.key); }
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    if (e.metaKey && e.key === 'ArrowLeft') {
+      try {
+        if ((parseInt(frame.contentWindow.location.hash.slice(1), 10) || 1) === 1) return;
+      } catch (error) {}
+    }
+    e.preventDefault();
+    go(e.key);
   });
   if (frame.requestFullscreen) {
     full.addEventListener('click', function () { frame.requestFullscreen().then(function () { frame.focus(); }); });
