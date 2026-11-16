@@ -196,25 +196,23 @@ section.closing{display:flex;flex-direction:column;justify-content:center;gap:va
 section.closing>:is(h1,h2){position:static;align-self:stretch;flex:none}
 section.closing:has(img[alt="qr"]){padding-right:300px}
 section.closing p:last-of-type{font-size:24px;line-height:1.5;font-weight:700;color:var(--ink)}
-/* closing-promo: お礼・フォロー・アンケートと告知を左右2列にまとめる */
+/* closing-promo: 最新事例とお礼・フォロー・アンケートを左右2列にまとめる */
 section.closing-promo{padding:112px var(--space-8) 72px;display:flex;flex-direction:column}
 section.closing-promo>:is(h1,h2){top:48px;font-size:36px;font-weight:700}
-.gl-closing-promo{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:var(--space-5);align-items:stretch;width:100%;height:100%;min-height:0}
-.gl-promo-thanks,.gl-promo-list{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:var(--space-2)}
-.gl-promo-thanks{align-items:center;text-align:center;border-right:1px solid var(--rule);padding-right:var(--space-4)}
-.gl-promo-thanks>p{margin:0}
+.gl-closing-promo{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:var(--space-5);align-items:stretch;width:100%;height:100%;min-height:0}
+.gl-promo-feature,.gl-promo-contact{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:var(--space-2)}
+.gl-promo-feature{align-items:center;text-align:center}
+.gl-promo-feature>h3{margin:0;font-size:26px;line-height:1.4}
+.gl-promo-feature>a{display:block;width:100%;max-width:520px}
+.gl-promo-feature img{display:block;width:100%;height:270px;object-fit:contain;border:1px solid var(--rule);border-radius:var(--radius-sm)}
+.gl-promo-feature>p{margin:0;font-size:18px;line-height:1.5}
+.gl-promo-contact{align-items:center;text-align:center;border-left:1px solid var(--rule);padding-left:var(--space-4)}
+.gl-promo-contact>p{margin:0}
 .gl-promo-x{display:flex;align-items:center;gap:var(--space-1)}
 .gl-promo-x a{font-weight:700;text-decoration:underline;text-underline-offset:4px}
 .gl-promo-survey{display:flex;flex-direction:column;align-items:center;gap:var(--space-1);margin:0}
 .gl-promo-survey img{display:block;width:176px;height:176px;object-fit:contain}
 .gl-promo-survey figcaption{font-size:18px;line-height:1.5;color:var(--ink-muted)}
-.gl-promo-list>h3{margin:0 0 var(--space-1);font-size:24px;line-height:1.4}
-.gl-promo-card{display:grid;grid-template-columns:190px minmax(0,1fr);gap:var(--space-2);align-items:center;min-height:112px;padding:var(--space-1);border:1px solid var(--rule);border-radius:var(--radius-sm)}
-.gl-promo-card>img{display:block;width:190px;height:102px;object-fit:cover;border:1px solid var(--rule)}
-.gl-promo-card>div{display:flex;flex-direction:column;gap:4px;min-width:0}
-.gl-promo-card p,.gl-promo-card a{margin:0;overflow-wrap:anywhere}
-.gl-promo-card a{font-size:18px;line-height:1.5}
-.gl-promo-related{margin:0;font-size:18px;line-height:1.5;color:var(--ink-muted)}
 /* qr-prompt: QRコードと案内文を縦に並べる */
 section.qr-prompt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-2)}
 section.qr-prompt>p:has(>img){display:flex;align-items:center;justify-content:center;margin:0}

@@ -360,9 +360,11 @@ variantNames: 10min
 
 ## 認証に必要な情報も、減らせるか考える
 
-- setlog：パスキーだけで、メールアドレスを持たない
-- Apple認証：エイリアスメールを渡す
 - 作る側も、そもそも情報を持たない
+- （例）setlog
+  - サービススタート時から認証は **パスキー** だけ
+    - その後Apple ID認証も（エイリアスメール）
+  - **メールアドレスもパスワードも集めない設計**
 
 ![setlogの登録画面。パスキーで登録する選択肢がある](images/setlog-passkey-screen.webp)
 
@@ -375,7 +377,9 @@ variantNames: 10min
 <!-- _class: panel current-topic -->
 <!-- _footer: 2. 使う人・作る人ができる情報の扱い > 作る側編 -->
 
-## パスキーをホテルのカードキーにたとえると
+## 選択肢としてパスキーを覚えておこう
+
+※パスキーをホテルのカードキーにたとえると
 
 ![スマホ認証を使うホテルカードキーのイメージ](images/passkey-hotel-card-key.webp)
 
@@ -541,23 +545,36 @@ variantNames: 10min
 - 教育大事
   - 自分で作って公開して学んで行こう => もいせんへ
 ---
+<!-- _class: source-cards current-topic -->
+<!-- _footer: 4. 作って試し、設計の工夫を発信する -->
+
+## 番宣: もいせん・プロトアウトに来ましょう
+
+<div class="gl-cards gl-cards--2">
+<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/moicen-site-screenshot.webp" alt="ものづくり医療センター もいせん公式サイト"><strong class="t-body">ものづくり医療センター「もいせん」</strong><p class="t-sub">医療者が現場の課題を自分で解決するための学びの場。</p><small class="t-note"><a href="https://moicen-forest.studio.site/">公式サイト</a></small></article>
+<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/protoout-site-screenshot.webp" alt="プロトアウトスタジオ公式サイト"><strong class="t-body">プロトアウトスタジオ</strong><p class="t-sub">作って、外に出して、反応を得ながら学ぶ。</p><small class="t-note"><a href="https://protoout.studio/">公式サイト</a></small></article>
+</div>
+<p class="gl-foot t-body">学びながら、最新事例にも触れましょう。</p>
+
+<!-- もいせんとプロトアウトに来て、一緒に学びましょう。情報もサービスも変わるので、コミュニティに参加して最新事例にも触れていきましょう。 -->
+
+---
 <!-- _class: closing-promo current-topic -->
 <!-- _footer: 4. 作って試し、設計の工夫を発信する -->
 
 ## ありがとうございました
 
 <div class="gl-closing-promo">
-<div class="gl-promo-thanks">
-<p class="t-message">ご参加ありがとうございました</p>
+<div class="gl-promo-feature">
+<h3>最新事例は「漏らされったー」で</h3>
+<a href="https://morasaretter.suke.dev/"><img src="images/morasaretter-og.webp" alt="漏らされったーの最新事例画面"></a>
+<p>情報漏えいの事例を追いかける / <a href="https://morasaretter.suke.dev/">morasaretter.suke.dev</a></p>
+</div>
+<div class="gl-promo-contact">
+<p class="t-body">フォロー・感想はこちら</p>
 <p class="gl-promo-x"><strong class="t-sub">Xでフォロー</strong><a class="t-body" href="https://x.com/n0bisuke">@n0bisuke</a></p>
 <figure class="gl-promo-survey"><img src="images/final-survey-qr.webp" alt="アンケートフォームを開くQRコード"><figcaption>感想・ご質問はこちら</figcaption></figure>
 </div>
-<div class="gl-promo-list">
-<h3>番宣・関連リンク</h3>
-<article class="gl-promo-card"><img src="images/cards/moicen-site-screenshot.webp" alt="ものづくり医療センター「もいせん」公式サイト"><div><strong class="t-sub">ものづくり医療センター「もいせん」</strong><p class="t-note">医療者が現場の課題を自分で解決するための学びの場。</p><a href="https://moicen-forest.studio.site/">公式サイト</a></div></article>
-<article class="gl-promo-card"><img src="images/cards/protoout-site-screenshot.webp" alt="プロトアウトスタジオ公式サイト"><div><strong class="t-sub">プロトアウトスタジオ</strong><p class="t-note">作って、外に出して、反応を得ながら学ぶ。</p><a href="https://protoout.studio/">公式サイト</a></div></article>
-<p class="gl-promo-related">最新事例: <a href="https://morasaretter.suke.dev/">漏らされったー</a></p>
-</div>
 </div>
 
-<!-- もいせんとプロトアウトに来て、一緒に学びましょう。情報もサービスも変わるので、コミュニティに参加して最新事例にも触れていきましょう。アンケートフォーム: https://forms.gle/sWkm89bvMTUSXED37 -->
+<!-- アンケートフォーム: https://forms.gle/sWkm89bvMTUSXED37。最新事例: https://morasaretter.suke.dev/ -->
