@@ -25,9 +25,9 @@ section.panel{background:var(--surface-panel)}
 /* 部品を指定しないスライドと補足、目次は、見出しの下で本文を縦の中央に置く（#13） */
 section:not([class]),section.panel,section.agenda{display:flex;flex-direction:column;justify-content:center}
 /* current-topic が付いた通常スライドも、見出しの下の本文を縦中央に置く */
-section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.media-split):not(.diagram):not(.qr-prompt):not(.closing){display:flex;flex-direction:column;justify-content:center}
-section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.media-split):not(.diagram):not(.qr-prompt):not(.closing) p:has(>img){display:flex;align-items:center;justify-content:center;margin:0}
-section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.media-split):not(.diagram):not(.qr-prompt):not(.closing) p>img{display:block;width:auto;height:auto;max-width:100%;max-height:460px;object-fit:contain}
+section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.media-split):not(.diagram):not(.qr-prompt):not(.closing):not(.closing-promo){display:flex;flex-direction:column;justify-content:center}
+section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.media-split):not(.diagram):not(.qr-prompt):not(.closing):not(.closing-promo) p:has(>img){display:flex;align-items:center;justify-content:center;margin:0}
+section.current-topic:not(.title-slide):not(.speaker-profile):not(.key-message):not(.link-cards):not(.source-cards):not(.text-image):not(.media-split):not(.diagram):not(.qr-prompt):not(.closing):not(.closing-promo) p>img{display:block;width:auto;height:auto;max-width:100%;max-height:460px;object-fit:contain}
 section:not([class]) img{display:block;max-width:100%;max-height:460px;object-fit:contain;margin:0 auto}
 /* diagram: 16:9の図解を本文の表示領域いっぱいに使う */
 section.diagram{display:flex;align-items:center;justify-content:center;padding:56px var(--space-6) 64px}
@@ -196,12 +196,31 @@ section.phase-chart>:is(h1,h2){top:var(--space-2)}
 .gl-say--human>div{background:var(--human-tint);border-color:var(--human)}
 .gl-say--ai{color:var(--ai)}
 .gl-say--ai>div{background:var(--ai-tint)}
-/* closing */
+/* closing: 講演の主張と次の行動 */
 section.closing img[alt="qr"]{position:absolute;right:var(--space-8);top:220px;width:200px;height:200px}
 section.closing{display:flex;flex-direction:column;justify-content:center;gap:var(--space-2);font-size:32px;line-height:1.6}
 section.closing>:is(h1,h2){position:static;align-self:stretch;flex:none}
 section.closing:has(img[alt="qr"]){padding-right:300px}
 section.closing p:last-of-type{font-size:24px;line-height:1.5;font-weight:700;color:var(--ink)}
+/* closing-promo: お礼・フォロー・アンケートと告知を左右2列にまとめる */
+section.closing-promo{padding:112px var(--space-8) 72px;display:flex;flex-direction:column}
+section.closing-promo>:is(h1,h2){top:48px;font-size:36px;font-weight:700}
+.gl-closing-promo{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:var(--space-5);align-items:stretch;width:100%;height:100%;min-height:0}
+.gl-promo-thanks,.gl-promo-list{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:var(--space-2)}
+.gl-promo-thanks{align-items:center;text-align:center;border-right:1px solid var(--rule);padding-right:var(--space-4)}
+.gl-promo-thanks>p{margin:0}
+.gl-promo-x{display:flex;align-items:center;gap:var(--space-1)}
+.gl-promo-x a{font-weight:700;text-decoration:underline;text-underline-offset:4px}
+.gl-promo-survey{display:flex;flex-direction:column;align-items:center;gap:var(--space-1);margin:0}
+.gl-promo-survey img{display:block;width:176px;height:176px;object-fit:contain}
+.gl-promo-survey figcaption{font-size:18px;line-height:1.5;color:var(--ink-muted)}
+.gl-promo-list>h3{margin:0 0 var(--space-1);font-size:24px;line-height:1.4}
+.gl-promo-card{display:grid;grid-template-columns:190px minmax(0,1fr);gap:var(--space-2);align-items:center;min-height:112px;padding:var(--space-1);border:1px solid var(--rule);border-radius:var(--radius-sm)}
+.gl-promo-card>img{display:block;width:190px;height:102px;object-fit:cover;border:1px solid var(--rule)}
+.gl-promo-card>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.gl-promo-card p,.gl-promo-card a{margin:0;overflow-wrap:anywhere}
+.gl-promo-card a{font-size:18px;line-height:1.5}
+.gl-promo-related{margin:0;font-size:18px;line-height:1.5;color:var(--ink-muted)}
 /* qr-prompt: QRコードと案内文を縦に並べる */
 section.qr-prompt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-2)}
 section.qr-prompt>p:has(>img){display:flex;align-items:center;justify-content:center;margin:0}

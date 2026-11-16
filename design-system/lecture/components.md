@@ -4,7 +4,7 @@
 
 部品は2つに分かれます。
 
-- **どの話題でも使う部品:** `title-slide`、`speaker-profile`、`brand`、`hero`、`key-message`、`summary`、`agenda`、`media-split`、`diagram`、`qr-prompt`、`source-cards`、`link-cards`、`tool-gallery`、`poll-result`、`zone-compare`、`phase-chart`、`closing`
+- **どの話題でも使う部品:** `title-slide`、`speaker-profile`、`brand`、`hero`、`key-message`、`summary`、`agenda`、`media-split`、`diagram`、`qr-prompt`、`source-cards`、`link-cards`、`tool-gallery`、`poll-result`、`zone-compare`、`phase-chart`、`closing`、`closing-promo`
 - **生成AIの話で使う部品:** `era-slide`、`era-map`、`actor-flow`、`prompt-block`。時代の比喩や、人とAIの担当を示すときだけ使います。
 
 ## `title-slide`
@@ -243,3 +243,15 @@ URLからプレビューカードを作るスライドです。URLがまだな�
 - 呼びかけは1つに絞ります。
 - URLは省略せずに書きます。
 - QRコードは任意です。置くときは実物で読み取りを確認します。
+
+## `closing-promo`
+
+講演の最後に、お礼、Xのフォロー先、アンケート、告知先を2列でまとめます。
+
+**用意するもの:** お礼のひとこと、発表者のX URL、任意のアンケートQR、告知するサービスや活動の名前・短い説明・URL・画像。
+
+- 左列にお礼、X、アンケートを置き、右列に告知カードを並べます。
+- 告知カードは2件までにします。追加の関連情報は短いリンクにまとめます。
+- URLは省略せず、クリック可能なリンクとして残します。
+- QRコードは余白を取り、会場の端末で読み取りを確認します。
+- 一般の講演の締めに使い、`closing` の主張と次の行動を伝える用途とは分けます。
