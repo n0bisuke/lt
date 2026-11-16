@@ -1,3 +1,7 @@
 {
-  "baseUrl": "https://n0bisuke.github.io/lt"
+  "baseUrl": "https://n0bisuke.github.io/lt",
+  "commentForm": {
+    "url": "https://docs.google.com/forms/d/e/1FAIpQLSdUUgdIuOdjfN0zz3UNeDohXBXVQ4DXgsKQYPe6NIgKT1XMqA/viewform",
+    "entry": "entry.1037145553"
+  }
 }

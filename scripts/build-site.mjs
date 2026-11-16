@@ -21,12 +21,14 @@ const PREVIEW = process.argv.includes('--preview');
 const REQUIRE_ARTIFACTS = process.argv.includes('--require-artifacts');
 const SKIP_VARIANTS = process.argv.includes('--skip-variants');
 const SITE_TITLE = 'LT スライド - 菅原のびすけ';
+const SITE_CONFIG = JSON.parse(readFileSync(join(ROOT, 'site.json'), 'utf8'));
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const errors = [];
 const warnings = [];
 const moves = [];
-const baseUrl = JSON.parse(readFileSync(join(ROOT, 'site.json'), 'utf8')).baseUrl.replace(/\/$/, '');
+const baseUrl = SITE_CONFIG.baseUrl.replace(/\/$/, '');
+const commentForm = SITE_CONFIG.commentForm;
 
 function updatedAtFor(sourcePath) {
   const repoPath = relative(ROOT, sourcePath);
@@ -486,6 +488,7 @@ ${headCommon(rootPrefix)}
       <button class="btn" id="next" type="button" aria-label="次のスライド">→</button>
       <div class="end">
         <button class="btn" id="full" type="button">全画面</button>
+      ${commentForm ? `<a class="btn" id="comment" href="${esc(commentForm.url)}" target="_blank" rel="noopener">このスライドにコメント</a>` : ''}
       ${d.hasPdf ? `<a class="btn" href="${encodeURIComponent(d.id)}.pdf" download>PDF</a>` : `<a class="btn" href="${pdfWorkflowUrl}" target="_blank" rel="noopener">PDF成果物</a>${d.isMarkdown ? `<a class="btn" href="${pdfRequestUrl(d)}" target="_blank" rel="noopener">PDFを生成</a>` : ''}`}
       </div>
     </div>
@@ -504,6 +507,19 @@ ${contactWidget}
   var prev = document.getElementById('prev');
   var next = document.getElementById('next');
   var full = document.getElementById('full');
+  var comment = document.getElementById('comment');
+  var commentFormUrl = ${JSON.stringify(commentForm?.url ?? '')};
+  var commentFormEntry = ${JSON.stringify(commentForm?.entry ?? '')};
+  function updateCommentLink() {
+    if (!comment || !commentFormUrl || !commentFormEntry || !frame.contentWindow) return;
+    var form = new URL(commentFormUrl);
+    var page = new URL(window.location.pathname, window.location.origin);
+    var slideHash = frame.contentWindow.location.hash.slice(1);
+    if (/^\\d+$/.test(slideHash)) page.hash = slideHash;
+    form.searchParams.set('usp', 'pp_url');
+    form.searchParams.set(commentFormEntry, page.href);
+    comment.href = form.href;
+  }
   function applySlideFragment() {
     var fragment = window.location.hash.slice(1);
     var slideFragment = /^(?:stopwatch|timer5|timer10|\\d+)$/.test(fragment) ? '#' + fragment : '';
@@ -519,6 +535,7 @@ ${contactWidget}
     count.textContent = at + ' / ' + total;
     prev.disabled = at <= 1;
     next.disabled = at >= total;
+    updateCommentLink();
   }
   function go(key) {
     frame.contentWindow.dispatchEvent(new KeyboardEvent('keydown', { key: key }));
@@ -529,6 +546,7 @@ ${contactWidget}
     var w = frame.contentWindow;
     w.addEventListener('keydown', function () { setTimeout(update); });
     w.addEventListener('click', function () { setTimeout(update); });
+    w.addEventListener('hashchange', updateCommentLink);
   });
   prev.addEventListener('click', function () { go('ArrowLeft'); });
   next.addEventListener('click', function () { go('ArrowRight'); });
