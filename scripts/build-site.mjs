@@ -306,6 +306,7 @@ main { padding-bottom: 120px; }
 .comment-dialog h2 { margin: 0 0 20px; font-size: 22px; }
 .comment-dialog form { display: grid; gap: 16px; }
 .comment-dialog label { display: grid; gap: 6px; font-weight: 700; }
+.comment-dialog label small { color: var(--ink-muted); font-size: 13px; font-weight: 500; }
 .comment-dialog input, .comment-dialog textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--rule-soft); background: var(--paper); color: var(--ink); font: inherit; font-weight: 500; }
 .comment-dialog textarea { min-height: 132px; resize: vertical; }
 .comment-dialog input:focus-visible, .comment-dialog textarea:focus-visible { outline: var(--stroke-rule) solid var(--ink-strong); outline-offset: 2px; }
@@ -497,7 +498,7 @@ ${headCommon(rootPrefix)}
       <button class="btn" id="next" type="button" aria-label="次のスライド">→</button>
       <div class="end">
         <button class="btn" id="full" type="button">全画面</button>
-      ${commentForm ? `<button class="btn" id="comment-open" type="button">コメントする</button>` : ''}
+      ${commentForm ? `<button class="btn" id="comment-open" type="button">このスライドにコメントを送る</button>` : ''}
       ${d.hasPdf ? `<a class="btn" href="${encodeURIComponent(d.id)}.pdf" download>PDF</a>` : d.isMarkdown ? `<a class="btn" id="pdf-link" href="${pdfRequestUrl(d)}" target="_blank" rel="noopener">PDFを生成</a>` : ''}
       </div>
     </div>
@@ -515,8 +516,8 @@ ${commentForm ? `<dialog class="comment-dialog" id="comment-dialog" aria-labelle
     <input type="hidden" id="comment-target" name="${esc(commentForm.entries.target)}">
     <input type="hidden" name="${esc(commentForm.entries.publishConsent)}" value="いいえ">
     <h2 id="comment-dialog-title">スライドへのコメント</h2>
-    <label>お名前（空欄なら匿名名を設定）<input id="comment-name" name="${esc(commentForm.entries.name)}" autocomplete="name"></label>
-    <label>コメント<textarea name="${esc(commentForm.entries.comment)}" required></textarea></label>
+    <label>コメント<textarea name="${esc(commentForm.entries.comment)}" maxlength="1000" required></textarea><small>1000文字以内にしてください。</small></label>
+    <label>お名前（空欄可能）<input id="comment-name" name="${esc(commentForm.entries.name)}" autocomplete="name"></label>
     <label>連絡先（任意）<input name="${esc(commentForm.entries.contact)}" autocomplete="email"></label>
     <div class="comment-actions">
       <button class="btn" id="comment-cancel" type="button">キャンセル</button>
