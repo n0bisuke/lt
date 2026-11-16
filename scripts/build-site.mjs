@@ -106,13 +106,18 @@ for (const dir of collectDeckDirs(DECKS)) {
     : readFileSync(htmlPath, 'utf8');
   const article = isMd ? renderArticle(renderSource, { assetPrefix: '../'.repeat(routeParts.length) }) : '';
   const pdfPath = join(dir, `${id}.pdf`);
-  const thumbPath = join(dir, 'thumbnail.png');
+  const thumbnailCandidates = [join(dir, 'thumbnail.png')];
+  if (isVariantMaster) {
+    const thumbnailVersions = String(meta.variantNames ?? '15min,10min').split(',').map((name) => name.trim());
+    thumbnailCandidates.push(...thumbnailVersions.map((name) => join(dir, name, 'thumbnail.png')));
+  }
+  const thumbPath = thumbnailCandidates.find((candidate) => existsSync(candidate)) ?? null;
 
   if (/class="[^"]*\blt-slot\b/.test(source ?? html)) errors.push(`${id}: 差し替えていない lt-slot が残っています`);
   if ((source ?? html).includes('【要確認】')) errors.push(`${id}: 【要確認】が残っています`);
   if (!meta.title || !/^\d{4}-\d{2}-\d{2}$/.test(meta.date ?? '')) errors.push(`${id}: deck.json の title か date（YYYY-MM-DD）が正しくありません`);
   if (meta.eventUrl && !/^https?:\/\//.test(meta.eventUrl)) errors.push(`${id}: deck.json の eventUrl は http(s) の URL にしてください`);
-  if (!existsSync(thumbPath) && REQUIRE_ARTIFACTS) errors.push(`${id}: thumbnail.png がありません（ActionsでPDF出力してください）`);
+  if (!thumbPath && REQUIRE_ARTIFACTS) errors.push(`${id}: thumbnail.png がありません（ActionsでPDF出力してください）`);
   if (!existsSync(pdfPath)) {
     if (REQUIRE_ARTIFACTS) errors.push(`${id}: PDF がありません（ActionsでPDF出力してください）`);
   } else {
@@ -146,7 +151,7 @@ for (const dir of collectDeckDirs(DECKS)) {
   // slides/ は decks/<id>/ と同じ深さなので、../../design-system のパスはそのまま使える
   writeFileSync(join(slides, 'index.html'), html);
   if (existsSync(pdfPath)) cpSync(pdfPath, join(out, `${id}.pdf`));
-  if (existsSync(thumbPath)) cpSync(thumbPath, join(out, 'thumbnail.png'));
+  if (thumbPath) cpSync(thumbPath, join(out, 'thumbnail.png'));
   for (const r of refs) {
     const from = join(dir, r);
     if (r.startsWith('..') || !existsSync(from)) { errors.push(`${id}: ${r} が見つかりません`); continue; }
@@ -175,7 +180,7 @@ for (const dir of collectDeckDirs(DECKS)) {
     variantGroup,
     variantName: variantGroup ? variantName : null,
     hasPdf: existsSync(pdfPath),
-    hasThumbnail: Boolean(thumbPath && existsSync(thumbPath)),
+    hasThumbnail: Boolean(thumbPath),
   });
 }
 
