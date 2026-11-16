@@ -103,7 +103,7 @@ IoTLT などのライトニングトーク（LT）のスライドを、発表者
 
    サイトを組み立て直してエラーがなければ、`git add`、`commit`、`push` まで行います。`decks/` は `published: true` のデッキだけを add し、削除した公開デッキも削除としてコミットします。公開リポジトリでは、コミットした内容はすべて誰でも読めるので、`git add .` や `git add decks` を直接使いません。`npm run deploy -- --dry-run` で、コミットされるファイルを先に確認できます。
 
-PDF とサムネイルは `.github/workflows/pdf-export.yml` が Playwright / Chromium で生成し、Actions artifact として14日間保存します。この処理は Pages 公開と独立しており、PDF 出力に失敗してもスライド公開は止まりません。Pages にはリポジトリに存在する PDF とサムネイルだけを含めます。手元で PDF を作る場合は `npm run export-pdf` を使い、初回だけ `npm exec playwright install chromium` を実行します。Homebrew、WeasyPrint、Poppler は使いません。
+PDF とサムネイルは `.github/workflows/pdf-export.yml` が Playwright / Chromium で生成し、Actions artifact として14日間保存します。この処理は Pages 公開と独立しており、PDF 出力に失敗してもスライド公開は止まりません。公開ページの「PDF成果物」から Actions 実行一覧を開けます。期限切れ後はデッキ詳細ページの「PDFを生成」から issue を作ると、そのデッキだけを再生成し、issue コメントに14日間有効なダウンロードリンクを返します。push 時は変更されたデッキだけを生成します。手元で PDF を作る場合は `npm run export-pdf` を使い、初回だけ `npm exec playwright install chromium` を実行します。Homebrew、WeasyPrint、Poppler は使いません。
 
 | URL | 内容 |
 | --- | --- |
@@ -159,7 +159,7 @@ node scripts/build-deck.mjs decks/<デッキ名>
 
 編集しながら確認する場合は `npm run deck -- decks` を使います。表示された localhost の URL を組み込みブラウザで開くと、スライドと記事を選べます。`deck.md` を保存すると、時間別版と記事を再ビルドし、プレビューを自動更新します。終了は `Ctrl+C` です。
 
-プレビュー左下の小さなタイマーで発表時間を計測できます。再生・一時停止・リセットができ、スライドを移動したりプレビューを再読み込みしたりしても計測状態を保ちます。画像を微調整するには、プレビュー右下の「画像を編集」を押します。画像をドラッグして移動し、右下の丸をドラッグして縦横比を保ったままサイズを変更できます。変更はデッキの `.lt-adjustments.json` に保存され、リセットできます。サイトを再生成するときも調整が反映されます。
+タイマーは URL の hash で切り替えます。通常は非表示で、`#stopwatch` がストップウォッチ、`#timer5` と `#timer10` が5分・10分のカウントダウンです。再生・一時停止・リセットができ、同じブラウザーで再読み込みしても計測状態を保ちます。画像を微調整するには、プレビュー右下の「画像を編集」を押します。画像をドラッグして移動し、右下の丸をドラッグして縦横比を保ったままサイズを変更できます。変更はデッキの `.lt-adjustments.json` に保存され、リセットできます。サイトを再生成するときも調整が反映されます。
 
 複数時間版の元データは親フォルダの `deck.md` です。親デッキがメインのページです。スライドの先頭に `<!-- only: 10min -->` のように書くと、そのスライドを子版だけに載せられます。指定がないスライドは全版に載ります。front matter の `variantNames: 10min` に含めた版だけを子フォルダに生成し、既存の除外版フォルダは手編集を守るため削除しません。`npm run deck -- decks` は親デッキをプレビューし、時間別の子デッキを一覧・再ビルドしません。`npm run deploy` は親デッキと設定済みの子版を公開します。
 
@@ -187,6 +187,7 @@ Markdown で書けないときだけ使います。
 | 手順の中の今の段階を示す | `SectionMarker` |
 | 箇条書き | `Bullets` |
 | 発表の最後に要点を箇条書きで整理 | lecture テーマの `summary` |
+| 最後にお礼、X、QR、番宣をまとめる | lecture テーマの `closing-promo` |
 | 短い言葉を中央に数行 | `Stack` |
 | `=>` の比較や左揃えの説明 | `Lines` |
 | 製品紹介（画像＋箇条書き） | `MediaSplit` |

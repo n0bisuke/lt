@@ -180,6 +180,7 @@ for (const dir of collectDeckDirs(DECKS)) {
     variantGroup,
     variantName: variantGroup ? variantName : null,
     hasPdf: existsSync(pdfPath),
+    isMarkdown: isMd,
     hasThumbnail: Boolean(thumbPath),
   });
 }
@@ -211,6 +212,14 @@ for (const f of ['design-system/tokens.css', `${P}/components/bundle.css`, `${P}
 
 const encodeRoute = (route) => route.split('/').map(encodeURIComponent).join('/');
 const urlOf = (d) => `${baseUrl}/${encodeRoute(d.route ?? d.id)}/`;
+const pdfWorkflowUrl = 'https://github.com/n0bisuke/lt/actions/workflows/pdf-export.yml';
+const pdfRequestUrl = (d) => {
+  const params = new URLSearchParams({
+    title: `[PDF request] ${d.id}`,
+    body: `Deck ID: \`${d.id}\`\n\nこのデッキのPDF生成をお願いします。`,
+  });
+  return `https://github.com/n0bisuke/lt/issues/new?${params}`;
+};
 const dateJa = (s) => { const [y, m, d] = s.split('-').map(Number); return `${y}年${m}月${d}日`; };
 const updatedJa = (s) => new Intl.DateTimeFormat('ja-JP', {
   timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false,
@@ -477,7 +486,7 @@ ${headCommon(rootPrefix)}
       <button class="btn" id="next" type="button" aria-label="次のスライド">→</button>
       <div class="end">
         <button class="btn" id="full" type="button">全画面</button>
-      ${d.hasPdf ? `<a class="btn" href="${encodeURIComponent(d.id)}.pdf" download>PDF</a>` : ''}
+      ${d.hasPdf ? `<a class="btn" href="${encodeURIComponent(d.id)}.pdf" download>PDF</a>` : `<a class="btn" href="${pdfWorkflowUrl}" target="_blank" rel="noopener">PDF成果物</a>${d.isMarkdown ? `<a class="btn" href="${pdfRequestUrl(d)}" target="_blank" rel="noopener">PDFを生成</a>` : ''}`}
       </div>
     </div>
     <h1>${esc(d.title)}</h1>
@@ -495,6 +504,14 @@ ${contactWidget}
   var prev = document.getElementById('prev');
   var next = document.getElementById('next');
   var full = document.getElementById('full');
+  function applySlideFragment() {
+    var fragment = window.location.hash.slice(1);
+    var slideFragment = /^(?:stopwatch|timer5|timer10|\\d+)$/.test(fragment) ? '#' + fragment : '';
+    var nextSrc = 'slides/' + slideFragment;
+    if (frame.getAttribute('src') !== nextSrc) frame.setAttribute('src', nextSrc);
+  }
+  applySlideFragment();
+  window.addEventListener('hashchange', applySlideFragment);
   function update() {
     var w = frame.contentWindow;
     var total = w.document.querySelectorAll('.lt-slide, svg[data-marpit-svg]').length;
@@ -557,6 +574,7 @@ writeFileSync(join(DIST, 'all.json'), JSON.stringify({
       url,
       slides: `${url}slides/`,
       ...(d.hasPdf ? { pdf: `${url}${encodeURIComponent(d.id)}.pdf` } : {}),
+      ...(d.isMarkdown ? { pdfRequest: pdfRequestUrl(d) } : {}),
       thumbnail: `${url}thumbnail.png`,
     };
   }),

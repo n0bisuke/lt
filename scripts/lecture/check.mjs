@@ -10,7 +10,7 @@ import { lectureDecks, root } from './decks.mjs';
 const errors = [];
 const fail = (where, msg) => errors.push(`${where}: ${msg}`);
 
-const CLASSES = new Set(['title-slide', 'speaker-profile', 'brand', 'hero', 'key-message', 'summary', 'agenda', 'overview', 'era-slide', 'recap', 'era-map', 'source-cards', 'text-image', 'media-split', 'diagram', 'qr-prompt', 'tool-gallery', 'poll-result', 'actor-flow', 'zone-compare', 'phase-chart', 'prompt-block', 'closing', 'link-cards', 'stage', 'panel', 'current-topic']);
+const CLASSES = new Set(['title-slide', 'speaker-profile', 'brand', 'hero', 'key-message', 'summary', 'agenda', 'overview', 'era-slide', 'recap', 'era-map', 'source-cards', 'text-image', 'media-split', 'diagram', 'qr-prompt', 'tool-gallery', 'poll-result', 'actor-flow', 'zone-compare', 'phase-chart', 'prompt-block', 'closing', 'closing-promo', 'link-cards', 'stage', 'panel', 'current-topic']);
 const STATE = new Set(['is-dim', 'is-top', 'is-focus']);
 
 function walk(dir) {

@@ -8,7 +8,7 @@ event: "第2回 ものづくり医療研究会"
 eventUrl: "https://moiken02.vercel.app/"
 published: true
 variants: true
-variantNames: 15min,10min
+variantNames: 10min
 
 ---
 
@@ -541,36 +541,23 @@ variantNames: 15min,10min
 - 教育大事
   - 自分で作って公開して学んで行こう => もいせんへ
 ---
-<!-- only: 15min,10min -->
-<!-- _class: source-cards current-topic -->
+<!-- _class: closing-promo current-topic -->
 <!-- _footer: 4. 作って試し、設計の工夫を発信する -->
 
-## 番宣: もいせん・プロトアウトに来ましょう
+## ありがとうございました
 
-<div class="gl-cards gl-cards--2">
-<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/moicen-site-screenshot.webp" alt="ものづくり医療センター もいせん公式サイト"><strong class="t-body">ものづくり医療センター「もいせん」</strong><p class="t-sub">医療者が現場の課題を自分で解決するための学びの場。</p><small class="t-note"><a href="https://moicen-forest.studio.site/">公式サイト</a></small></article>
-<article class="gl-source"><img class="gl-source__screenshot" src="images/cards/protoout-site-screenshot.webp" alt="プロトアウトスタジオ公式サイト"><strong class="t-body">プロトアウトスタジオ</strong><p class="t-sub">作って、外に出して、反応を得ながら学ぶ。</p><small class="t-note"><a href="https://protoout.studio/">公式サイト</a></small></article>
+<div class="gl-closing-promo">
+<div class="gl-promo-thanks">
+<p class="t-message">ご参加ありがとうございました</p>
+<p class="gl-promo-x"><strong class="t-sub">Xでフォロー</strong><a class="t-body" href="https://x.com/n0bisuke">@n0bisuke</a></p>
+<figure class="gl-promo-survey"><img src="images/final-survey-qr.webp" alt="アンケートフォームを開くQRコード"><figcaption>感想・ご質問はこちら</figcaption></figure>
 </div>
-<p class="gl-foot t-body">学びながら、最新事例にも触れましょう。</p>
+<div class="gl-promo-list">
+<h3>番宣・関連リンク</h3>
+<article class="gl-promo-card"><img src="images/cards/moicen-site-screenshot.webp" alt="ものづくり医療センター「もいせん」公式サイト"><div><strong class="t-sub">ものづくり医療センター「もいせん」</strong><p class="t-note">医療者が現場の課題を自分で解決するための学びの場。</p><a href="https://moicen-forest.studio.site/">公式サイト</a></div></article>
+<article class="gl-promo-card"><img src="images/cards/protoout-site-screenshot.webp" alt="プロトアウトスタジオ公式サイト"><div><strong class="t-sub">プロトアウトスタジオ</strong><p class="t-note">作って、外に出して、反応を得ながら学ぶ。</p><a href="https://protoout.studio/">公式サイト</a></div></article>
+<p class="gl-promo-related">最新事例: <a href="https://morasaretter.suke.dev/">漏らされったー</a></p>
+</div>
+</div>
 
-<!-- もいせんとプロトアウトに来て、一緒に学びましょう。情報もサービスも変わるので、コミュニティに参加して最新事例にも触れていきましょう。 -->
-
----
-<!-- _class: link-cards current-topic -->
-<!-- _footer: 4. 作って試し、設計の工夫を発信する -->
-
-## 最新事例は「漏らされったー」で
-
-<!-- card: images/morasaretter-og.webp | 出典: morasaretter.suke.dev -->
-<article class="gl-linkcard is-image" data-card="images/morasaretter-og.webp | 出典: morasaretter.suke.dev"><img src="images/morasaretter-og.webp" alt=""><small class="t-note gl-muted">出典: morasaretter.suke.dev</small></article>
-
----
-<!-- only: 15min,10min -->
-<!-- _class: diagram current-topic -->
-<!-- _footer: 4. 作って試し、設計の工夫を発信する -->
-
-## 感想などはこちら
-
-![アンケートフォームを開くQRコード](images/final-survey-qr.webp)
-
-<!-- アンケートフォーム: https://forms.gle/sWkm89bvMTUSXED37 -->
+<!-- もいせんとプロトアウトに来て、一緒に学びましょう。情報もサービスも変わるので、コミュニティに参加して最新事例にも触れていきましょう。アンケートフォーム: https://forms.gle/sWkm89bvMTUSXED37 -->

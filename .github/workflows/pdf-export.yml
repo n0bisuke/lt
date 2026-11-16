@@ -14,17 +14,26 @@ on:
       - 'package-lock.json'
       - '.github/workflows/pdf-export.yml'
   workflow_dispatch:
+    inputs:
+      deck_id:
+        description: Deck ID to export (leave blank for changed decks)
+        required: false
+        type: string
+  issues:
+    types: [opened]
 
 permissions:
   actions: read
   contents: read
+  issues: write
 
 concurrency:
-  group: pdf-export
+  group: pdf-export-${{ github.event.issue.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
   export:
+    if: github.event_name != 'issues' || startsWith(github.event.issue.title, '[PDF request]')
     runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
@@ -41,8 +50,51 @@ jobs:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
       - run: npx playwright install --with-deps chromium
+      - name: Resolve requested deck
+        id: target
+        if: github.event_name == 'issues' || (github.event_name == 'workflow_dispatch' && inputs.deck_id != '')
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          INPUT_DECK_ID: ${{ inputs.deck_id }}
+        run: |
+          node --input-type=module <<'NODE' >> "$GITHUB_OUTPUT"
+          import { readdirSync, readFileSync } from 'node:fs';
+          import { basename, join, relative } from 'node:path';
+          import { parseDeck } from './scripts/lib/deck.mjs';
+          const eventName = process.env.EVENT_NAME;
+          if (eventName === 'issues' && !process.env.ISSUE_TITLE?.startsWith('[PDF request]')) {
+            throw new Error('PDF request issue title is missing');
+          }
+          const bodyId = process.env.ISSUE_BODY?.match(/^Deck ID:\s*`([a-zA-Z0-9._-]+)`\s*$/m)?.[1];
+          const id = eventName === 'issues' ? bodyId : process.env.INPUT_DECK_ID;
+          if (!id || !/^[a-zA-Z0-9._-]+$/.test(id)) throw new Error('Deck ID is missing or invalid');
+          const found = [];
+          function visit(dir) {
+            for (const entry of readdirSync(dir, { withFileTypes: true })) {
+              if (!entry.isDirectory() || ['images', 'notes', 'unused'].includes(entry.name)) continue;
+              const child = join(dir, entry.name);
+              const source = join(child, 'deck.md');
+              try {
+                const meta = parseDeck(readFileSync(source, 'utf8')).meta;
+                if (meta.published === true && (meta.id ?? basename(child)) === id) found.push({ dir: child, meta });
+              } catch {}
+              visit(child);
+            }
+          }
+          visit('decks');
+          if (found.length !== 1) throw new Error(`Expected one deck for ${id}; found ${found.length}`);
+          const item = found[0];
+          const outputId = item.meta.id ?? basename(item.dir);
+          console.log(`deck_path=${relative('.', item.dir)}`);
+          console.log(`pdf_path=${relative('.', join(item.dir, `${outputId}.pdf`))}`);
+          console.log(`thumbnail_path=${relative('.', join(item.dir, 'thumbnail.png'))}`);
+          console.log(`deck_id=${outputId}`);
+          NODE
       - name: Select PDF diff base
         id: pdf-base
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deck_id == '')
         env:
           PUSH_BEFORE: ${{ github.event.before }}
         run: |
@@ -52,10 +104,30 @@ jobs:
           fi
           echo "sha=$base" >> "$GITHUB_OUTPUT"
       - name: Export PDFs for changed decks
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deck_id == '')
         run: node scripts/export-pdf.mjs --changed
         env:
           PDF_BASE_SHA: ${{ steps.pdf-base.outputs.sha }}
-      - uses: actions/upload-artifact@v6
+      - name: Export requested PDF
+        if: steps.target.outputs.deck_path != ''
+        env:
+          TARGET_DECK_PATH: ${{ steps.target.outputs.deck_path }}
+        run: node scripts/export-pdf.mjs "$TARGET_DECK_PATH"
+      - name: Upload requested PDF for 14 days
+        id: artifact
+        if: steps.target.outputs.pdf_path != ''
+        uses: actions/upload-artifact@v6
+        with:
+          name: slide-pdf-${{ steps.target.outputs.deck_id }}-${{ github.run_id }}
+          path: |
+            ${{ steps.target.outputs.pdf_path }}
+            ${{ steps.target.outputs.thumbnail_path }}
+          if-no-files-found: error
+          retention-days: 14
+      - name: Upload changed PDFs for 14 days
+        id: changed-artifact
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deck_id == '')
+        uses: actions/upload-artifact@v6
         with:
           name: slide-pdfs-${{ github.sha }}
           path: |
@@ -63,3 +135,12 @@ jobs:
             decks/**/thumbnail.png
           if-no-files-found: warn
           retention-days: 14
+      - name: Add artifact link to the request issue
+        if: github.event_name == 'issues' && steps.artifact.outputs.artifact-url != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ARTIFACT_URL: ${{ steps.artifact.outputs.artifact-url }}
+          DECK_ID: ${{ steps.target.outputs.deck_id }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" --body "${DECK_ID} のPDFを生成しました。14日間こちらからダウンロードできます: ${ARTIFACT_URL}"
