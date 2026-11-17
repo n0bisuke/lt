@@ -66,6 +66,7 @@ export function renderSlides(md, { title = '', assetPrefix = '../../design-syste
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc}</title>
+<link rel="icon" type="image/png" href="${assetPrefix}/project/assets/Logos/favicon.png">
 <style>${css}</style>
 <link rel="stylesheet" href="${assetPrefix}/project/components/bundle.css">
 <script src="${assetPrefix}/project/components/bundle.js"></script>

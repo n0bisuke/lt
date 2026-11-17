@@ -234,7 +234,8 @@ for (const { name, dir, unused } of moves) {
 // デッキが読み込む共通ファイル（デッキからの相対パスをそのまま保つ）
 const P = 'design-system/project';
 const AVATAR = `${P}/assets/Logos/nobisuke-avatar.jpg`;
-for (const f of ['design-system/tokens.css', `${P}/components/bundle.css`, `${P}/components/bundle.js`, AVATAR, ...shared]) {
+const FAVICON = `${P}/assets/Logos/favicon.png`;
+for (const f of ['design-system/tokens.css', `${P}/components/bundle.css`, `${P}/components/bundle.js`, AVATAR, FAVICON, ...shared]) {
   if (!existsSync(join(ROOT, f))) { console.error(`エラー: ${f} がありません（node scripts/build-tokens.mjs）`); process.exit(1); }
   mkdirSync(dirname(join(DIST, f)), { recursive: true });
   cpSync(join(ROOT, f), join(DIST, f));
@@ -372,6 +373,7 @@ main[data-lt-gated]:not(.lt-access-open) { visibility: hidden; }
 
 const headCommon = (css) => `<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="${css}${FAVICON}">
 <link rel="stylesheet" href="${css}design-system/tokens.css">
 <link rel="stylesheet" href="${css}site.css">
 ${GA_ENABLED ? gaSnippet() : ''}`;
